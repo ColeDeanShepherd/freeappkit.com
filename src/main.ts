@@ -3,16 +3,25 @@ import './style.css'
 
 const appElem = document.getElementById('app')!;
 
-// #region Pages
-
-const mkHomePage = () =>
+appElem.append(
   div([
     h1([
-      text('Free App Kit')
+      a({ href: '/' }, [text('Free App Kit')])
     ]),
     h2([
       text('Free App Kit is a collection of free web-based applications.')
     ]),
+    div({ id: "route-container" }, [
+    ])
+  ])
+);
+
+const routeContainerElem = document.getElementById('route-container')!;
+
+// #region Pages
+
+const mkHomePage = () =>
+  div([
     p([text('Our apps:')]),
     ul([
       li([
@@ -104,12 +113,11 @@ function changeRoute(pathname: string) {
 // #endregion Router
 
 function run() {
-  console.log(location);
   changeRoute(location.pathname);
 }
 
 function setPageElem(pageElem: Node) {
-  appElem.replaceChildren(pageElem);
+  routeContainerElem.replaceChildren(pageElem);
 }
 
 run();
