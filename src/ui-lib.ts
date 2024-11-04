@@ -12,8 +12,7 @@ interface ANodeProps extends NodeProps {
 interface TextAreaNodeProps extends NodeProps {
   readonly?: boolean;
 }
-
-export function elem(tagName: keyof HTMLElementTagNameMap, propsOrChildren?: NodeProps | Node[], children?: Node[]) {
+export function elem<K extends keyof HTMLElementTagNameMap>(tagName: K, propsOrChildren?: NodeProps | Node[], children?: Node[]): HTMLElementTagNameMap[K] {
   const elem = document.createElement(tagName);
 
   if (propsOrChildren !== undefined) {

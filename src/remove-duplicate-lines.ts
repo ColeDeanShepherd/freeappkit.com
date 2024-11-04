@@ -3,14 +3,18 @@ import { Route } from './router';
 import "bootstrap-icons/font/bootstrap-icons.css";
 import { removeDuplicateLines, waitMs } from './util';
 
-const mkRemoveDuplicateLinesPage = () =>
-  div([
+const mkRemoveDuplicateLinesPage = () => {
+  let inputElem: HTMLTextAreaElement;
+  let outputElem: HTMLTextAreaElement;
+  let copySuccessTextElem: HTMLSpanElement;
+
+  const page = div([
     h2([
       text('Remove Duplicate Lines')
     ]),
     div([
       h3([text('Input')]),
-      textArea({ id: 'input', style: 'min-height: 300px' }),
+      (inputElem = textArea({ id: 'input', style: 'min-height: 300px' })),
       button({ onClick: removeDuplicateLinesOnClick }, [text('Remove Duplicate Lines')]),
     ]),
     div([
@@ -19,33 +23,30 @@ const mkRemoveDuplicateLinesPage = () =>
         button({ onClick: copyOutputToClipboard, style: 'margin: 0 1rem;' }, [
           i({ class: 'bi bi-clipboard' })
         ]),
-        span({ id: 'copy-success-text' }, [text('')]),
+        (copySuccessTextElem = span({ id: 'copy-success-text' }, [text('')])),
       ]),
-      textArea({ id: 'output', readonly: true, style: 'min-height: 300px' }),
+      (outputElem = textArea({ id: 'output', readonly: true, style: 'min-height: 300px' })),
     ]),
   ]);
 
-function removeDuplicateLinesOnClick() {
-  const inputElem = document.getElementById('input') as HTMLTextAreaElement;
-  const outputElem = document.getElementById('output') as HTMLTextAreaElement;
+  return page;
 
-  outputElem.value = removeDuplicateLines(inputElem.value);
-}
-
-async function copyOutputToClipboard() {
-  const outputElem = document.getElementById('output') as HTMLTextAreaElement;
-
-  try {
-    await navigator.clipboard.writeText(outputElem.value);
-  } catch (err) {
-    alert('Failed to copy to clipboard');
-    return;
+  function removeDuplicateLinesOnClick() {
+    outputElem.value = removeDuplicateLines(inputElem.value);
   }
-  
-  const copySuccessTextElem = document.getElementById('copy-success-text') as HTMLSpanElement;
-  copySuccessTextElem.textContent = 'Copied to clipboard!';
-  await waitMs(2000);
-  copySuccessTextElem.textContent = '';
+
+  async function copyOutputToClipboard() {
+    try {
+      await navigator.clipboard.writeText(outputElem.value);
+    } catch (err) {
+      alert('Failed to copy to clipboard');
+      return;
+    }
+    
+    copySuccessTextElem.textContent = 'Copied to clipboard!';
+    await waitMs(2000);
+    copySuccessTextElem.textContent = '';
+  }
 }
 
 export const removeDuplicateLinesRoute: Route = {
@@ -54,7 +55,7 @@ export const removeDuplicateLinesRoute: Route = {
   mkPageElem: mkRemoveDuplicateLinesPage,
 };
 
-export const reomveDuplicateLinesRoute2: Route = {
+export const removeDuplicateLinesRoute2: Route = {
   pathname: '/dedupe-lines',
   title: 'Remove Duplicate Lines',
   mkPageElem: mkRemoveDuplicateLinesPage,
