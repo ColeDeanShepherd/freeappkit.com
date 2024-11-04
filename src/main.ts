@@ -74,6 +74,9 @@ function changeRoute(pathname: string) {
     ? `${route.title} - Free App Kit`
     : 'Free App Kit';
 
+  // Send page view to Google Analytics now that the page title is set.
+  gtag('event', 'page_view');
+
   setPageElem(route.mkPageElem());
 }
 
