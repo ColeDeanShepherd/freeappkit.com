@@ -2,6 +2,7 @@ import { text, h1, h2, h3, h4, div, p, ul, li, a, textArea, button } from './ui-
 import './style.css'
 import { Route } from './router';
 import { removeDuplicateLinesRoute, removeDuplicateLinesRoute2 } from './remove-duplicate-lines';
+import { sortLinesRoute } from './sort-lines';
 
 const appElem = document.getElementById('app')!;
 
@@ -29,8 +30,11 @@ const mkHomePage = () =>
     p([text('Our apps:')]),
     ul([
       li([
-        a({ href: '/remove-duplicate-lines' }, [text('Remove Duplicate Lines')]),
+        a({ href: removeDuplicateLinesRoute.pathname }, [text('Remove Duplicate Lines')]),
       ]),
+      li([
+        a({ href: sortLinesRoute.pathname }, [text('Sort Lines')]),
+      ])
     ])
   ]);
 
@@ -49,7 +53,8 @@ const routes: Route[] = [
     mkPageElem: mkHomePage,
   },
   removeDuplicateLinesRoute,
-  removeDuplicateLinesRoute2
+  removeDuplicateLinesRoute2,
+  sortLinesRoute,
 ];
 
 const notFoundRoute: Route = {
