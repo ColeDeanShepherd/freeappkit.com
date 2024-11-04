@@ -1,7 +1,7 @@
 import { text, h1, h2, h3, h4, div, p, ul, li, a, textArea, button, i, span } from './ui-lib';
 import { Route } from './router';
 import "bootstrap-icons/font/bootstrap-icons.css";
-import { waitMs } from './util';
+import { removeDuplicateLines, waitMs } from './util';
 
 const mkRemoveDuplicateLinesPage = () =>
   div([
@@ -30,10 +30,6 @@ function removeDuplicateLinesOnClick() {
   const outputElem = document.getElementById('output') as HTMLTextAreaElement;
 
   outputElem.value = removeDuplicateLines(inputElem.value);
-}
-
-function removeDuplicateLines(text: string) {
-  return Array.from(new Set(text.split('\n'))).join('\n');
 }
 
 async function copyOutputToClipboard() {
