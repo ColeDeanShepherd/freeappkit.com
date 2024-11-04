@@ -1,4 +1,4 @@
-import { text, h1, h2, h3, h4, div, p, ul, li, a, textArea, button } from './ui-lib';
+import { text, h1, h2, h3, h4, div, p, ul, li, a, textArea, button } from './ui-core';
 import './style.css'
 import { Route } from './router';
 import { removeDuplicateLinesRoute, removeDuplicateLinesRoute2 } from './remove-duplicate-lines';
