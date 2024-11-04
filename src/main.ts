@@ -15,6 +15,9 @@ appElem.append(
       h2({ class: 'tag-line' }, [
         text('A collection of free web-based applications.')
       ]),
+      button({ style: "margin-bottom: 1rem;" }, [
+        a({ href: 'https://www.patreon.com/bePatron?u=4644571', target: "_blank", class: 'patreon-button' }, [text('Support us on Patreon!')])
+      ])
     ]),
     div({ id: "route-container" }, [
     ])

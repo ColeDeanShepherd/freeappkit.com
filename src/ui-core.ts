@@ -8,6 +8,7 @@ interface NodeProps {
 
 interface ANodeProps extends NodeProps {
   href?: string;
+  target?: string;
 }
 
 interface TextAreaNodeProps extends NodeProps {
@@ -73,6 +74,10 @@ export const a = (propsOrChildren?: ANodeProps | Node[], children?: Node[]) => {
 
     if (props.href) {
       _elem.setAttribute('href', props.href);
+    }
+
+    if (props.target) {
+      _elem.setAttribute('target', props.target);
     }
   }
 
