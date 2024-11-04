@@ -3,6 +3,7 @@ interface NodeProps {
   class?: string;
   style?: string;
   onClick?: () => void;
+  type?: string;
 }
 
 interface ANodeProps extends NodeProps {
@@ -12,6 +13,11 @@ interface ANodeProps extends NodeProps {
 interface TextAreaNodeProps extends NodeProps {
   readonly?: boolean;
 }
+
+interface CheckboxProps extends NodeProps {
+  checked?: boolean;
+}
+
 export function elem<K extends keyof HTMLElementTagNameMap>(tagName: K, propsOrChildren?: NodeProps | Node[], children?: Node[]): HTMLElementTagNameMap[K] {
   const elem = document.createElement(tagName);
 
@@ -33,6 +39,10 @@ export function elem<K extends keyof HTMLElementTagNameMap>(tagName: K, propsOrC
 
       if (propsOrChildren.onClick !== undefined) {
         elem.addEventListener('click', propsOrChildren.onClick);
+      }
+
+      if (propsOrChildren.type !== undefined) {
+        elem.setAttribute('type', propsOrChildren.type);
       }
     }
   }
@@ -83,3 +93,17 @@ export const textArea = (propsOrChildren?: TextAreaNodeProps | Node[], children?
 }
 export const button = (propsOrChildren?: NodeProps | Node[], children?: Node[]) => elem('button', propsOrChildren, children);
 export const i = (propsOrChildren?: NodeProps | Node[], children?: Node[]) => elem('i', propsOrChildren, children);
+export const checkbox = (propsOrChildren?: CheckboxProps | Node[], children?: Node[]) => {
+  const _elem = elem('input', { ...propsOrChildren, type: 'checkbox' }, children);
+
+  if (!Array.isArray(propsOrChildren) && (propsOrChildren !== undefined)) {
+    const props = propsOrChildren
+
+    if (props.checked) {
+      _elem.setAttribute('checked', '');
+    }
+  }
+
+  return _elem;
+}
+export const label = (propsOrChildren?: NodeProps | Node[], children?: Node[]) => elem('label', propsOrChildren, children);

@@ -6,7 +6,6 @@ import { copyToClipboardButton } from './ui-components';
 const mkRemoveDuplicateLinesPage = () => {
   let inputElem: HTMLTextAreaElement;
   let outputElem: HTMLTextAreaElement;
-  let copySuccessTextElem: HTMLSpanElement;
 
   const page = div([
     h2([
@@ -20,8 +19,7 @@ const mkRemoveDuplicateLinesPage = () => {
     div([
       h3([
         text('Output'),
-        copyToClipboardButton(() => outputElem),
-        (copySuccessTextElem = span({ }, [text('')])),
+        copyToClipboardButton(() => outputElem)
       ]),
       (outputElem = textArea({ readonly: true, style: 'min-height: 300px' })),
     ]),
