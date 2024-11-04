@@ -1,15 +1,19 @@
-import { text, h1, h2, h3, h4, div, p, ul, li, a, textArea } from './ui-lib';
+import { text, h1, h2, h3, h4, div, p, ul, li, a, textArea, button } from './ui-lib';
 import './style.css'
+import { Route } from './router';
+import { removeDuplicateLinesRoute } from './remove-duplicate-lines';
 
 const appElem = document.getElementById('app')!;
 
 appElem.append(
   div([
-    h1([
-      a({ href: '/' }, [text('Free App Kit')])
-    ]),
-    h2([
-      text('Free App Kit is a collection of free web-based applications.')
+    div({ class: 'header' }, [
+      h1({ class: 'logo' }, [
+        a({ href: '/' }, [text('Free App Kit')])
+      ]),
+      h2({ class: 'tag-line' }, [
+        text('A collection of free web-based applications.')
+      ]),
     ]),
     div({ id: "route-container" }, [
     ])
@@ -30,42 +34,6 @@ const mkHomePage = () =>
     ])
   ]);
 
-const mkRemoveDuplicateLinesPage = () =>
-  div([
-    h1([
-      text('Remove Duplicate Lines')
-    ]),
-    h2([
-      text('Remove duplicate lines from a list of lines.')
-    ]),
-    div([
-      h3([text('Input')]),
-      p([text('Enter a list of lines.')]),
-      h3([text('Output')]),
-      p([text('The list of lines with duplicates removed.')]),
-    ]),
-    div([
-      h3([text('Example')]),
-      div([
-        h4([text('Input')]),
-        p([text('a')]),
-        p([text('b')]),
-        p([text('a')]),
-        h4([text('Output')]),
-        p([text('a')]),
-        p([text('b')]),
-      ]),
-    ]),
-    div([
-      h3([text('Input')]),
-      textArea({}),
-    ]),
-    div([
-      h3([text('Output')]),
-      textArea({}),
-    ]),
-  ]);
-
 function mkNotFoundPage() {
   return text('Page not found!');
 }
@@ -74,23 +42,13 @@ function mkNotFoundPage() {
 
 // #region Router
 
-interface Route {
-  pathname: string;
-  title: string | undefined;
-  mkPageElem: () => Node;
-}
-
 const routes: Route[] = [
   {
     pathname: '/',
     title: undefined,
     mkPageElem: mkHomePage,
   },
-  {
-    pathname: '/remove-duplicate-lines',
-    title: 'Remove Duplicate Lines',
-    mkPageElem: mkRemoveDuplicateLinesPage,
-  },
+  removeDuplicateLinesRoute
 ];
 
 const notFoundRoute: Route = {

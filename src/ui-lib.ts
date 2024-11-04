@@ -4,10 +4,17 @@ export function text(_text: string) {
 
 interface NodeProps {
   id?: string;
+  class?: string;
+  style?: string;
+  onClick?: () => void;
 }
 
 interface ANodeProps extends NodeProps {
   href?: string;
+}
+
+interface TextAreaNodeProps extends NodeProps {
+  readonly?: boolean;
 }
 
 export function elem(tagName: keyof HTMLElementTagNameMap, propsOrChildren?: NodeProps | Node[], children?: Node[]) {
@@ -19,6 +26,18 @@ export function elem(tagName: keyof HTMLElementTagNameMap, propsOrChildren?: Nod
     } else {
       if (propsOrChildren.id !== undefined) {
         elem.setAttribute('id', propsOrChildren.id);
+      }
+
+      if (propsOrChildren.class !== undefined) {
+        elem.setAttribute('class', propsOrChildren.class);
+      }
+
+      if (propsOrChildren.style !== undefined) {
+        elem.setAttribute('style', propsOrChildren.style);
+      }
+
+      if (propsOrChildren.onClick !== undefined) {
+        elem.addEventListener('click', propsOrChildren.onClick);
       }
     }
   }
@@ -53,4 +72,17 @@ export const a = (propsOrChildren?: ANodeProps | Node[], children?: Node[]) => {
 
   return _elem;
 }
-export const textArea = (propsOrChildren?: NodeProps | Node[], children?: Node[]) => elem('textarea', propsOrChildren, children);
+export const textArea = (propsOrChildren?: TextAreaNodeProps | Node[], children?: Node[]) => {
+  const _elem = elem('textarea', propsOrChildren, children);
+
+  if (!Array.isArray(propsOrChildren) && (propsOrChildren !== undefined)) {
+    const props = propsOrChildren
+
+    if (props.readonly) {
+      _elem.setAttribute('readonly', '');
+    }
+  }
+
+  return _elem;
+}
+export const button = (propsOrChildren?: NodeProps | Node[], children?: Node[]) => elem('button', propsOrChildren, children);

@@ -24,10 +24,10 @@ a:hover {
 
 body {
   margin: 0;
-  display: flex;
+  /* display: flex;
   place-items: center;
   min-width: 320px;
-  min-height: 100vh;
+  min-height: 100vh; */
 }
 
 h1 {
@@ -38,21 +38,28 @@ h1 {
 #app {
   max-width: 1280px;
   margin: 0 auto;
-  padding: 2rem;
-  text-align: center;
+  padding: 0.5rem;
+}
+
+.header {
+  border-bottom: 1px solid #333;
 }
 
 .logo {
-  height: 6em;
-  padding: 1.5em;
-  will-change: filter;
-  transition: filter 300ms;
+  margin-top: 0;
+  margin-bottom: 0;
 }
-.logo:hover {
-  filter: drop-shadow(0 0 2em #646cffaa);
+
+.logo a {
+  color: inherit;
 }
-.logo.vanilla:hover {
-  filter: drop-shadow(0 0 2em #3178c6aa);
+.logo a:hover {
+  color: inherit;
+  text-decoration: underline;
+}
+
+.tag-line {
+  margin-top: 0;
 }
 
 .card {
@@ -80,6 +87,10 @@ button:hover {
 button:focus,
 button:focus-visible {
   outline: 4px auto -webkit-focus-ring-color;
+}
+
+textarea {
+  width: 100%;
 }
 
 @media (prefers-color-scheme: light) {
