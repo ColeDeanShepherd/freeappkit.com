@@ -56,6 +56,7 @@ export const h4 = (propsOrChildren?: NodeProps | Node[], children?: Node[]) => e
 export const h5 = (propsOrChildren?: NodeProps | Node[], children?: Node[]) => elem('h5', propsOrChildren, children);
 export const h6 = (propsOrChildren?: NodeProps | Node[], children?: Node[]) => elem('h6', propsOrChildren, children);
 export const div = (propsOrChildren?: NodeProps | Node[], children?: Node[]) => elem('div', propsOrChildren, children);
+export const span = (propsOrChildren?: NodeProps | Node[], children?: Node[]) => elem('span', propsOrChildren, children);
 export const p = (propsOrChildren?: NodeProps | Node[], children?: Node[]) => elem('p', propsOrChildren, children);
 export const ul = (propsOrChildren?: NodeProps | Node[], children?: Node[]) => elem('ul', propsOrChildren, children);
 export const li = (propsOrChildren?: NodeProps | Node[], children?: Node[]) => elem('li', propsOrChildren, children);
@@ -86,3 +87,4 @@ export const textArea = (propsOrChildren?: TextAreaNodeProps | Node[], children?
   return _elem;
 }
 export const button = (propsOrChildren?: NodeProps | Node[], children?: Node[]) => elem('button', propsOrChildren, children);
+export const i = (propsOrChildren?: NodeProps | Node[], children?: Node[]) => elem('i', propsOrChildren, children);
