@@ -91,6 +91,7 @@ button:focus-visible {
 
 textarea {
   width: 100%;
+  box-sizing: border-box;
 }
 
 @media (prefers-color-scheme: light) {
