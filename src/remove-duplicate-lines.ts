@@ -33,3 +33,9 @@ export const removeDuplicateLinesRoute: Route = {
   title: 'Remove Duplicate Lines',
   mkPageElem: mkRemoveDuplicateLinesPage,
 };
+
+export const reomveDuplicateLinesRoute2: Route = {
+  pathname: '/dedupe-lines',
+  title: 'Remove Duplicate Lines',
+  mkPageElem: mkRemoveDuplicateLinesPage,
+};

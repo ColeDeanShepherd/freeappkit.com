@@ -1,7 +1,7 @@
 import { text, h1, h2, h3, h4, div, p, ul, li, a, textArea, button } from './ui-lib';
 import './style.css'
 import { Route } from './router';
-import { removeDuplicateLinesRoute } from './remove-duplicate-lines';
+import { removeDuplicateLinesRoute, reomveDuplicateLinesRoute2 } from './remove-duplicate-lines';
 
 const appElem = document.getElementById('app')!;
 
@@ -48,7 +48,8 @@ const routes: Route[] = [
     title: undefined,
     mkPageElem: mkHomePage,
   },
-  removeDuplicateLinesRoute
+  removeDuplicateLinesRoute,
+  reomveDuplicateLinesRoute2
 ];
 
 const notFoundRoute: Route = {
