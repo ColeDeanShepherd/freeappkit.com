@@ -12,7 +12,7 @@ const mkRemoveDuplicateLinesPage = () => {
     h2([
       text('Remove Duplicate Lines')
     ]),
-    p([text('Delete duplicate lines with this free online tool. Simply paste your text into the 1st box below and click the "Remove Duplicate Lines" button, then copy the unique lines from the 2nd box. The duplicate lines that were detected are also displayed in the 3rd box below.')]),
+    p([text('Delete duplicate lines with this free online tool. Simply paste your text/list into the 1st box below and click the "Remove Duplicate Lines" button, then copy the de-duplicated lines from the 2nd box. The duplicate lines that were detected are also displayed in the 3rd box below.')]),
     div([
       h3([text('Paste your text below')]),
       (inputElem = textArea({ style: 'min-height: 300px' })),
@@ -41,7 +41,7 @@ const mkRemoveDuplicateLinesPage = () => {
 
   function removeDuplicateLinesOnClick() {
     const { uniqueLines, duplicateLines } = detectAndRemoveDuplicateLines(inputElem.value);
-    
+
     outputElem.value = uniqueLines;
     duplicateLinesElem.value = duplicateLines;
   }
