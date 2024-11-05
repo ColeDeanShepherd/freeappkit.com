@@ -7,6 +7,7 @@ import './style.css'
 import { removeEmptyLinesRoute } from './remove-empty-lines';
 import { appList } from './ui-components';
 import { randomizeLinesRoute } from './randomize-lines';
+import { isDevEnv } from './util';
 
 const appElem = document.getElementById('app')!;
 
@@ -81,7 +82,9 @@ function changeRoute(pathname: string) {
     : 'Free App Kit';
 
   // Send page view to Google Analytics now that the page title is set.
-  gtag('event', 'page_view');
+  if (!isDevEnv()) {
+    gtag('event', 'page_view');
+  }
 
   setPageElem(route.mkPageElem());
 }
@@ -95,5 +98,5 @@ function run() {
 function setPageElem(pageElem: Node) {
   routeContainerElem.replaceChildren(pageElem);
 }
-
+console.log(process.env.NODE_ENV);
 run();

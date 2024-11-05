@@ -1,3 +1,7 @@
+export function isDevEnv() {
+  return process.env.NODE_ENV === 'development';
+}
+
 export async function waitMs(delayMs: number) {
   return new Promise(resolve => setTimeout(resolve, delayMs));
 }
