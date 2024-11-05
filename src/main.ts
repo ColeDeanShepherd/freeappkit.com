@@ -6,6 +6,7 @@ import { sortLinesRoute } from './sort-lines';
 import './style.css'
 import { removeEmptyLinesRoute } from './remove-empty-lines';
 import { appList } from './ui-components';
+import { randomizeLinesRoute } from './randomize-lines';
 
 const appElem = document.getElementById('app')!;
 
@@ -61,7 +62,8 @@ const routes: Route[] = [
   removeDuplicateLinesRoute,
   removeDuplicateLinesRoute2,
   sortLinesRoute,
-  removeEmptyLinesRoute
+  removeEmptyLinesRoute,
+  randomizeLinesRoute
 ];
 
 const notFoundRoute: Route = {

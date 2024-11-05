@@ -4,6 +4,7 @@ import { waitMs } from './util';
 import { removeDuplicateLinesRoute } from './remove-duplicate-lines';
 import { sortLinesRoute } from './sort-lines';
 import { removeEmptyLinesRoute } from './remove-empty-lines';
+import { randomizeLinesRoute } from './randomize-lines';
 
 export const copyToClipboardButton = (getTextContainerElem: () => HTMLTextAreaElement) => {
   let successTextElem: HTMLSpanElement;
@@ -39,5 +40,8 @@ export const appList = () =>
     ]),
     li([
       a({ href: removeEmptyLinesRoute.pathname }, [text('Remove Empty Lines')]),
+    ]),
+    li([
+      a({ href: randomizeLinesRoute.pathname }, [text('Randomize (Shuffle) Lines')]),
     ])
   ]);
