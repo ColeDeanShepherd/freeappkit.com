@@ -5,6 +5,7 @@ import { sortLinesRoute } from './sort-lines';
 
 import './style.css'
 import { removeEmptyLinesRoute } from './remove-empty-lines';
+import { appList } from './ui-components';
 
 const appElem = document.getElementById('app')!;
 
@@ -28,7 +29,10 @@ appElem.append(
         ])
       ])
     ]),
-    div({ id: "route-container" }, [
+    div({ id: "route-container" }),
+    div([
+      p([text('Our apps:')]),
+      appList()
     ])
   ])
 );
@@ -38,20 +42,7 @@ const routeContainerElem = document.getElementById('route-container')!;
 // #region Pages
 
 const mkHomePage = () =>
-  div([
-    p([text('Our apps:')]),
-    ul([
-      li([
-        a({ href: removeDuplicateLinesRoute.pathname }, [text('Remove Duplicate Lines')]),
-      ]),
-      li([
-        a({ href: sortLinesRoute.pathname }, [text('Sort Lines')]),
-      ]),
-      li([
-        a({ href: removeEmptyLinesRoute.pathname }, [text('Remove Empty Lines')]),
-      ])
-    ])
-  ]);
+  div([]);
 
 function mkNotFoundPage() {
   return text('Page not found!');

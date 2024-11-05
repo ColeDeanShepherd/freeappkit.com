@@ -1,6 +1,9 @@
-import { text, button, i, span } from './ui-core';
+import { text, button, i, span, ul, li, a } from './ui-core';
 import "bootstrap-icons/font/bootstrap-icons.css";
 import { waitMs } from './util';
+import { removeDuplicateLinesRoute } from './remove-duplicate-lines';
+import { sortLinesRoute } from './sort-lines';
+import { removeEmptyLinesRoute } from './remove-empty-lines';
 
 export const copyToClipboardButton = (getTextContainerElem: () => HTMLTextAreaElement) => {
   let successTextElem: HTMLSpanElement;
@@ -25,3 +28,16 @@ export const copyToClipboardButton = (getTextContainerElem: () => HTMLTextAreaEl
 
   return btn;
 };
+
+export const appList = () =>
+  ul([
+    li([
+      a({ href: removeDuplicateLinesRoute.pathname }, [text('Remove Duplicate Lines')]),
+    ]),
+    li([
+      a({ href: sortLinesRoute.pathname }, [text('Sort Lines')]),
+    ]),
+    li([
+      a({ href: removeEmptyLinesRoute.pathname }, [text('Remove Empty Lines')]),
+    ])
+  ]);
