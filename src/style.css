@@ -52,6 +52,12 @@ h1 {
   margin-bottom: 0;
 }
 
+.logo img {
+  width: 2.4rem;
+  height: 2.4rem;
+  margin-right: 1rem;
+}
+
 .logo a {
   color: inherit;
 }

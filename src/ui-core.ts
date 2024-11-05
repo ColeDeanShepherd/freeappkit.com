@@ -6,19 +6,6 @@ interface NodeProps {
   type?: string;
 }
 
-interface ANodeProps extends NodeProps {
-  href?: string;
-  target?: string;
-}
-
-interface TextAreaNodeProps extends NodeProps {
-  readonly?: boolean;
-}
-
-interface CheckboxProps extends NodeProps {
-  checked?: boolean;
-}
-
 export function elem<K extends keyof HTMLElementTagNameMap>(tagName: K, propsOrChildren?: NodeProps | Node[], children?: Node[]): HTMLElementTagNameMap[K] {
   const elem = document.createElement(tagName);
 
@@ -66,6 +53,12 @@ export const span = (propsOrChildren?: NodeProps | Node[], children?: Node[]) =>
 export const p = (propsOrChildren?: NodeProps | Node[], children?: Node[]) => elem('p', propsOrChildren, children);
 export const ul = (propsOrChildren?: NodeProps | Node[], children?: Node[]) => elem('ul', propsOrChildren, children);
 export const li = (propsOrChildren?: NodeProps | Node[], children?: Node[]) => elem('li', propsOrChildren, children);
+
+interface ANodeProps extends NodeProps {
+  href?: string;
+  target?: string;
+}
+
 export const a = (propsOrChildren?: ANodeProps | Node[], children?: Node[]) => {
   const _elem = elem('a', propsOrChildren, children);
 
@@ -83,6 +76,11 @@ export const a = (propsOrChildren?: ANodeProps | Node[], children?: Node[]) => {
 
   return _elem;
 }
+
+interface TextAreaNodeProps extends NodeProps {
+  readonly?: boolean;
+}
+
 export const textArea = (propsOrChildren?: TextAreaNodeProps | Node[], children?: Node[]) => {
   const _elem = elem('textarea', propsOrChildren, children);
 
@@ -98,6 +96,11 @@ export const textArea = (propsOrChildren?: TextAreaNodeProps | Node[], children?
 }
 export const button = (propsOrChildren?: NodeProps | Node[], children?: Node[]) => elem('button', propsOrChildren, children);
 export const i = (propsOrChildren?: NodeProps | Node[], children?: Node[]) => elem('i', propsOrChildren, children);
+
+interface CheckboxProps extends NodeProps {
+  checked?: boolean;
+}
+
 export const checkbox = (propsOrChildren?: CheckboxProps | Node[], children?: Node[]) => {
   const _elem = elem('input', { ...propsOrChildren, type: 'checkbox' }, children);
 
@@ -112,3 +115,26 @@ export const checkbox = (propsOrChildren?: CheckboxProps | Node[], children?: No
   return _elem;
 }
 export const label = (propsOrChildren?: NodeProps | Node[], children?: Node[]) => elem('label', propsOrChildren, children);
+
+interface ImgProps extends NodeProps {
+  src?: string;
+  alt?: string;
+}
+
+export const img = (propsOrChildren?: ImgProps | Node[], children?: Node[]) => {
+  const _elem = elem('img', propsOrChildren, children);
+
+  if (!Array.isArray(propsOrChildren) && (propsOrChildren !== undefined)) {
+    const props = propsOrChildren
+
+    if (props.src) {
+      _elem.setAttribute('src', props.src);
+    }
+
+    if (props.alt) {
+      _elem.setAttribute('alt', props.alt);
+    }
+  }
+
+  return _elem;
+}

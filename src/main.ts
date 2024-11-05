@@ -1,4 +1,4 @@
-import { text, h1, h2, h3, h4, div, p, ul, li, a, textArea, button } from './ui-core';
+import { text, h1, h2, h3, h4, div, p, ul, li, a, textArea, button, img } from './ui-core';
 import { Route } from './router';
 import { removeDuplicateLinesRoute, removeDuplicateLinesRoute2 } from './remove-duplicate-lines';
 import { sortLinesRoute } from './sort-lines';
@@ -12,10 +12,13 @@ appElem.append(
     div({ class: 'header' }, [
       div([
         h1({ class: 'logo' }, [
-          a({ href: '/' }, [text('Free App Kit')])
+          a({ href: '/' }, [
+            img({ src: 'favicon.svg', alt: 'Free App Kit' }),
+            text('Free App Kit')
+          ])
         ]),
         h2({ class: 'tag-line' }, [
-          text('A collection of free web-based applications.')
+          text('Free web applications!')
         ])
       ]),
       div({ class: 'support-us-container' }, [
