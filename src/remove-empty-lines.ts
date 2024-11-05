@@ -12,14 +12,15 @@ const mkRemoveEmptyLinesPage = () => {
     h2([
       text('Remove Empty Lines')
     ]),
+    p([text('Remove empty/blank lines of text with this free online tool. Simply paste your text/list into the 1st box below and click the "Remove empty lines" button, then copy the output from the 2nd box below.')]),
     div([
-      h3([text('Input')]),
+      h3([text('Paste your text below')]),
       (inputElem = textArea({ style: 'min-height: 300px' })),
       div({ style: "margin: 1rem 0" }, [
         (alsoRemoveLinesOfBlankCharsCheckboxElem = checkbox()),
         label([text('Also remove lines of blank characters')]),
       ]),
-      button({ onClick: onSubmit }, [text('Submit')]),
+      button({ onClick: onSubmit }, [text('Remove empty lines')]),
     ]),
     div([
       h3([

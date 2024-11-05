@@ -13,8 +13,9 @@ const mkSortLinesPage = () => {
     h2([
       text('Sort Lines')
     ]),
+    p([text('Sort lines of text with this free online tool. Simply paste your text/list into the 1st box below, configure the tool using the checkboxes, click the "Sort" button, then copy the output from the 2nd box below.')]),
     div([
-      h3([text('Input')]),
+      h3([text('Paste your text below')]),
       (inputElem = textArea({ style: 'min-height: 300px' })),
       div({ style: "margin: 1rem 0" }, [
         (isDescendingCheckboxElem = checkbox()),
@@ -28,7 +29,7 @@ const mkSortLinesPage = () => {
     ]),
     div([
       h3([
-        text('Output'),
+        text('Sorted lines'),
         copyToClipboardButton(() => outputElem)
       ]),
       (outputElem = textArea({ readonly: true, style: 'min-height: 300px' })),

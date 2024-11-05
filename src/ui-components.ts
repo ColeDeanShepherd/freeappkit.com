@@ -33,15 +33,15 @@ export const copyToClipboardButton = (getTextContainerElem: () => HTMLTextAreaEl
 export const appList = () =>
   ul([
     li([
-      a({ href: removeDuplicateLinesRoute.pathname }, [text('Remove Duplicate Lines')]),
-    ]),
-    li([
-      a({ href: sortLinesRoute.pathname }, [text('Sort Lines')]),
+      a({ href: randomizeLinesRoute.pathname }, [text('Randomize (Shuffle) Lines')]),
     ]),
     li([
       a({ href: removeEmptyLinesRoute.pathname }, [text('Remove Empty Lines')]),
     ]),
     li([
-      a({ href: randomizeLinesRoute.pathname }, [text('Randomize (Shuffle) Lines')]),
-    ])
+      a({ href: removeDuplicateLinesRoute.pathname }, [text('Remove Duplicate Lines')]),
+    ]),
+    li([
+      a({ href: sortLinesRoute.pathname }, [text('Sort Lines')]),
+    ]),
   ]);
