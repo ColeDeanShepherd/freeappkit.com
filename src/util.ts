@@ -32,3 +32,15 @@ export function sortLines(text: string, descending: boolean, caseSensitive: bool
 
   return sortedLines.join('\n');
 }
+
+export function removeEmptyLines(text: string, alsoRemoveLinesOfBlankChars: boolean) {
+  return lines(text)
+    .filter(line => {
+      if (alsoRemoveLinesOfBlankChars) {
+        return line.trim() !== '';
+      } else {
+        return line !== '';
+      }
+    })
+    .join('\n');
+}

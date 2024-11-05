@@ -4,6 +4,7 @@ import { removeDuplicateLinesRoute, removeDuplicateLinesRoute2 } from './remove-
 import { sortLinesRoute } from './sort-lines';
 
 import './style.css'
+import { removeEmptyLinesRoute } from './remove-empty-lines';
 
 const appElem = document.getElementById('app')!;
 
@@ -45,6 +46,9 @@ const mkHomePage = () =>
       ]),
       li([
         a({ href: sortLinesRoute.pathname }, [text('Sort Lines')]),
+      ]),
+      li([
+        a({ href: removeEmptyLinesRoute.pathname }, [text('Remove Empty Lines')]),
       ])
     ])
   ]);
@@ -66,6 +70,7 @@ const routes: Route[] = [
   removeDuplicateLinesRoute,
   removeDuplicateLinesRoute2,
   sortLinesRoute,
+  removeEmptyLinesRoute
 ];
 
 const notFoundRoute: Route = {
