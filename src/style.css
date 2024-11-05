@@ -42,6 +42,8 @@ h1 {
 }
 
 .header {
+  display: flex;
+  justify-content: space-between;
   border-bottom: 1px solid #333;
 }
 
@@ -56,6 +58,12 @@ h1 {
 .logo a:hover {
   color: inherit;
   text-decoration: underline;
+}
+
+.support-us-container {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;;
 }
 
 .tag-line {

@@ -1,22 +1,27 @@
 import { text, h1, h2, h3, h4, div, p, ul, li, a, textArea, button } from './ui-core';
-import './style.css'
 import { Route } from './router';
 import { removeDuplicateLinesRoute, removeDuplicateLinesRoute2 } from './remove-duplicate-lines';
 import { sortLinesRoute } from './sort-lines';
+
+import './style.css'
 
 const appElem = document.getElementById('app')!;
 
 appElem.append(
   div([
     div({ class: 'header' }, [
-      h1({ class: 'logo' }, [
-        a({ href: '/' }, [text('Free App Kit')])
+      div([
+        h1({ class: 'logo' }, [
+          a({ href: '/' }, [text('Free App Kit')])
+        ]),
+        h2({ class: 'tag-line' }, [
+          text('A collection of free web-based applications.')
+        ])
       ]),
-      h2({ class: 'tag-line' }, [
-        text('A collection of free web-based applications.')
-      ]),
-      button({ style: "margin-bottom: 1rem;" }, [
-        a({ href: 'https://www.patreon.com/bePatron?u=4644571', target: "_blank", class: 'patreon-button' }, [text('Support us on Patreon!')])
+      div({ class: 'support-us-container' }, [
+        button({ style: "margin-bottom: 1rem;" }, [
+          a({ href: 'https://www.patreon.com/bePatron?u=4644571', target: "_blank", class: 'patreon-button' }, [text('Support us on Patreon!')])
+        ])
       ])
     ]),
     div({ id: "route-container" }, [
