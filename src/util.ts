@@ -10,6 +10,26 @@ export function lines(text: string) {
   return text.split('\n');
 }
 
+export function detectAndRemoveDuplicateLines(text: string) {
+  const linesArr = lines(text);
+
+  const uniqueLines = new Set<string>();
+  const duplicateLines: string[] = [];
+
+  for (const line of linesArr) {
+    if (uniqueLines.has(line)) {
+      duplicateLines.push(line);
+    } else {
+      uniqueLines.add(line);
+    }
+  }
+
+  return {
+    uniqueLines: Array.from(uniqueLines).join('\n'),
+    duplicateLines: duplicateLines.join('\n')
+  };
+}
+
 export function removeDuplicateLines(text: string) {
   return Array.from(new Set(lines(text))).join('\n');
 }

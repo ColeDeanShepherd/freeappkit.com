@@ -1,34 +1,55 @@
 import { text, h1, h2, h3, h4, div, p, ul, li, a, textArea, button, i, span } from './ui-core';
 import { Route } from './router';
-import { removeDuplicateLines } from './util';
+import { detectAndRemoveDuplicateLines, removeDuplicateLines } from './util';
 import { copyToClipboardButton } from './ui-components';
 
 const mkRemoveDuplicateLinesPage = () => {
   let inputElem: HTMLTextAreaElement;
   let outputElem: HTMLTextAreaElement;
+  let duplicateLinesElem: HTMLTextAreaElement;
 
   const page = div([
     h2([
       text('Remove Duplicate Lines')
     ]),
+    p([text('Delete duplicate lines with this free online tool. Simply paste your text into the 1st box below and click the "Remove Duplicate Lines" button, then copy the unique lines from the 2nd box. The duplicate lines that were detected are also displayed in the 3rd box below.')]),
     div([
-      h3([text('Input')]),
+      h3([text('Paste your text below')]),
       (inputElem = textArea({ style: 'min-height: 300px' })),
-      button({ onClick: removeDuplicateLinesOnClick }, [text('Remove Duplicate Lines')]),
+      div([
+        button({ onClick: removeDuplicateLinesOnClick, style: 'margin-right: 1rem;' }, [text('Remove Duplicate Lines')]),
+        button({ onClick: resetOnClick }, [text('Reset')]),
+      ])
     ]),
     div([
       h3([
-        text('Output'),
+        text('De-duplicated text'),
         copyToClipboardButton(() => outputElem)
       ]),
       (outputElem = textArea({ readonly: true, style: 'min-height: 300px' })),
+    ]),
+    div([
+      h3([
+        text('Duplicate lines that were removed'),
+        copyToClipboardButton(() => duplicateLinesElem)
+      ]),
+      (duplicateLinesElem = textArea({ readonly: true, style: 'min-height: 300px' })),
     ]),
   ]);
 
   return page;
 
   function removeDuplicateLinesOnClick() {
-    outputElem.value = removeDuplicateLines(inputElem.value);
+    const { uniqueLines, duplicateLines } = detectAndRemoveDuplicateLines(inputElem.value);
+    
+    outputElem.value = uniqueLines;
+    duplicateLinesElem.value = duplicateLines;
+  }
+
+  function resetOnClick() {
+    inputElem.value = '';
+    outputElem.value = '';
+    duplicateLinesElem.value = '';
   }
 }
 

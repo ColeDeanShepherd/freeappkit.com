@@ -10,7 +10,7 @@ export const copyToClipboardButton = (getTextContainerElem: () => HTMLTextAreaEl
   let successTextElem: HTMLSpanElement;
 
   const btn = button({ onClick: onClick, style: 'margin: 0 1rem;' }, [
-    i({ class: 'bi bi-clipboard' }),
+    span([text('Copy to Clipboard')]),
     (successTextElem = span([text('')]))
   ]);
 
@@ -22,7 +22,7 @@ export const copyToClipboardButton = (getTextContainerElem: () => HTMLTextAreaEl
       return;
     }
     
-    successTextElem.textContent = ' Copied to clipboard!';
+    successTextElem.textContent = ' ✅';
     await waitMs(2000);
     successTextElem.textContent = '';
   }
