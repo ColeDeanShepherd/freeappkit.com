@@ -59,8 +59,143 @@ export const sortLinesCommand: ICommand = {
   runFn: (args) => sortLines(args['text'], args['Descending Order'], args['Case Sensitive']),
 };
 
+export const convertToLowerCaseCommand: ICommand = {
+  name: "Convert to Lowercase",
+  description: "Convert text to lowercase with this free online lowercase converter. Simply paste your text into the 1st box below and click the \"Convert to lowercase\" button, then copy the output from the 2nd box below.",
+  parameters: [
+    {
+      name: "text",
+      type: { kind: 'text' },
+      description: "Paste your text below"
+    }
+  ],
+  returnType: { kind: 'text' },
+  runFn: (args) => args['text'].toLowerCase(),
+};
+
+export const convertToUpperCaseCommand: ICommand = {
+  name: "Convert to Uppercase",
+  description: "Convert text to uppercase with this free online uppercase converter. Simply paste your text into the 1st box below and click the \"Convert to uppercase\" button, then copy the output from the 2nd box below.",
+  parameters: [
+    {
+      name: "text",
+      type: { kind: 'text' },
+      description: "Paste your text below"
+    }
+  ],
+  returnType: { kind: 'text' },
+  runFn: (args) => args['text'].toUpperCase(),
+};
+
+export const base64EncodeCommand: ICommand = {
+  name: "Base64 Encode",
+  description: "Base64 encode text with this free online tool. Simply paste your text into the 1st box below and click the \"Base64 Encode\" button, then copy the output from the 2nd box below.",
+  parameters: [
+    {
+      name: "text",
+      type: { kind: 'text' },
+      description: "Paste your text below"
+    }
+  ],
+  returnType: { kind: 'text' },
+  runFn: (args) => btoa(args['text']),
+};
+
+export const base64DecodeCommand: ICommand = {
+  name: "Base64 Decode",
+  description: "Base64 decode text with this free online tool. Simply paste your text into the 1st box below and click the \"Base64 Decode\" button, then copy the output from the 2nd box below.",
+  parameters: [
+    {
+      name: "text",
+      type: { kind: 'text' },
+      description: "Paste your text below"
+    }
+  ],
+  returnType: { kind: 'text' },
+  runFn: (args) => atob(args['text']),
+};
+
+export const countCharactersCommand: ICommand = {
+  name: "Count Characters",
+  description: "Count characters with this free online tool. Simply paste your text into the 1st box below and click the \"Count Characters\" button, then copy the output from the 2nd box below.",
+  parameters: [
+    {
+      name: "text",
+      type: { kind: 'text' },
+      description: "Paste your text below"
+    }
+  ],
+  returnType: { kind: 'text' },
+  runFn: (args) => args['text'].length.toString(),
+};
+
+export const countWordsCommand: ICommand = {
+  name: "Count Words",
+  description: "Count words with this free online tool. Simply paste your text into the 1st box below and click the \"Count Words\" button, then copy the output from the 2nd box below.",
+  parameters: [
+    {
+      name: "text",
+      type: { kind: 'text' },
+      description: "Paste your text below"
+    }
+  ],
+  returnType: { kind: 'text' },
+  runFn: (args) => args['text'].split(/\s+/).length.toString(),
+};
+
+export const countSentencesCommand: ICommand = {
+  name: "Count Sentences",
+  description: "Count sentences with this free online tool. Simply paste your text into the 1st box below and click the \"Count Sentences\" button, then copy the output from the 2nd box below.",
+  parameters: [
+    {
+      name: "text",
+      type: { kind: 'text' },
+      description: "Paste your text below"
+    }
+  ],
+  returnType: { kind: 'text' },
+  runFn: (args) => args['text'].split(/[.!?]/).filter((s: string) => s.length > 0).length.toString(),
+};
+
+export const urlEncodeCommand: ICommand = {
+  name: "URL Encode",
+  description: "URL encode text with this free online tool. Simply paste your text into the 1st box below and click the \"URL Encode\" button, then copy the output from the 2nd box below.",
+  parameters: [
+    {
+      name: "text",
+      type: { kind: 'text' },
+      description: "Paste your text below"
+    }
+  ],
+  returnType: { kind: 'text' },
+  runFn: (args) => encodeURIComponent(args['text']),
+};
+
+export const urlDecodeCommand: ICommand = {
+  name: "URL Decode",
+  description: "URL decode text with this free online tool. Simply paste your text into the 1st box below and click the \"URL Decode\" button, then copy the output from the 2nd box below.",
+  parameters: [
+    {
+      name: "text",
+      type: { kind: 'text' },
+      description: "Paste your text below"
+    }
+  ],
+  returnType: { kind: 'text' },
+  runFn: (args) => decodeURIComponent(args['text']),
+};
+
 export const commands = [
   randomizeLinesCommand,
   removeEmptyLinesCommand,
-  sortLinesCommand
+  sortLinesCommand,
+  convertToLowerCaseCommand,
+  convertToUpperCaseCommand,
+  base64EncodeCommand,
+  base64DecodeCommand,
+  countCharactersCommand,
+  countWordsCommand,
+  countSentencesCommand,
+  urlEncodeCommand,
+  urlDecodeCommand
 ];
