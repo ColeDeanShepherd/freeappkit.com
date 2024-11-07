@@ -2,9 +2,8 @@ import { text, button, i, span, ul, li, a } from './ui-core';
 import "bootstrap-icons/font/bootstrap-icons.css";
 import { waitMs } from './util';
 import { removeDuplicateLinesRoute } from './remove-duplicate-lines';
-import { sortLinesRoute } from './sort-lines';
-import { removeEmptyLinesRoute } from './remove-empty-lines';
-import { randomizeLinesRoute } from './randomize-lines';
+import { commands } from './commands';
+import { mkRouteFromCommand } from './command';
 
 export const copyToClipboardButton = (getTextContainerElem: () => HTMLTextAreaElement) => {
   let successTextElem: HTMLSpanElement;
@@ -36,15 +35,9 @@ export const appList = () =>
       a({ href: 'https://keytune.io' }, [text('KeyTune - Learn to play songs on piano for free!')]),
     ]),
     li([
-      a({ href: randomizeLinesRoute.pathname }, [text('Randomize (Shuffle) Lines')]),
-    ]),
-    li([
-      a({ href: removeEmptyLinesRoute.pathname }, [text('Remove Empty Lines')]),
-    ]),
-    li([
       a({ href: removeDuplicateLinesRoute.pathname }, [text('Remove Duplicate Lines')]),
     ]),
-    li([
-      a({ href: sortLinesRoute.pathname }, [text('Sort Lines')]),
-    ]),
+    ...commands.map(c => li([
+      a({ href: mkRouteFromCommand(c).pathname }, [text(c.name)])
+    ]))
   ]);

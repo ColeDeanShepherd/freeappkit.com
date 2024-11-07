@@ -1,13 +1,12 @@
 import { text, h1, h2, h3, h4, div, p, ul, li, a, textArea, button, img } from './ui-core';
 import { Route } from './router';
 import { removeDuplicateLinesRoute, removeDuplicateLinesRoute2 } from './remove-duplicate-lines';
-import { sortLinesRoute } from './sort-lines';
+import { appList } from './ui-components';
+import { isDevEnv } from './util';
 
 import './style.css'
-import { removeEmptyLinesRoute, removeEmptyLinesCommand } from './remove-empty-lines';
-import { appList } from './ui-components';
-import { randomizeLinesRoute } from './randomize-lines';
-import { isDevEnv } from './util';
+import { mkRouteFromCommand } from './command';
+import { commands } from './commands';
 
 const appElem = document.getElementById('app')!;
 
@@ -62,9 +61,7 @@ const routes: Route[] = [
   },
   removeDuplicateLinesRoute,
   removeDuplicateLinesRoute2,
-  sortLinesRoute,
-  removeEmptyLinesRoute,
-  randomizeLinesRoute
+  ...commands.map(mkRouteFromCommand)
 ];
 
 const notFoundRoute: Route = {
@@ -90,10 +87,6 @@ function changeRoute(pathname: string) {
 }
 
 // #endregion Router
-
-const commands = [
-  removeEmptyLinesCommand
-];
 
 function run() {
   changeRoute(location.pathname);
