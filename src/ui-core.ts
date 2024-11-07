@@ -79,6 +79,8 @@ export const a = (propsOrChildren?: ANodeProps | Node[], children?: Node[]) => {
 
 interface TextAreaNodeProps extends NodeProps {
   readonly?: boolean;
+  value?: string
+  onInput?: (e: Event) => void;
 }
 
 export const textArea = (propsOrChildren?: TextAreaNodeProps | Node[], children?: Node[]) => {
@@ -90,6 +92,14 @@ export const textArea = (propsOrChildren?: TextAreaNodeProps | Node[], children?
     if (props.readonly) {
       _elem.setAttribute('readonly', '');
     }
+
+    if (props.onInput) {
+      _elem.addEventListener('input', e => props.onInput!(e));
+    }
+
+    if (props.value) {
+      _elem.value = props.value;
+    }
   }
 
   return _elem;
@@ -99,6 +109,7 @@ export const i = (propsOrChildren?: NodeProps | Node[], children?: Node[]) => el
 
 interface CheckboxProps extends NodeProps {
   checked?: boolean;
+  onChange?: (e: Event) => void;
 }
 
 export const checkbox = (propsOrChildren?: CheckboxProps | Node[], children?: Node[]) => {
@@ -109,6 +120,10 @@ export const checkbox = (propsOrChildren?: CheckboxProps | Node[], children?: No
 
     if (props.checked) {
       _elem.setAttribute('checked', '');
+    }
+
+    if (props.onChange) {
+      _elem.addEventListener('change', e => props.onChange!(e));
     }
   }
 

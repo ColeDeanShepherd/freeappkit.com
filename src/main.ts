@@ -4,7 +4,7 @@ import { removeDuplicateLinesRoute, removeDuplicateLinesRoute2 } from './remove-
 import { sortLinesRoute } from './sort-lines';
 
 import './style.css'
-import { removeEmptyLinesRoute } from './remove-empty-lines';
+import { removeEmptyLinesRoute, removeEmptyLinesCommand } from './remove-empty-lines';
 import { appList } from './ui-components';
 import { randomizeLinesRoute } from './randomize-lines';
 import { isDevEnv } from './util';
@@ -90,6 +90,10 @@ function changeRoute(pathname: string) {
 }
 
 // #endregion Router
+
+const commands = [
+  removeEmptyLinesCommand
+];
 
 function run() {
   changeRoute(location.pathname);
