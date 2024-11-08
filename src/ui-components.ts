@@ -4,6 +4,7 @@ import { waitMs } from './util';
 import { removeDuplicateLinesRoute } from './remove-duplicate-lines';
 import { commands } from './commands';
 import { mkRouteFromCommand } from './command';
+import * as plainTextEditor from './plain-text-editor';
 
 export const copyToClipboardButton = (getTextContainerElem: () => HTMLTextAreaElement) => {
   let successTextElem: HTMLSpanElement;
@@ -36,6 +37,9 @@ export const appList = () =>
     ]),
     li([
       a({ href: removeDuplicateLinesRoute.pathname }, [text('Remove Duplicate Lines')]),
+    ]),
+    li([
+      a({ href: plainTextEditor.route.pathname }, [text('Plain-Text Editor')]),
     ]),
     ...commands.map(c => li([
       a({ href: mkRouteFromCommand(c).pathname }, [text(c.name)])

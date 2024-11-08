@@ -125,7 +125,7 @@ export const countCharactersCommand: ICommand = {
       description: "Paste your text below"
     }
   ],
-  returnType: { kind: 'text' },
+  returnType: { kind: 'number' },
   runFn: (args) => args['text'].length.toString(),
 };
 
@@ -139,7 +139,7 @@ export const countWordsCommand: ICommand = {
       description: "Paste your text below"
     }
   ],
-  returnType: { kind: 'text' },
+  returnType: { kind: 'number' },
   runFn: (args) => args['text'].split(/\s+/).length.toString(),
 };
 
@@ -149,7 +149,7 @@ export const countSentencesCommand: ICommand = {
   parameters: [
     {
       name: "text",
-      type: { kind: 'text' },
+      type: { kind: 'number' },
       description: "Paste your text below"
     }
   ],

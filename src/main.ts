@@ -1,6 +1,7 @@
 import { text, h1, h2, h3, h4, div, p, ul, li, a, textArea, button, img } from './ui-core';
 import { Route } from './router';
 import { removeDuplicateLinesRoute, removeDuplicateLinesRoute2 } from './remove-duplicate-lines';
+import * as plainTextEditor from './plain-text-editor';
 import { appList } from './ui-components';
 import { isDevEnv } from './util';
 
@@ -61,6 +62,7 @@ const routes: Route[] = [
   },
   removeDuplicateLinesRoute,
   removeDuplicateLinesRoute2,
+  plainTextEditor.route,
   ...commands.map(mkRouteFromCommand)
 ];
 

@@ -153,3 +153,67 @@ export const img = (propsOrChildren?: ImgProps | Node[], children?: Node[]) => {
 
   return _elem;
 }
+
+interface SelectProps extends NodeProps {
+  value?: string;
+  onChange?: (e: Event) => void;
+}
+
+export const select = (propsOrChildren?: SelectProps | Node[], children?: Node[]) => {
+  const _elem = elem('select', propsOrChildren, children);
+
+  if (!Array.isArray(propsOrChildren) && (propsOrChildren !== undefined)) {
+    const props = propsOrChildren
+
+    if (props.value) {
+      _elem.setAttribute('value', props.value);
+    }
+
+    if (props.onChange) {
+      _elem.addEventListener('change', e => props.onChange!(e));
+    }
+  }
+
+  return _elem;
+}
+
+interface OptionProps extends NodeProps {
+  value?: string;
+}
+
+export const option = (propsOrChildren?: OptionProps | Node[], children?: Node[]) => {
+  const _elem = elem('option', propsOrChildren, children);
+
+  if (!Array.isArray(propsOrChildren) && (propsOrChildren !== undefined)) {
+    const props = propsOrChildren
+
+    if (props.value) {
+      _elem.setAttribute('value', props.value);
+    }
+  }
+
+  return _elem;
+}
+
+interface TextInputProps extends NodeProps {
+  value?: string;
+  onInput?: (e: Event) => void;
+}
+
+export const textInput = (propsOrChildren?: TextInputProps | Node[], children?: Node[]) => {
+  const _elem = elem('input', { ...propsOrChildren, type: 'text' }, children);
+
+  if (!Array.isArray(propsOrChildren) && (propsOrChildren !== undefined)) {
+    const props = propsOrChildren
+
+    if (props.value) {
+      _elem.setAttribute('value', props.value);
+    }
+
+    if (props.onInput) {
+      _elem.addEventListener('input', e => props.onInput!(e));
+    }
+  }
+
+  return _elem;
+}
