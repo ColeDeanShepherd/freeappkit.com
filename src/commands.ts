@@ -185,6 +185,25 @@ export const urlDecodeCommand: ICommand = {
   runFn: (args) => decodeURIComponent(args['text']),
 };
 
+export const addToEndOfEachLineCommand: ICommand = {
+  name: "Add to End of Each Line",
+  description: "Add text to the end of each line with this free online tool. Simply paste your text into the 1st box below, type the text you want to add into the 2nd box below, click the \"Add to End of Each Line\" button, then copy the output from the 3rd box below.",
+  parameters: [
+    {
+      name: "text",
+      type: { kind: 'text' },
+      description: "Paste your text below"
+    },
+    {
+      name: "textToAdd",
+      type: { kind: 'text' },
+      description: "Text to add"
+    }
+  ],
+  returnType: { kind: 'text' },
+  runFn: (args) => args['text'].split('\n').map((line: string) => line + args['textToAdd']).join('\n'),
+};
+
 export const commands = [
   randomizeLinesCommand,
   removeEmptyLinesCommand,
@@ -197,5 +216,6 @@ export const commands = [
   countWordsCommand,
   countSentencesCommand,
   urlEncodeCommand,
-  urlDecodeCommand
+  urlDecodeCommand,
+  addToEndOfEachLineCommand
 ];
