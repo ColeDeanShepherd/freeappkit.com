@@ -23,14 +23,14 @@ const mkRemoveDuplicateLinesPage = () => {
     ]),
     div([
       h3([
-        text('De-duplicated text'),
+        span({ style: 'margin-right: 1rem;' }, [ text('De-duplicated text') ]),
         copyToClipboardButton(() => outputElem)
       ]),
       (outputElem = textArea({ readonly: true, style: 'min-height: 300px' })),
     ]),
     div([
       h3([
-        text('Duplicate lines that were removed'),
+        span({ style: 'margin-right: 1rem;' }, [ text('Duplicate lines that were removed') ]),
         copyToClipboardButton(() => duplicateLinesElem)
       ]),
       (duplicateLinesElem = textArea({ readonly: true, style: 'min-height: 300px' })),

@@ -4,6 +4,7 @@ import { commands } from './commands';
 import { commandArgsView, ICommand, mkDefaultArgs } from './command';
 import { openFilePicker, saveStringToFile } from './util';
 import { on } from 'events';
+import { copyToClipboardButton } from './ui-components';
 
 const applicableCommands = commands.filter(c =>
   c.parameters.length >= 1 &&
@@ -41,7 +42,7 @@ const mkPageElem = () => {
             ]))
           ]),
           div({ style: 'position: relative' }, [
-            button({ onClick: toggleEditMenu }, [ span([ text('Edit '), i({ class: 'bi bi-chevron-down' }) ]) ]),
+            button({ onClick: toggleEditMenu }, [ span([ text('Tools '), i({ class: 'bi bi-chevron-down' }) ]) ]),
             (editDropdownMenu = div({ class: 'dropdown-menu hidden' }, [
               ul([
                 ...applicableCommands.map(c =>
@@ -50,6 +51,9 @@ const mkPageElem = () => {
                   }, [ text(c.name) ]))
               ])
             ]))
+          ]),
+          div([
+            copyToClipboardButton(() => curTextArea)
           ])
         ])
       ]),

@@ -9,7 +9,7 @@ import * as plainTextEditor from './plain-text-editor';
 export const copyToClipboardButton = (getTextContainerElem: () => HTMLTextAreaElement) => {
   let successTextElem: HTMLSpanElement;
 
-  const btn = button({ onClick: onClick, style: 'margin: 0 1rem;' }, [
+  const btn = button({ onClick: onClick }, [
     span([text('Copy to Clipboard')]),
     (successTextElem = span([text('')]))
   ]);
