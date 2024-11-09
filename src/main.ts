@@ -73,6 +73,23 @@ const notFoundRoute: Route = {
   mkPageElem: mkNotFoundPage,
 };
 
+function initGoogleAnalytics() {
+  const _window = window as any;
+  _window.dataLayer = _window.dataLayer || [];
+
+  function gtag(...args: any[]){ _window.dataLayer.push(arguments); }
+
+  gtag('js', new Date());
+
+  gtag('config', 'G-JZQEMPD2QS', { send_page_view: false });
+  
+  gtag('event', 'conversion', {
+      'send_to': 'AW-16763524210/YqTZCObdg-UZEPKovLk-',
+      'value': 1.0,
+      'currency': 'USD'
+  });
+}
+
 function changeRoute(pathname: string) {
   let route = routes.find(route => route.pathname === pathname);
   if (route === undefined) { route = notFoundRoute; }
@@ -83,6 +100,7 @@ function changeRoute(pathname: string) {
 
   // Send page view to Google Analytics now that the page title is set.
   if (!isDevEnv()) {
+    initGoogleAnalytics();
     gtag('event', 'page_view');
   }
 
@@ -98,5 +116,5 @@ function run() {
 function setPageElem(pageElem: Node) {
   routeContainerElem.replaceChildren(pageElem);
 }
-console.log(process.env.NODE_ENV);
+
 run();
