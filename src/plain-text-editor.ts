@@ -1,9 +1,8 @@
-import { text, h1, h2, h3, h4, div, p, ul, li, a, textArea, button, i, span, select, option, label, fileInput } from './ui-core';
+import { text, h1, h2, h3, h4, div, p, ul, li, a, textArea, button, i, span } from './ui-core';
 import { Route } from './router';
 import { commands } from './commands';
 import { commandArgsView, ICommand, mkDefaultArgs } from './command';
 import { openFilePicker, saveStringToFile } from './util';
-import { on } from 'events';
 import { copyToClipboardButton } from './ui-components';
 
 const applicableCommands = commands.filter(c =>
@@ -12,54 +11,59 @@ const applicableCommands = commands.filter(c =>
   c.returnType.kind === 'text'
 );
 
-const mkPageElem = () => {
+export const mkPageElem = () => {
+  const page = div([
+    h2([
+      text('Plain Text Editor')
+    ]),
+    p([text('Edit plain-text with our advanced web tool. Enter your text below and select a tool to apply.')]),
+    mkPlainTextEditorView()
+  ]);
+
+  return page;
+};
+
+export const mkPlainTextEditorView = () => {
   let curCommand: ICommand | undefined = undefined;
   let curCommandArgs: { [key: string]: any } = {};
 
   let curCommandArgsView: HTMLDivElement;
-  let curCommandSubmitButton: HTMLButtonElement;
   let curTextArea: HTMLTextAreaElement;
 
   let fileDropdownMenu: HTMLDivElement;
   let editDropdownMenu: HTMLDivElement;
 
   const page = div([
-    h2([
-      text('Plain Text Editor')
-    ]),
-    p([text('Edit plain-text with our advanced web tool. Enter your text below and select a tool to apply.')]),
-    div([
-      div({ style: "margin-bottom: 1rem;" }, [
-        div({ class: 'toolbar' }, [
-          div({ style: 'position: relative' }, [
-            button({ onClick: toggleFileMenu }, [ span([ text('File '), i({ class: 'bi bi-chevron-down' }) ]) ]),
-            (fileDropdownMenu = div({ class: 'dropdown-menu hidden' }, [
-              ul([
-                li({ onClick: () => onFileMenuOptionClick(newFile) }, [ text('New') ]),
-                li({ onClick: () => onFileMenuOptionClick(openFile) }, [ text('Open') ]),
-                li({ onClick: () => onFileMenuOptionClick(saveToFile) }, [ text('Save As') ]),
-              ])
-            ]))
-          ]),
-          div({ style: 'position: relative' }, [
-            button({ onClick: toggleEditMenu }, [ span([ text('Tools '), i({ class: 'bi bi-chevron-down' }) ]) ]),
-            (editDropdownMenu = div({ class: 'dropdown-menu hidden' }, [
-              ul([
-                ...applicableCommands.map(c =>
-                  li({
-                    onClick: () => onEditMenuOptionClick(() => { onCommandChange({ target: { value: c.name } } as any) })
-                  }, [ text(c.name) ]))
-              ])
-            ]))
-          ]),
-          div([
-            copyToClipboardButton(() => curTextArea)
-          ])
+    div({ style: "margin-bottom: 1rem;" }, [
+      div({ class: 'toolbar' }, [
+        div({ style: 'position: relative' }, [
+          button({ onClick: toggleFileMenu }, [ span([ text('File '), i({ class: 'bi bi-chevron-down' }) ]) ]),
+          (fileDropdownMenu = div({ class: 'dropdown-menu hidden' }, [
+            ul([
+              li({ onClick: () => onFileMenuOptionClick(newFile) }, [ text('New') ]),
+              li({ onClick: () => onFileMenuOptionClick(openFile) }, [ text('Open') ]),
+              li({ onClick: () => onFileMenuOptionClick(saveToFile) }, [ text('Save As') ]),
+            ])
+          ]))
+        ]),
+        div({ style: 'position: relative' }, [
+          button({ onClick: toggleEditMenu }, [ span([ text('Tools '), i({ class: 'bi bi-chevron-down' }) ]) ]),
+          (editDropdownMenu = div({ class: 'dropdown-menu hidden' }, [
+            ul([
+              ...applicableCommands.map(c =>
+                li({
+                  onClick: () => onEditMenuOptionClick(() => { onCommandChange({ target: { value: c.name } } as any) })
+                }, [ text(c.name) ]))
+            ])
+          ]))
+        ]),
+        div([
+          copyToClipboardButton(() => curTextArea)
         ])
-      ]),
-      (curCommandArgsView = div({ style: 'margin-bottom: 1rem' })),
-      (curTextArea = textArea({ style: 'min-height: 300px' }))
-    ])
+      ])
+    ]),
+    (curCommandArgsView = div({ style: 'margin-bottom: 1rem' })),
+    (curTextArea = textArea({ style: 'min-height: 300px' }))
   ]);
 
   function toggleFileMenu() {
