@@ -149,11 +149,11 @@ export const countSentencesCommand: ICommand = {
   parameters: [
     {
       name: "text",
-      type: { kind: 'number' },
+      type: { kind: 'text' },
       description: "Paste your text below"
     }
   ],
-  returnType: { kind: 'text' },
+  returnType: { kind: 'number' },
   runFn: (args) => args['text'].split(/[.!?]/).filter((s: string) => s.length > 0).length.toString(),
 };
 
