@@ -2,8 +2,8 @@ export function gtag(...args: any[]) {
   const dataLayer = (window as any).dataLayer;
 
   if (dataLayer) {
-    dataLayer.push(args);
-    console.log((window as any).dataLayer, args);
+    // Must use `arguments`, not `args`.
+    dataLayer.push(arguments);
   }
 }
 

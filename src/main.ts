@@ -85,7 +85,7 @@ function changeRoute(pathname: string) {
     : 'Free App Kit';
 
   // Send page view to Google Analytics now that the page title is set.
-  if (true || !isDevEnv()) {
+  if (!isDevEnv()) {
     initGoogleAnalytics();
 
     gtag('event', 'page_view');
