@@ -130,3 +130,7 @@ export function openFilePicker(): Promise<File | null> {
     });
   });
 }
+
+export function except<T>(array: T[], valuesToExclude: T[]): T[] {
+  return array.filter(item => !valuesToExclude.includes(item));
+}

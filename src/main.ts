@@ -3,7 +3,7 @@ import { Route } from './router';
 import { removeDuplicateLinesRoute, removeDuplicateLinesRoute2 } from './remove-duplicate-lines';
 import * as plainTextEditor from './plain-text-editor';
 import { appList } from './ui-components';
-import { isDevEnv } from './util';
+import { except, isDevEnv } from './util';
 
 import './style.css'
 import { mkRouteFromCommand } from './command';
@@ -63,7 +63,8 @@ const routes: Route[] = [
   removeDuplicateLinesRoute,
   removeDuplicateLinesRoute2,
   plainTextEditor.route,
-  ...commands.map(mkRouteFromCommand)
+  ...plainTextEditor.plainTextEditorCommands.map(plainTextEditor.mkRouteFromPlainTextEditorCommand),
+  ...except(commands, plainTextEditor.plainTextEditorCommands).map(mkRouteFromCommand)
 ];
 
 const notFoundRoute: Route = {

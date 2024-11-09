@@ -1,3 +1,4 @@
+import { mkPlainTextEditorView } from './plain-text-editor';
 import { copyToClipboardButton } from './ui-components';
 import { text, h1, h2, h3, h4, div, p, ul, li, a, textArea, button, i, span, checkbox, label, textInput } from './ui-core';
 
@@ -103,46 +104,45 @@ export const commandArgsView = (parameters: ICommandParameter[], args: { [key: s
   return paramsView;
 };
 
+function mkReturnValueView(returnType: IType): [node: Node, updateValue: (value: any) => void] {
+  switch (returnType.kind) {
+    case 'text':
+      {
+        let returnValueElem: Element;
+        let outputElem: HTMLTextAreaElement;
+
+        returnValueElem =  div([
+          h3([
+            text('Output'),
+            copyToClipboardButton(() => outputElem)
+          ]),
+          (outputElem = textArea({ readonly: true, style: 'min-height: 300px' })),
+        ]);
+
+        return [returnValueElem, (value) => outputElem.value = value];
+      }
+    
+    case 'number':
+      {
+        let numberElem: Element;
+        let outputElem: HTMLParagraphElement;
+
+        numberElem = div([
+          h3([ text('Output') ]),
+          (outputElem = p([ text('') ])),
+        ]);
+
+        return [numberElem, (value) => outputElem.innerText = value.toString()];
+      }
+
+    default:
+      return [text('Unknown type'), () => {}];
+  }
+}
+
 export const mkCommandView = (command: ICommand) => {
   let args: { [key: string]: any } = mkDefaultArgs(command.parameters);
-
-  function mkReturnValueView(returnType: IType): [node: Node, updateValue: (value: any) => void] {
-    switch (returnType.kind) {
-      case 'text':
-        {
-          let returnValueElem: Element;
-          let outputElem: HTMLTextAreaElement;
-  
-          returnValueElem =  div([
-            h3([
-              text('Output'),
-              copyToClipboardButton(() => outputElem)
-            ]),
-            (outputElem = textArea({ readonly: true, style: 'min-height: 300px' })),
-          ]);
-  
-          return [returnValueElem, (value) => outputElem.value = value];
-        }
-      
-      case 'number':
-        {
-          let numberElem: Element;
-          let outputElem: HTMLParagraphElement;
-
-          numberElem = div([
-            h3([ text('Output') ]),
-            (outputElem = p([ text('') ])),
-          ]);
-
-          return [numberElem, (value) => outputElem.innerText = value.toString()];
-        }
-
-      default:
-        return [text('Unknown type'), () => {}];
-    }
-  }
-
-  const [node, updatReturnVal] = mkReturnValueView(command.returnType)
+  const [returnValueNode, updateReturnVal] = mkReturnValueView(command.returnType)
 
   const page = div([
     h2([
@@ -151,20 +151,24 @@ export const mkCommandView = (command: ICommand) => {
     p([text(command.description)]),
     commandArgsView(command.parameters, args),
     button({ onClick: onSubmit }, [text(command.name)]),
-    node,
+    returnValueNode,
   ]);
 
   return page;
 
   function onSubmit() {
     const returnVal = command.runFn(args);
-    updatReturnVal(returnVal);
+    updateReturnVal(returnVal);
   }
+}
+
+export const getCommandPathName = (command: ICommand) => {
+  return '/' + command.name.toLowerCase().replace(/ /g, '-');
 }
 
 export const mkRouteFromCommand = (command: ICommand) => {
   return {
-    pathname: '/' + command.name.toLowerCase().replace(/ /g, '-'),
+    pathname: getCommandPathName(command),
     title: command.name,
     mkPageElem: () => mkCommandView(command)
   };

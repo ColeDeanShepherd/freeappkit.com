@@ -1,15 +1,35 @@
 import { text, h1, h2, h3, h4, div, p, ul, li, a, textArea, button, i, span } from './ui-core';
 import { Route } from './router';
 import { commands } from './commands';
-import { commandArgsView, ICommand, mkDefaultArgs } from './command';
+import { commandArgsView, getCommandPathName, ICommand, mkDefaultArgs } from './command';
 import { openFilePicker, saveStringToFile } from './util';
 import { copyToClipboardButton } from './ui-components';
 
-const applicableCommands = commands.filter(c =>
+export const plainTextEditorCommands = commands.filter(c =>
   c.parameters.length >= 1 &&
   c.parameters[0].type.kind === 'text' &&
   c.returnType.kind === 'text'
 );
+
+export const mkPlainTextEditorCommandView = (command: ICommand) => {
+  const page = div([
+    h2([
+      text(command.name)
+    ]),
+    p([text(command.description)]),
+    mkPlainTextEditorView(command)
+  ]);
+
+  return page;
+};
+
+export const mkRouteFromPlainTextEditorCommand = (command: ICommand) => {
+  return {
+    pathname: getCommandPathName(command),
+    title: command.name,
+    mkPageElem: () => mkPlainTextEditorCommandView(command)
+  };
+}
 
 export const mkPageElem = () => {
   const page = div([
@@ -23,7 +43,7 @@ export const mkPageElem = () => {
   return page;
 };
 
-export const mkPlainTextEditorView = () => {
+export const mkPlainTextEditorView = (preSelectedCommand: ICommand | undefined = undefined) => {
   let curCommand: ICommand | undefined = undefined;
   let curCommandArgs: { [key: string]: any } = {};
 
@@ -50,7 +70,7 @@ export const mkPlainTextEditorView = () => {
           button({ onClick: toggleEditMenu }, [ span([ text('Tools '), i({ class: 'bi bi-chevron-down' }) ]) ]),
           (editDropdownMenu = div({ class: 'dropdown-menu hidden' }, [
             ul([
-              ...applicableCommands.map(c =>
+              ...plainTextEditorCommands.map(c =>
                 li({
                   onClick: () => onEditMenuOptionClick(() => { onCommandChange({ target: { value: c.name } } as any) })
                 }, [ text(c.name) ]))
@@ -65,6 +85,10 @@ export const mkPlainTextEditorView = () => {
     (curCommandArgsView = div({ style: 'margin-bottom: 1rem' })),
     (curTextArea = textArea({ style: 'min-height: 300px' }))
   ]);
+
+  if (preSelectedCommand) {
+    onCommandChangeInternal(preSelectedCommand);
+  }
 
   function toggleFileMenu() {
     fileDropdownMenu.classList.toggle('hidden');
@@ -109,17 +133,22 @@ export const mkPlainTextEditorView = () => {
 
   function onCommandChange(e: Event) {
     const target = e.target as HTMLSelectElement;
-    const selectedCommand = applicableCommands.find(c => c.name === target.value);
+    const selectedCommand = plainTextEditorCommands.find(c => c.name === target.value);
 
     if (selectedCommand) {
-      curCommand = selectedCommand;
-      
-      const paramsTail = selectedCommand.parameters.slice(1);
-      curCommandArgs = mkDefaultArgs(selectedCommand.parameters);
-      curCommandArgsView.replaceChildren(h3([text(selectedCommand.name)]));
-      curCommandArgsView.append(commandArgsView(paramsTail, curCommandArgs));
-      curCommandArgsView.appendChild(button({ onClick: onSubmit }, [text(selectedCommand.name)]));
+      onCommandChangeInternal(selectedCommand);
     }
+  }
+
+  function onCommandChangeInternal(selectedCommand: ICommand) {
+    curCommand = selectedCommand;
+    
+    const paramsTail = selectedCommand.parameters.slice(1);
+    curCommandArgs = mkDefaultArgs(selectedCommand.parameters);
+    curCommandArgsView.innerHTML = '';
+    //curCommandArgsView.replaceChildren(h3([text(selectedCommand.name)]));
+    curCommandArgsView.append(commandArgsView(paramsTail, curCommandArgs));
+    curCommandArgsView.appendChild(button({ onClick: onSubmit }, [text(selectedCommand.name)]));
   }
 
   function onSubmit() {
