@@ -110,6 +110,17 @@ textarea {
   box-sizing: border-box;
 }
 
+.toolbar {
+}
+
+.toolbar > div {
+  margin-right: 1rem;
+  display: inline-block;
+}
+
+.toolbar > div > button {
+}
+
 .dropdown-menu {
   position: absolute;
   left: 0;
@@ -117,6 +128,9 @@ textarea {
   background-color: #242424;
   border-radius: 8px;
   border: 1px solid #333;
+  white-space: nowrap;
+  width: auto;
+  height: auto;
 }
 
 .dropdown-menu ul {
@@ -135,7 +149,7 @@ textarea {
 }
 
 .hidden {
-  display: none;
+  display: none !important;
 }
 
 @media (prefers-color-scheme: light) {

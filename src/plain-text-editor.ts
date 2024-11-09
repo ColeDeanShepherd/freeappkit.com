@@ -3,6 +3,7 @@ import { Route } from './router';
 import { commands } from './commands';
 import { commandArgsView, ICommand, mkDefaultArgs } from './command';
 import { openFilePicker, saveStringToFile } from './util';
+import { on } from 'events';
 
 const applicableCommands = commands.filter(c =>
   c.parameters.length >= 1 &&
@@ -18,7 +19,8 @@ const mkPageElem = () => {
   let curCommandSubmitButton: HTMLButtonElement;
   let curTextArea: HTMLTextAreaElement;
 
-  let dropdownMenu: HTMLDivElement;
+  let fileDropdownMenu: HTMLDivElement;
+  let editDropdownMenu: HTMLDivElement;
 
   const page = div([
     h2([
@@ -27,43 +29,47 @@ const mkPageElem = () => {
     p([text('Edit plain-text with our advanced web tool. Enter your text below and select a tool to apply.')]),
     div([
       div({ style: "margin-bottom: 1rem;" }, [
-        div({ style: 'position: relative' }, [
-          button({ onClick: toggleFileMenu }, [ span([ text('File '), i({ class: 'bi bi-chevron-down' }) ]) ]),
-          (dropdownMenu = div({ class: 'dropdown-menu hidden' }, [
-            ul([
-              li({ onClick: () => onFileMenuOptionClick(newFile) }, [ text('New') ]),
-              li({ onClick: () => onFileMenuOptionClick(openFile) }, [ text('Open') ]),
-              li({ onClick: () => onFileMenuOptionClick(saveToFile) }, [ text('Save As') ]),
-            ])
-          ]))
-        ]),
-        text('Select a tool: '),
-        select({ value: '', onChange: onCommandChange }, [
-          option({ value: '' }, [text('')]),
-          ...applicableCommands.map(c => option({ value: c.name }, [text(c.name)]))
-        ]),
+        div({ class: 'toolbar' }, [
+          div({ style: 'position: relative' }, [
+            button({ onClick: toggleFileMenu }, [ span([ text('File '), i({ class: 'bi bi-chevron-down' }) ]) ]),
+            (fileDropdownMenu = div({ class: 'dropdown-menu hidden' }, [
+              ul([
+                li({ onClick: () => onFileMenuOptionClick(newFile) }, [ text('New') ]),
+                li({ onClick: () => onFileMenuOptionClick(openFile) }, [ text('Open') ]),
+                li({ onClick: () => onFileMenuOptionClick(saveToFile) }, [ text('Save As') ]),
+              ])
+            ]))
+          ]),
+          div({ style: 'position: relative' }, [
+            button({ onClick: toggleEditMenu }, [ span([ text('Edit '), i({ class: 'bi bi-chevron-down' }) ]) ]),
+            (editDropdownMenu = div({ class: 'dropdown-menu hidden' }, [
+              ul([
+                ...applicableCommands.map(c =>
+                  li({
+                    onClick: () => onEditMenuOptionClick(() => { onCommandChange({ target: { value: c.name } } as any) })
+                  }, [ text(c.name) ]))
+              ])
+            ]))
+          ])
+        ])
       ]),
       (curCommandArgsView = div({ style: 'margin-bottom: 1rem' })),
       (curTextArea = textArea({ style: 'min-height: 300px' }))
     ])
   ]);
 
-  function onFileChange(e: Event) {
-    const target = e.target as HTMLInputElement;
-    const file = target.files?.[0];
-    if (file === undefined) { return; }
-
-    file.text()
-      .then(contents => curTextArea.value = contents)
-      .catch(err => alert(`Error reading file: ${err}`));
-  }
-
   function toggleFileMenu() {
-    dropdownMenu.classList.toggle('hidden');
+    fileDropdownMenu.classList.toggle('hidden');
+    editDropdownMenu.classList.add('hidden');
   }
 
   function onFileMenuOptionClick(fn: () => void) {
-    dropdownMenu.classList.add('hidden');
+    fileDropdownMenu.classList.add('hidden');
+    fn();
+  }
+
+  function onEditMenuOptionClick(fn: () => void) {
+    editDropdownMenu.classList.add('hidden');
     fn();
   }
 
@@ -88,6 +94,11 @@ const mkPageElem = () => {
     saveStringToFile(curTextArea.value, filename, "text/plain");
   }
 
+  function toggleEditMenu() {
+    editDropdownMenu.classList.toggle('hidden');
+    fileDropdownMenu.classList.add('hidden');
+  }
+
   function onCommandChange(e: Event) {
     const target = e.target as HTMLSelectElement;
     const selectedCommand = applicableCommands.find(c => c.name === target.value);
@@ -97,7 +108,8 @@ const mkPageElem = () => {
       
       const paramsTail = selectedCommand.parameters.slice(1);
       curCommandArgs = mkDefaultArgs(selectedCommand.parameters);
-      curCommandArgsView.replaceChildren(commandArgsView(paramsTail, curCommandArgs));
+      curCommandArgsView.replaceChildren(h3([text(selectedCommand.name)]));
+      curCommandArgsView.append(commandArgsView(paramsTail, curCommandArgs));
       curCommandArgsView.appendChild(button({ onClick: onSubmit }, [text(selectedCommand.name)]));
     }
   }
