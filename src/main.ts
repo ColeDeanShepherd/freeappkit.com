@@ -8,6 +8,7 @@ import { except, isDevEnv } from './util';
 import './style.css'
 import { mkRouteFromCommand } from './command';
 import { commands } from './commands';
+import { initGoogleAnalytics } from './analytics';
 
 const appElem = document.getElementById('app')!;
 
@@ -73,17 +74,7 @@ const notFoundRoute: Route = {
   mkPageElem: mkNotFoundPage,
 };
 
-function gtag(...args: any[]) {
-  (window as any).dataLayer.push(args);
-}
 
-function initGoogleAnalytics() {
-  const _window = window as any;
-  _window.dataLayer = _window.dataLayer || [];
-
-  gtag('js', new Date());
-  gtag('config', 'G-JZQEMPD2QS', { send_page_view: false });
-}
 
 function changeRoute(pathname: string) {
   let route = routes.find(route => route.pathname === pathname);
