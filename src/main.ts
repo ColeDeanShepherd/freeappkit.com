@@ -8,7 +8,7 @@ import { except, isDevEnv } from './util';
 import './style.css'
 import { mkRouteFromCommand } from './command';
 import { commands } from './commands';
-import { initGoogleAnalytics } from './analytics';
+import { gtag, initGoogleAnalytics } from './analytics';
 
 const appElem = document.getElementById('app')!;
 
@@ -85,7 +85,7 @@ function changeRoute(pathname: string) {
     : 'Free App Kit';
 
   // Send page view to Google Analytics now that the page title is set.
-  if (!isDevEnv()) {
+  if (true || !isDevEnv()) {
     initGoogleAnalytics();
 
     gtag('event', 'page_view');
