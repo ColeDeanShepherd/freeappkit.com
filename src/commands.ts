@@ -17,7 +17,7 @@ export const randomizeLinesCommand: ICommand = {
 
 export const removeEmptyLinesCommand: ICommand = {
   name: "Remove Empty Lines",
-  description: "Remove empty/blank lines of text with this free online tool. Simply paste your text/list into the 1st box below and click the \"Remove empty lines\" button, then copy the output from the 2nd box below.",
+  description: "Remove empty/blank lines of text with this free online tool. Simply paste your text/list into the 1st box below and click the \"Remove empty lines\" button.",
   parameters: [
     {
       name: "text",
@@ -36,7 +36,7 @@ export const removeEmptyLinesCommand: ICommand = {
 
 export const sortLinesCommand: ICommand = {
   name: "Sort Lines",
-  description: "Sort lines of text with this free online tool. Simply paste your text/list into the 1st box below, configure the tool using the checkboxes, click the \"Sort\" button, then copy the output from the 2nd box below.",
+  description: "Sort lines of text with this free online tool. Simply paste your text/list into the 1st box below, configure the tool using the checkboxes, click the \"Sort\" button.",
   parameters: [
     {
       name: "text",
@@ -61,7 +61,7 @@ export const sortLinesCommand: ICommand = {
 
 export const convertToLowerCaseCommand: ICommand = {
   name: "Convert to Lowercase",
-  description: "Convert text to lowercase with this free online lowercase converter. Simply paste your text into the 1st box below and click the \"Convert to lowercase\" button, then copy the output from the 2nd box below.",
+  description: "Convert text to lowercase with this free online lowercase converter. Simply paste your text into the 1st box below and click the \"Convert to lowercase\" button.",
   parameters: [
     {
       name: "text",
@@ -75,7 +75,7 @@ export const convertToLowerCaseCommand: ICommand = {
 
 export const convertToUpperCaseCommand: ICommand = {
   name: "Convert to Uppercase",
-  description: "Convert text to uppercase with this free online uppercase converter. Simply paste your text into the 1st box below and click the \"Convert to uppercase\" button, then copy the output from the 2nd box below.",
+  description: "Convert text to uppercase with this free online uppercase converter. Simply paste your text into the 1st box below and click the \"Convert to uppercase\" button.",
   parameters: [
     {
       name: "text",
@@ -89,7 +89,7 @@ export const convertToUpperCaseCommand: ICommand = {
 
 export const base64EncodeCommand: ICommand = {
   name: "Base64 Encode",
-  description: "Base64 encode text with this free online tool. Simply paste your text into the 1st box below and click the \"Base64 Encode\" button, then copy the output from the 2nd box below.",
+  description: "Base64 encode text with this free online tool. Simply paste your text into the 1st box below and click the \"Base64 Encode\" button.",
   parameters: [
     {
       name: "text",
@@ -103,7 +103,7 @@ export const base64EncodeCommand: ICommand = {
 
 export const base64DecodeCommand: ICommand = {
   name: "Base64 Decode",
-  description: "Base64 decode text with this free online tool. Simply paste your text into the 1st box below and click the \"Base64 Decode\" button, then copy the output from the 2nd box below.",
+  description: "Base64 decode text with this free online tool. Simply paste your text into the 1st box below and click the \"Base64 Decode\" button.",
   parameters: [
     {
       name: "text",
@@ -117,7 +117,7 @@ export const base64DecodeCommand: ICommand = {
 
 export const countCharactersCommand: ICommand = {
   name: "Count Characters",
-  description: "Count characters with this free online tool. Simply paste your text into the 1st box below and click the \"Count Characters\" button, then copy the output from the 2nd box below.",
+  description: "Count characters with this free online tool. Simply paste your text into the 1st box below and click the \"Count Characters\" button.",
   parameters: [
     {
       name: "text",
@@ -131,7 +131,7 @@ export const countCharactersCommand: ICommand = {
 
 export const countWordsCommand: ICommand = {
   name: "Count Words",
-  description: "Count words with this free online tool. Simply paste your text into the 1st box below and click the \"Count Words\" button, then copy the output from the 2nd box below.",
+  description: "Count words with this free online tool. Simply paste your text into the 1st box below and click the \"Count Words\" button.",
   parameters: [
     {
       name: "text",
@@ -145,7 +145,7 @@ export const countWordsCommand: ICommand = {
 
 export const countSentencesCommand: ICommand = {
   name: "Count Sentences",
-  description: "Count sentences with this free online tool. Simply paste your text into the 1st box below and click the \"Count Sentences\" button, then copy the output from the 2nd box below.",
+  description: "Count sentences with this free online tool. Simply paste your text into the 1st box below and click the \"Count Sentences\" button.",
   parameters: [
     {
       name: "text",
@@ -159,7 +159,7 @@ export const countSentencesCommand: ICommand = {
 
 export const urlEncodeCommand: ICommand = {
   name: "URL Encode",
-  description: "URL encode text with this free online tool. Simply paste your text into the 1st box below and click the \"URL Encode\" button, then copy the output from the 2nd box below.",
+  description: "URL encode text with this free online tool. Simply paste your text into the 1st box below and click the \"URL Encode\" button.",
   parameters: [
     {
       name: "text",
@@ -173,7 +173,7 @@ export const urlEncodeCommand: ICommand = {
 
 export const urlDecodeCommand: ICommand = {
   name: "URL Decode",
-  description: "URL decode text with this free online tool. Simply paste your text into the 1st box below and click the \"URL Decode\" button, then copy the output from the 2nd box below.",
+  description: "URL decode text with this free online tool. Simply paste your text into the 1st box below and click the \"URL Decode\" button.",
   parameters: [
     {
       name: "text",
