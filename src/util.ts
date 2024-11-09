@@ -104,3 +104,29 @@ export function saveStringToFile(content: string, filename = 'download.txt', mim
   document.body.removeChild(link);
   window.URL.revokeObjectURL(url);
 }
+
+export function openFilePicker(): Promise<File | null> {
+  return new Promise((resolve) => {
+    // Create an invisible file input element
+    const input = document.createElement('input');
+    input.type = 'file';
+    input.style.display = 'none';
+
+    // Add an event listener to handle file selection
+    input.addEventListener('change', () => {
+      const file = input.files ? input.files[0] : null;
+      resolve(file);
+    });
+
+    // Trigger click to open the file picker
+    document.body.appendChild(input);
+    input.click();
+
+    // Remove the input element after selection
+    input.addEventListener('click', () => {
+      setTimeout(() => {
+        document.body.removeChild(input);
+      }, 1000);
+    });
+  });
+}

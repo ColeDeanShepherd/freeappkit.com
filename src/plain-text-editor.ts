@@ -2,7 +2,7 @@ import { text, h1, h2, h3, h4, div, p, ul, li, a, textArea, button, i, span, sel
 import { Route } from './router';
 import { commands } from './commands';
 import { commandArgsView, ICommand, mkDefaultArgs } from './command';
-import { saveStringToFile } from './util';
+import { openFilePicker, saveStringToFile } from './util';
 
 const applicableCommands = commands.filter(c =>
   c.parameters.length >= 1 &&
@@ -18,6 +18,8 @@ const mkPageElem = () => {
   let curCommandSubmitButton: HTMLButtonElement;
   let curTextArea: HTMLTextAreaElement;
 
+  let dropdownMenu: HTMLDivElement;
+
   const page = div([
     h2([
       text('Plain Text Editor')
@@ -25,12 +27,15 @@ const mkPageElem = () => {
     p([text('Edit plain-text with our advanced web tool. Enter your text below and select a tool to apply.')]),
     div([
       div({ style: "margin-bottom: 1rem;" }, [
-        div({ style: 'margin-bottom: 1rem;' }, [
-          span({ style: 'margin-right: 1rem;' }, [
-            label({ for: 'file', class: 'button' }, [ text('Load File') ]),
-            fileInput({ id: 'file', onChange: onFileChange, style: 'display: none;' })
-          ]),
-          button({ onClick: saveToFile }, [ text('Save File') ])
+        div({ style: 'position: relative' }, [
+          button({ onClick: toggleFileMenu }, [ span([ text('File '), i({ class: 'bi bi-chevron-down' }) ]) ]),
+          (dropdownMenu = div({ class: 'dropdown-menu hidden' }, [
+            ul([
+              li({ onClick: () => onFileMenuOptionClick(newFile) }, [ text('New') ]),
+              li({ onClick: () => onFileMenuOptionClick(openFile) }, [ text('Open') ]),
+              li({ onClick: () => onFileMenuOptionClick(saveToFile) }, [ text('Save As') ]),
+            ])
+          ]))
         ]),
         text('Select a tool: '),
         select({ value: '', onChange: onCommandChange }, [
@@ -51,6 +56,31 @@ const mkPageElem = () => {
     file.text()
       .then(contents => curTextArea.value = contents)
       .catch(err => alert(`Error reading file: ${err}`));
+  }
+
+  function toggleFileMenu() {
+    dropdownMenu.classList.toggle('hidden');
+  }
+
+  function onFileMenuOptionClick(fn: () => void) {
+    dropdownMenu.classList.add('hidden');
+    fn();
+  }
+
+  function newFile() {
+    curTextArea.value = '';
+  }
+
+  function openFile() {
+    openFilePicker()
+      .then(file => {
+        if (file) {
+          file.text()
+            .then(contents => curTextArea.value = contents)
+            .catch(err => alert(`Error reading file: ${err}`));
+        }
+      })
+      .catch(err => alert(`Error opening file: ${err}`));
   }
 
   function saveToFile() {
