@@ -129,7 +129,24 @@ export const checkbox = (propsOrChildren?: CheckboxProps | Node[], children?: No
 
   return _elem;
 }
-export const label = (propsOrChildren?: NodeProps | Node[], children?: Node[]) => elem('label', propsOrChildren, children);
+
+interface LabelProps extends NodeProps {
+  for?: string;
+}
+
+export const label = (propsOrChildren?: LabelProps | Node[], children?: Node[]) => {
+  const _elem = elem('label', propsOrChildren, children);
+
+  if (!Array.isArray(propsOrChildren) && (propsOrChildren !== undefined)) {
+    const props = propsOrChildren
+
+    if (props.for) {
+      _elem.setAttribute('for', props.for);
+    }
+  }
+
+  return _elem;
+}
 
 interface ImgProps extends NodeProps {
   src?: string;
@@ -212,6 +229,29 @@ export const textInput = (propsOrChildren?: TextInputProps | Node[], children?: 
 
     if (props.onInput) {
       _elem.addEventListener('input', e => props.onInput!(e));
+    }
+  }
+
+  return _elem;
+}
+
+interface FileInputProps extends NodeProps {
+  accept?: string;
+  onChange?: (e: Event) => void;
+}
+
+export const fileInput = (propsOrChildren?: FileInputProps | Node[], children?: Node[]) => {
+  const _elem = elem('input', { ...propsOrChildren, type: 'file' }, children);
+
+  if (!Array.isArray(propsOrChildren) && (propsOrChildren !== undefined)) {
+    const props = propsOrChildren
+
+    if (props.accept) {
+      _elem.setAttribute('accept', props.accept);
+    }
+
+    if (props.onChange) {
+      _elem.addEventListener('change', e => props.onChange!(e));
     }
   }
 

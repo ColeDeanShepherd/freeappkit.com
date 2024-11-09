@@ -81,3 +81,26 @@ export function shuffleArray<T>(array: T[]) {
 export function shuffleLines(text: string) {
   return shuffleArray(lines(text)).join('\n');
 }
+
+export function saveStringToFile(content: string, filename = 'download.txt', mimeType = 'text/plain') {
+  // Create a Blob containing the string data
+  const blob = new Blob([content], { type: mimeType });
+  
+  // Create a temporary URL for the Blob
+  const url = window.URL.createObjectURL(blob);
+  
+  // Create a temporary anchor element
+  const link = document.createElement('a');
+  link.href = url;
+  link.download = filename;
+  
+  // Append link to body (required for Firefox)
+  document.body.appendChild(link);
+  
+  // Programmatically click the link to trigger the download
+  link.click();
+  
+  // Clean up by removing the link and revoking the URL
+  document.body.removeChild(link);
+  window.URL.revokeObjectURL(url);
+}
