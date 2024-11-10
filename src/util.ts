@@ -9,6 +9,11 @@ export function getFreeAppKitApexHost() {
     ? `localhost:${window.location.port}` : 'freeappkit.com';
 }
 
+export function getFreeAppKitApexHostname() {
+  return isDevEnv()
+    ? `localhost` : 'freeappkit.com';
+}
+
 export async function waitMs(delayMs: number) {
   return new Promise(resolve => setTimeout(resolve, delayMs));
 }
@@ -143,7 +148,8 @@ export function except<T>(array: T[], valuesToExclude: T[]): T[] {
 }
 
 export function getSubdomain(): string | undefined {
-  let subdomain = window.location.hostname.replace(`${getFreeAppKitApexHost()}`, '');
+  const apexHost = getFreeAppKitApexHostname();
+  let subdomain = window.location.hostname.replace(`${apexHost}`, '');
   subdomain = subdomain.replace(/\.$/, '');
   return (subdomain.length >= 1) ? subdomain : undefined;
 }
