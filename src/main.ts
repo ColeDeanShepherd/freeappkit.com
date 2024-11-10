@@ -59,12 +59,15 @@ function renderPageTemplate() {
     const [route, _] = findRouteAndLocale(pathname);
     const localizedPathname = toLocalizedString(route.pathname) as any;
 
+    console.log('1', newLocale, pathname, route, localizedPathname);
+
     if (localizedPathname[newLocale] !== undefined) {
       const newUrl = getUrlWithNewSubdomain(new URL(window.location.href), undefined);
       newUrl.pathname = localizedPathname[newLocale];
-      window.location.href = newUrl.href;
+      console.log('2', newUrl.href);
+      //window.location.href = newUrl.href;
     } else {
-      changeSubdomain(newLocale);
+      //changeSubdomain(newLocale);
     }
   }
 
