@@ -1,4 +1,5 @@
-import { mkPlainTextEditorView } from './plain-text-editor';
+import { MaybeLocalizedString, translate } from './localization';
+import { Route } from './router';
 import { copyToClipboardButton } from './ui-components';
 import { text, h1, h2, h3, h4, div, p, ul, li, a, textArea, button, i, span, checkbox, label, textInput } from './ui-core';
 
@@ -17,7 +18,8 @@ interface NumberType {
 export type IType = BoolType | TextType | NumberType;
 
 export interface ICommand {
-  name: string;
+  name: MaybeLocalizedString;
+  pathname?: MaybeLocalizedString;
   description: string;
   parameters: ICommandParameter[];
   returnType: IType;
@@ -163,10 +165,14 @@ export const mkCommandView = (command: ICommand) => {
 }
 
 export const getCommandPathName = (command: ICommand) => {
-  return '/' + command.name.toLowerCase().replace(/ /g, '-');
+  if (command.pathname) {
+    return command.pathname;
+  } else {
+    return '/' + translate(command.name).toLowerCase().replace(/ /g, '-');
+  }
 }
 
-export const mkRouteFromCommand = (command: ICommand) => {
+export const mkRouteFromCommand = (command: ICommand): Route => {
   return {
     pathname: getCommandPathName(command),
     title: command.name,

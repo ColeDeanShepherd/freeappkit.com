@@ -75,7 +75,8 @@ export const convertToLowerCaseCommand: ICommand = {
 };
 
 export const convertToUpperCaseCommand: ICommand = {
-  name: translate(strings.convertToUpperCase),
+  name: strings.convertToUpperCase,
+  pathname: strings.convertToUpperCasePath,
   description: "Convert text to uppercase with this free online uppercase converter. Simply paste your text into the 1st box below and click the \"Convert to uppercase\" button.",
   parameters: [
     {

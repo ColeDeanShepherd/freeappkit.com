@@ -23,7 +23,7 @@ export const mkPlainTextEditorCommandView = (command: ICommand) => {
   return page;
 };
 
-export const mkRouteFromPlainTextEditorCommand = (command: ICommand) => {
+export const mkRouteFromPlainTextEditorCommand = (command: ICommand): Route => {
   return {
     pathname: getCommandPathName(command),
     title: command.name,

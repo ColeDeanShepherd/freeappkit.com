@@ -1,6 +1,7 @@
+import { MaybeLocalizedString } from "./localization";
 
 export interface Route {
-  pathname: string;
-  title: string | undefined;
+  pathname: MaybeLocalizedString;
+  title: MaybeLocalizedString | undefined;
   mkPageElem: () => Node;
 }

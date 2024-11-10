@@ -9,6 +9,7 @@ import './style.css'
 import { mkRouteFromCommand } from './command';
 import { commands } from './commands';
 import { gtag, initGoogleAnalytics } from './analytics';
+import { MaybeLocalizedString, translate } from './localization';
 
 const appElem = document.getElementById('app')!;
 
@@ -27,7 +28,7 @@ appElem.append(
         ])
       ]),
       div({ class: 'support-us-container' }, [
-        select({ style: "margin-bottom: 1rem;" }, [
+        select({ style: "display: none; margin-bottom: 1rem;" }, [
           option({ value: 'en' }, [text('English')]),
           option({ value: 'es' }, [text('Español')]),
         ]),
@@ -78,14 +79,26 @@ const notFoundRoute: Route = {
   mkPageElem: mkNotFoundPage,
 };
 
+function equalsAnyTranslation(a: string, b: MaybeLocalizedString): boolean {
+  if (typeof b === 'string') {
+    return a === b;
+  } else {
+    return Object.values(b).some(v => a === v);
+  }
+}
 
-
-function changeRoute(pathname: string) {
-  let route = routes.find(route => route.pathname === pathname);
+function findRoute(pathname: string): Route {
+  let route = routes.find(route => equalsAnyTranslation(pathname, route.pathname));
   if (route === undefined) { route = notFoundRoute; }
 
+  return route;
+}
+
+function changeRoute(pathname: string) {
+  let route = findRoute(pathname);
+
   document.title = (route.title !== undefined)
-    ? `${route.title} - Free App Kit`
+    ? `${translate(route.title)} - Free App Kit`
     : 'Free App Kit';
 
   // Send page view to Google Analytics now that the page title is set.
