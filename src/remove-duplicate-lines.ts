@@ -2,6 +2,7 @@ import { text, h1, h2, h3, h4, div, p, ul, li, a, textArea, button, i, span } fr
 import { Route } from './router';
 import { detectAndRemoveDuplicateLines, removeDuplicateLines } from './util';
 import { copyToClipboardButton } from './ui-components';
+import { strings } from './strings';
 
 const mkRemoveDuplicateLinesPage = () => {
   let inputElem: HTMLTextAreaElement;
@@ -12,7 +13,7 @@ const mkRemoveDuplicateLinesPage = () => {
     h2([
       text('Remove Duplicate Lines')
     ]),
-    p([text('Delete duplicate lines with this free online tool. Simply paste your text/list into the 1st box below and click the "Remove Duplicate Lines" button, then copy the de-duplicated lines from the 2nd box. The duplicate lines that were detected are also displayed in the 3rd box below.')]),
+    p([text(strings.removeDuplicateLinesDescription)]),
     div([
       h3([text('Paste your text below')]),
       (inputElem = textArea({ style: 'min-height: 300px' })),

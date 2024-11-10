@@ -169,7 +169,7 @@ export const img = (propsOrChildren?: ImgProps | Node[], children?: Node[]) => {
     }
 
     if (props.alt) {
-      _elem.setAttribute('alt', props.alt);
+      _elem.setAttribute('alt', translate(props.alt));
     }
   }
 

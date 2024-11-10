@@ -35,7 +35,7 @@ export const mkRouteFromPlainTextEditorCommand = (command: ICommand): Route => {
 export const mkPageElem = () => {
   const page = div([
     h2([
-      text('Plain Text Editor')
+      text('Plain-Text Editor')
     ]),
     p([text('Edit plain-text with our advanced web tool. Enter your text below and select a tool to apply.')]),
     mkPlainTextEditorView()
@@ -165,6 +165,6 @@ export const mkPlainTextEditorView = (preSelectedCommand: ICommand | undefined =
 
 export const route: Route = {
   pathname: '/plain-text-editor',
-  title: 'Plain Text Editor',
+  title: 'Plain-Text Editor',
   mkPageElem: mkPageElem,
 };

@@ -4,7 +4,7 @@ import { strings } from './strings';
 
 export const randomizeLinesCommand: ICommand = {
   name: "Randomize Lines",
-  description: "Randomize/shuffle lines of text with this free online tool. Simply paste your text/list into the 1st box below and click the \"Randomize\" button, then copy the randomized lines from the 2nd box below.",
+  description: strings.randomizeLinesDescription,
   parameters: [
     {
       name: "text",
@@ -18,7 +18,7 @@ export const randomizeLinesCommand: ICommand = {
 
 export const removeEmptyLinesCommand: ICommand = {
   name: "Remove Empty Lines",
-  description: "Remove empty/blank lines of text with this free online tool. Simply paste your text/list into the 1st box below and click the \"Remove empty lines\" button.",
+  description: strings.removeEmptyLinesDescription,
   parameters: [
     {
       name: "text",
@@ -37,7 +37,7 @@ export const removeEmptyLinesCommand: ICommand = {
 
 export const sortLinesCommand: ICommand = {
   name: "Sort Lines",
-  description: "Sort lines of text with this free online tool. Simply paste your text/list into the 1st box below, configure the tool using the checkboxes, click the \"Sort\" button.",
+  description: strings.sortLinesDescription,
   parameters: [
     {
       name: "text",
@@ -62,7 +62,7 @@ export const sortLinesCommand: ICommand = {
 
 export const convertToLowerCaseCommand: ICommand = {
   name: "Convert to Lowercase",
-  description: "Convert text to lowercase with this free online lowercase converter. Simply paste your text into the 1st box below and click the \"Convert to lowercase\" button.",
+  description: strings.convertToLowerCaseDescription,
   parameters: [
     {
       name: "text",
@@ -91,7 +91,7 @@ export const convertToUpperCaseCommand: ICommand = {
 
 export const base64EncodeCommand: ICommand = {
   name: "Base64 Encode",
-  description: "Base64 encode text with this free online tool. Simply paste your text into the 1st box below and click the \"Base64 Encode\" button.",
+  description: strings.base64EncodeDescription,
   parameters: [
     {
       name: "text",
@@ -105,7 +105,7 @@ export const base64EncodeCommand: ICommand = {
 
 export const base64DecodeCommand: ICommand = {
   name: "Base64 Decode",
-  description: "Base64 decode text with this free online tool. Simply paste your text into the 1st box below and click the \"Base64 Decode\" button.",
+  description: strings.base64DecodeDescription,
   parameters: [
     {
       name: "text",
@@ -119,7 +119,7 @@ export const base64DecodeCommand: ICommand = {
 
 export const countCharactersCommand: ICommand = {
   name: "Count Characters",
-  description: "Count characters with this free online tool. Simply paste your text into the 1st box below and click the \"Count Characters\" button.",
+  description: strings.countCharactersDescription,
   parameters: [
     {
       name: "text",
@@ -133,7 +133,7 @@ export const countCharactersCommand: ICommand = {
 
 export const countWordsCommand: ICommand = {
   name: "Count Words",
-  description: "Count words with this free online tool. Simply paste your text into the 1st box below and click the \"Count Words\" button.",
+  description: strings.countWordsDescription,
   parameters: [
     {
       name: "text",
@@ -147,7 +147,7 @@ export const countWordsCommand: ICommand = {
 
 export const countLinesCommand: ICommand = {
   name: "Count Lines",
-  description: "Count lines with this free online tool. Simply paste your text into the 1st box below and click the \"Count Lines\" button.",
+  description: strings.countLinesDescription,
   parameters: [
     {
       name: "text",
@@ -161,7 +161,7 @@ export const countLinesCommand: ICommand = {
 
 export const countSentencesCommand: ICommand = {
   name: "Count Sentences",
-  description: "Count sentences with this free online tool. Simply paste your text into the 1st box below and click the \"Count Sentences\" button.",
+  description: strings.countSentencesDescription,
   parameters: [
     {
       name: "text",
@@ -175,7 +175,7 @@ export const countSentencesCommand: ICommand = {
 
 export const urlEncodeCommand: ICommand = {
   name: "URL Encode",
-  description: "URL encode text with this free online tool. Simply paste your text into the 1st box below and click the \"URL Encode\" button.",
+  description: strings.urlEncodeDescription,
   parameters: [
     {
       name: "text",
@@ -189,7 +189,7 @@ export const urlEncodeCommand: ICommand = {
 
 export const urlDecodeCommand: ICommand = {
   name: "URL Decode",
-  description: "URL decode text with this free online tool. Simply paste your text into the 1st box below and click the \"URL Decode\" button.",
+  description: strings.urlDecodeDescription,
   parameters: [
     {
       name: "text",
@@ -203,7 +203,7 @@ export const urlDecodeCommand: ICommand = {
 
 export const addToEndOfEachLineCommand: ICommand = {
   name: "Add to End of Each Line",
-  description: "Add text to the end of each line with this free online tool. Simply paste your text into the 1st box below, type the text you want to add into the 2nd box below, click the \"Add to End of Each Line\" button, then copy the output from the 3rd box below.",
+  description: strings.addToEndOfEachLineDescription,
   parameters: [
     {
       name: "text",
