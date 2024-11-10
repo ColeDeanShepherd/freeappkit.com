@@ -9,7 +9,7 @@ import './style.css'
 import { mkRouteFromCommand } from './command';
 import { commands } from './commands';
 import { gtag, initGoogleAnalytics } from './analytics';
-import { getFirstSupportedPreferredLanguage, getLanguage, MaybeLocalizedString, setLanguage as setLocale, setStrings, toLocalizedString, translate } from './localization';
+import { getFirstSupportedPreferredLanguage, getLanguage, MaybeLocalizedString, setLanguage, setStrings, toLocalizedString, translate } from './localization';
 import { strings } from './strings';
 
 const appElem = document.getElementById('app')!;
@@ -59,15 +59,12 @@ function renderPageTemplate() {
     const [route, _] = findRouteAndLocale(pathname);
     const localizedPathname = toLocalizedString(route.pathname) as any;
 
-    console.log('1', newLocale, pathname, route, localizedPathname);
-
     if (localizedPathname[newLocale] !== undefined) {
       const newUrl = getUrlWithNewSubdomain(new URL(window.location.href), undefined);
       newUrl.pathname = localizedPathname[newLocale];
-      console.log('2', newUrl.href);
-      //window.location.href = newUrl.href;
+      window.location.href = newUrl.href;
     } else {
-      //changeSubdomain(newLocale);
+      changeSubdomain(newLocale);
     }
   }
 
@@ -171,7 +168,7 @@ function changeRoute(pathname: string) {
   let [route, localeFromRoute] = findRouteAndLocale(pathname);
 
   const locale = selectLocale(localeFromRoute);
-  setLocale(locale);
+  setLanguage(locale);
   
   renderPageTemplate();
 

@@ -143,8 +143,9 @@ export function except<T>(array: T[], valuesToExclude: T[]): T[] {
 }
 
 export function getSubdomain(): string | undefined {
-  const splitHostname = window.location.hostname.split('.');
-  return splitHostname.length > 1 ? splitHostname[0] : undefined;
+  let subdomain = window.location.hostname.replace(`${getFreeAppKitApexHost()}`, '');
+  subdomain = subdomain.replace(/\.$/, '');
+  return (subdomain.length >= 1) ? subdomain : undefined;
 }
 
 export function getUrlWithNewSubdomain(url: URL, newSubdomain: string | undefined) {
