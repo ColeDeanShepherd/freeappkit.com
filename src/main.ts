@@ -9,7 +9,8 @@ import './style.css'
 import { mkRouteFromCommand } from './command';
 import { commands } from './commands';
 import { gtag, initGoogleAnalytics } from './analytics';
-import { MaybeLocalizedString, setLanguage as setLocale, toLocalizedString, translate } from './localization';
+import { MaybeLocalizedString, setLanguage as setLocale, setStrings, toLocalizedString, translate } from './localization';
+import { strings } from './strings';
 
 const appElem = document.getElementById('app')!;
 let routeContainerElem: HTMLElement;
@@ -22,11 +23,11 @@ function renderPageTemplate() {
           h1({ class: 'logo' }, [
             a({ href: '/' }, [
               img({ src: 'favicon.svg', alt: 'Free App Kit' }),
-              text('Free App Kit')
+              text('freeappkit.com', /* disableTranslation: */ true)
             ])
           ]),
           h2({ class: 'tag-line' }, [
-            text('Free web applications!')
+            text(strings.freeWebApplications)
           ])
         ]),
         div({ class: 'support-us-container' }, [
@@ -110,6 +111,7 @@ function findRouteAndLocale(pathname: string): [Route, string] {
 function changeRoute(pathname: string) {
   let [route, locale] = findRouteAndLocale(pathname);
 
+  setStrings(strings);
   setLocale(locale);
   
   renderPageTemplate();

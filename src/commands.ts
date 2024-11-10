@@ -145,6 +145,20 @@ export const countWordsCommand: ICommand = {
   runFn: (args) => args['text'].split(/\s+/).length.toString(),
 };
 
+export const countLinesCommand: ICommand = {
+  name: "Count Lines",
+  description: "Count lines with this free online tool. Simply paste your text into the 1st box below and click the \"Count Lines\" button.",
+  parameters: [
+    {
+      name: "text",
+      type: { kind: 'text' },
+      description: "Paste your text below"
+    }
+  ],
+  returnType: { kind: 'number' },
+  runFn: (args) => args['text'].split('\n').length.toString(),
+};
+
 export const countSentencesCommand: ICommand = {
   name: "Count Sentences",
   description: "Count sentences with this free online tool. Simply paste your text into the 1st box below and click the \"Count Sentences\" button.",
@@ -216,6 +230,7 @@ export const commands = [
   base64DecodeCommand,
   countCharactersCommand,
   countWordsCommand,
+  countLinesCommand,
   countSentencesCommand,
   urlEncodeCommand,
   urlDecodeCommand,

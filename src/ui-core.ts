@@ -43,7 +43,10 @@ export function elem<K extends keyof HTMLElementTagNameMap>(tagName: K, propsOrC
 
   return elem;
 }
-export const text = (_text: MaybeLocalizedString) => document.createTextNode(translate(_text));
+export const text = (_text: MaybeLocalizedString, disableTranslation = false) =>
+  document.createTextNode(
+    (disableTranslation && typeof _text === 'string') ? _text : translate(_text)
+  );
 export const h1 = (propsOrChildren?: NodeProps | Node[], children?: Node[]) => elem('h1', propsOrChildren, children);
 export const h2 = (propsOrChildren?: NodeProps | Node[], children?: Node[]) => elem('h2', propsOrChildren, children);
 export const h3 = (propsOrChildren?: NodeProps | Node[], children?: Node[]) => elem('h3', propsOrChildren, children);

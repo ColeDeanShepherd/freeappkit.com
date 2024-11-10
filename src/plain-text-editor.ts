@@ -4,6 +4,7 @@ import { commands } from './commands';
 import { commandArgsView, getCommandPathName, ICommand, mkDefaultArgs } from './command';
 import { openFilePicker, saveStringToFile } from './util';
 import { copyToClipboardButton } from './ui-components';
+import { strings } from './strings';
 
 export const plainTextEditorCommands = commands.filter(c =>
   c.parameters.length >= 1 &&
@@ -57,7 +58,7 @@ export const mkPlainTextEditorView = (preSelectedCommand: ICommand | undefined =
     div({ style: "margin-bottom: 1rem;" }, [
       div({ class: 'toolbar' }, [
         div({ style: 'position: relative' }, [
-          button({ onClick: toggleFileMenu }, [ span([ text('File '), i({ class: 'bi bi-chevron-down' }) ]) ]),
+          button({ onClick: toggleFileMenu }, [ span([ text(strings.fileNoun), text(' '), i({ class: 'bi bi-chevron-down' }) ]) ]),
           (fileDropdownMenu = div({ class: 'dropdown-menu hidden' }, [
             ul([
               li({ onClick: () => onFileMenuOptionClick(newFile) }, [ text('New') ]),
@@ -67,7 +68,7 @@ export const mkPlainTextEditorView = (preSelectedCommand: ICommand | undefined =
           ]))
         ]),
         div({ style: 'position: relative' }, [
-          button({ onClick: toggleEditMenu }, [ span([ text('Tools '), i({ class: 'bi bi-chevron-down' }) ]) ]),
+          button({ onClick: toggleEditMenu }, [ span([ text('Tools'), text(' '), i({ class: 'bi bi-chevron-down' }) ]) ]),
           (editDropdownMenu = div({ class: 'dropdown-menu hidden' }, [
             ul([
               ...plainTextEditorCommands.map(c =>
