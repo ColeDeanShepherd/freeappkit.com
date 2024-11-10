@@ -9,7 +9,7 @@ import './style.css'
 import { mkRouteFromCommand } from './command';
 import { commands } from './commands';
 import { gtag, initGoogleAnalytics } from './analytics';
-import { MaybeLocalizedString, setLanguage as setLocale, setStrings, toLocalizedString, translate } from './localization';
+import { getLanguage, MaybeLocalizedString, setLanguage as setLocale, setStrings, toLocalizedString, translate } from './localization';
 import { strings } from './strings';
 
 const appElem = document.getElementById('app')!;
@@ -31,7 +31,7 @@ function renderPageTemplate() {
           ])
         ]),
         div({ class: 'support-us-container' }, [
-          select({ style: "display: none; margin-bottom: 1rem;" }, [
+          select({ value: getLanguage(), onChange: changeLocale, style: "margin-bottom: 1rem;" }, [
             option({ value: 'en' }, [text('English')]),
             option({ value: 'es' }, [text('Español')]),
           ]),
@@ -47,6 +47,27 @@ function renderPageTemplate() {
       ])
     ])
   );
+
+  function changeLocale(e: Event) {
+    const selectElem = e.target as HTMLSelectElement;
+    const newLocale = selectElem.value;
+    const pathname = window.location.pathname;
+    const [route, _] = findRouteAndLocale(pathname);
+    const localizedPathname = toLocalizedString(route.pathname) as any;
+    if (localizedPathname[newLocale] !== undefined) {
+      window.location.pathname = localizedPathname[newLocale];
+    }
+  }
+
+  // HACK: find child select elements of appElem, and re-set their values to get the right option to be selected
+  const selectElems = appElem.querySelectorAll('select');
+  selectElems.forEach(selectElem => {
+    const valueAttr = selectElem.getAttribute('value');
+
+    if (valueAttr !== null) {
+      selectElem.value = valueAttr;
+    }
+  });
 }
 
 

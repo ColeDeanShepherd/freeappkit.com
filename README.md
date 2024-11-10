@@ -1,6 +1,7 @@
 # FreeAppKit
 
+## To-Do
+* Translate alt-text
+
 ## Ideas
-* MIDI keyboard player
 * Tweetify (AI summary tweet length)
-* Multiple languages

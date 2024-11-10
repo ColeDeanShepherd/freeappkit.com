@@ -11,6 +11,10 @@ export function setLanguage(lang: string) {
   language = lang;
 }
 
+export function getLanguage(): string {
+  return language;
+}
+
 let strings: { [key: string]: LocalizedString } = {};
 let localizedStringsByEnglishString: { [key: string]: LocalizedString } = {};
 
