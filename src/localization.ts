@@ -6,6 +6,10 @@ export interface LocalizedString {
 export type MaybeLocalizedString = string | LocalizedString;
 
 export const supportedLanguages = ['en', 'es'];
+export const languageCodeToName: { [key: string]: string } = {
+  'en': 'English',
+  'es': 'Español'
+};
 
 export function getFirstSupportedPreferredLanguage(): string {
   const preferredLanguages = navigator.languages;

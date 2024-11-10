@@ -5,7 +5,7 @@ import { removeDuplicateLinesRoute } from './remove-duplicate-lines';
 import { commands } from './commands';
 import { mkRouteFromCommand } from './command';
 import * as plainTextEditor from './plain-text-editor';
-import { getSubdomainForLocale, supportedLanguages, translate } from './localization';
+import { getSubdomainForLocale, languageCodeToName, supportedLanguages, translate } from './localization';
 
 export const copyToClipboardButton = (getTextContainerElem: () => HTMLTextAreaElement) => {
   let successTextElem: HTMLSpanElement;
@@ -57,7 +57,7 @@ export const languageList = () => {
       const url = (subdomain === undefined) ? `${protocol}//${domainName}` : `${protocol}//${subdomain}.${domainName}`;
 
       return li([
-        a({ href: url }, [text(lang)])
+        a({ href: url }, [text(languageCodeToName[lang])])
       ]);
     })
   ]);
