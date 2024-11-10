@@ -3,13 +3,13 @@ import { Route } from './router';
 import { removeDuplicateLinesRoute, removeDuplicateLinesRoute2 } from './remove-duplicate-lines';
 import * as plainTextEditor from './plain-text-editor';
 import { appList } from './ui-components';
-import { except, isDevEnv } from './util';
+import { changeSubdomain, except, getSubdomain, getUrlWithNewSubdomain, isDevEnv } from './util';
 
 import './style.css'
 import { mkRouteFromCommand } from './command';
 import { commands } from './commands';
 import { gtag, initGoogleAnalytics } from './analytics';
-import { getLanguage, MaybeLocalizedString, setLanguage as setLocale, setStrings, toLocalizedString, translate } from './localization';
+import { getFirstSupportedPreferredLanguage, getLanguage, MaybeLocalizedString, setLanguage as setLocale, setStrings, toLocalizedString, translate } from './localization';
 import { strings } from './strings';
 
 const appElem = document.getElementById('app')!;
@@ -21,7 +21,7 @@ function renderPageTemplate() {
       div({ class: 'header' }, [
         div([
           h1({ class: 'logo' }, [
-            a({ href: translate(strings.localePathname) }, [
+            a({ href: '/' }, [
               img({ src: 'favicon.svg', alt: 'Free App Kit' }),
               text('freeappkit.com', /* disableTranslation: */ true)
             ])
@@ -54,8 +54,13 @@ function renderPageTemplate() {
     const pathname = window.location.pathname;
     const [route, _] = findRouteAndLocale(pathname);
     const localizedPathname = toLocalizedString(route.pathname) as any;
+
     if (localizedPathname[newLocale] !== undefined) {
-      window.location.pathname = localizedPathname[newLocale];
+      const newUrl = getUrlWithNewSubdomain(new URL(window.location.href), undefined);
+      newUrl.pathname = localizedPathname[newLocale];
+      window.location.href = newUrl.href;
+    } else {
+      changeSubdomain(newLocale);
     }
   }
 
@@ -90,11 +95,6 @@ const routes: Route[] = [
     title: undefined,
     mkPageElem: mkHomePage,
   },
-  {
-    pathname: strings.localePathname,
-    title: undefined,
-    mkPageElem: mkHomePage,
-  },
   
   removeDuplicateLinesRoute,
   removeDuplicateLinesRoute2,
@@ -109,15 +109,7 @@ const notFoundRoute: Route = {
   mkPageElem: mkNotFoundPage,
 };
 
-function equalsAnyTranslation(a: string, b: MaybeLocalizedString): boolean {
-  if (typeof b === 'string') {
-    return a === b;
-  } else {
-    return Object.values(b).some(v => a === v);
-  }
-}
-
-function findRouteAndLocale(pathname: string): [Route, string] {
+function findRouteAndLocale(pathname: string): [Route, string | undefined] {
   const pathnamesToRouteAndLocales: { [pathname: string]: [Route, string] } = {};
   
   for (const route of routes) {
@@ -129,15 +121,36 @@ function findRouteAndLocale(pathname: string): [Route, string] {
   }
 
   if (pathnamesToRouteAndLocales[pathname] !== undefined) {
-    return pathnamesToRouteAndLocales[pathname];
+    const routeAndLocale = pathnamesToRouteAndLocales[pathname];
+    const route = routeAndLocale[0];
+    
+    if (pathname === '/') {
+      return [route, undefined];
+    } else {
+      return routeAndLocale;
+    }
   } else {
-    return [notFoundRoute, 'en'];
+    return [notFoundRoute, undefined];
   }
 }
 
-function changeRoute(pathname: string) {
-  let [route, locale] = findRouteAndLocale(pathname);
+function selectLocale(localeFromRoute: string | undefined) {
+  const subdomain = getSubdomain();
+  if ((subdomain !== undefined) && (subdomain !== 'www')) {
+    return subdomain;
+  }
+  
+  if (localeFromRoute !== undefined) {
+    return localeFromRoute;
+  }
 
+  return getFirstSupportedPreferredLanguage();
+}
+
+function changeRoute(pathname: string) {
+  let [route, localeFromRoute] = findRouteAndLocale(pathname);
+
+  const locale = selectLocale(localeFromRoute);
   setStrings(strings);
   setLocale(locale);
   

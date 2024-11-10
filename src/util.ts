@@ -1,3 +1,5 @@
+import { get } from "http";
+
 export function isDevEnv() {
   return process.env.NODE_ENV === 'development';
 }
@@ -133,4 +135,32 @@ export function openFilePicker(): Promise<File | null> {
 
 export function except<T>(array: T[], valuesToExclude: T[]): T[] {
   return array.filter(item => !valuesToExclude.includes(item));
+}
+
+export function getSubdomain(): string | undefined {
+  const splitHostname = window.location.hostname.split('.');
+  return splitHostname.length > 1 ? splitHostname[0] : undefined;
+}
+
+export function getUrlWithNewSubdomain(url: URL, newSubdomain: string | undefined) {
+  const hostnameParts = url.hostname.split('.');
+
+  if (hostnameParts.length > 1) {
+    if (newSubdomain === undefined) {
+      hostnameParts.shift();
+    } else {
+      hostnameParts[0] = newSubdomain;
+    }
+  } else if (newSubdomain !== undefined) {
+    hostnameParts.unshift(newSubdomain);
+  }
+
+  const newUrl = new URL(url.href);
+  newUrl.hostname = hostnameParts.join('.');
+  return newUrl;
+}
+
+export function changeSubdomain(newSubdomain: string | undefined) {
+  const newUrl = getUrlWithNewSubdomain(new URL(window.location.href), newSubdomain);
+  window.location.href = newUrl.href;
 }

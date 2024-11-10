@@ -5,6 +5,20 @@ export interface LocalizedString {
 
 export type MaybeLocalizedString = string | LocalizedString;
 
+const supportedLanguages = ['en', 'es'];
+
+export function getFirstSupportedPreferredLanguage(): string {
+  const preferredLanguages = navigator.languages;
+
+  for (const preferredLanguage of preferredLanguages) {
+    if (supportedLanguages.includes(preferredLanguage)) {
+      return preferredLanguage;
+    }
+  }
+
+  return 'en';
+}
+
 let language = 'en';
 
 export function setLanguage(lang: string) {

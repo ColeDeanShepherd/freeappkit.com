@@ -1,9 +1,4 @@
 export const strings = {
-  localePathname: {
-    en: "/",
-    es: "/es",
-  },
-
   freeAppKit: {
     en: "Free App Kit",
     es: "Kit de Aplicación Gratuita",
@@ -20,6 +15,11 @@ export const strings = {
   ourApps: {
     en: "Our apps:",
     es: "Nuestras aplicaciones:",
+  },
+
+  pageNotFound: {
+    en: "Page not found!",
+    es: "¡Página no encontrada!",
   },
 
   fileNoun: {
