@@ -21,7 +21,7 @@ function renderPageTemplate() {
       div({ class: 'header' }, [
         div([
           h1({ class: 'logo' }, [
-            a({ href: '/' }, [
+            a({ href: translate(strings.localePathname) }, [
               img({ src: 'favicon.svg', alt: 'Free App Kit' }),
               text('freeappkit.com', /* disableTranslation: */ true)
             ])
@@ -69,6 +69,12 @@ const routes: Route[] = [
     title: undefined,
     mkPageElem: mkHomePage,
   },
+  {
+    pathname: strings.localePathname,
+    title: undefined,
+    mkPageElem: mkHomePage,
+  },
+  
   removeDuplicateLinesRoute,
   removeDuplicateLinesRoute2,
   plainTextEditor.route,

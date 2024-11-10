@@ -1,7 +1,9 @@
-import { base64DecodeCommand, countSentencesCommand } from "./commands";
-import { removeDuplicateLines, removeEmptyLines, sortLines } from "./util";
-
 export const strings = {
+  localePathname: {
+    en: "/",
+    es: "/es",
+  },
+
   freeAppKit: {
     en: "Free App Kit",
     es: "Kit de Aplicación Gratuita",
