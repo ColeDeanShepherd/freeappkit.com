@@ -164,3 +164,12 @@ export function changeSubdomain(newSubdomain: string | undefined) {
   const newUrl = getUrlWithNewSubdomain(new URL(window.location.href), newSubdomain);
   window.location.href = newUrl.href;
 }
+
+export const getDomainNameWithoutSubdomains = () => {
+  const hostParts = window.location.host.split('.');
+  return arrayLast(hostParts);
+};
+
+export function arrayLast<T>(arr: T[]) {
+  return arr[arr.length - 1];
+}

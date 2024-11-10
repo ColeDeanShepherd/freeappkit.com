@@ -2,7 +2,7 @@ import { text, h1, h2, h3, h4, div, p, ul, li, a, textArea, button, img, select,
 import { Route } from './router';
 import { removeDuplicateLinesRoute, removeDuplicateLinesRoute2 } from './remove-duplicate-lines';
 import * as plainTextEditor from './plain-text-editor';
-import { appList } from './ui-components';
+import { appList, languageList } from './ui-components';
 import { changeSubdomain, except, getSubdomain, getUrlWithNewSubdomain, isDevEnv } from './util';
 
 import './style.css'
@@ -44,6 +44,10 @@ function renderPageTemplate() {
       div([
         p([text('Our apps:')]),
         appList()
+      ]),
+      div([
+        p([text('Supported languages:')]),
+        languageList()
       ])
     ])
   );

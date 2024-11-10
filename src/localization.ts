@@ -5,7 +5,7 @@ export interface LocalizedString {
 
 export type MaybeLocalizedString = string | LocalizedString;
 
-const supportedLanguages = ['en', 'es'];
+export const supportedLanguages = ['en', 'es'];
 
 export function getFirstSupportedPreferredLanguage(): string {
   const preferredLanguages = navigator.languages;
@@ -62,5 +62,13 @@ export function toLocalizedString(str: MaybeLocalizedString): LocalizedString {
     }
   } else {
     return str;
+  }
+}
+
+export function getSubdomainForLocale(locale: string) {
+  if (locale === 'en') {
+    return undefined;
+  } else {
+    return locale;
   }
 }

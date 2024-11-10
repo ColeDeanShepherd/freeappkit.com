@@ -1,11 +1,11 @@
 import { text, button, i, span, ul, li, a } from './ui-core';
 import "bootstrap-icons/font/bootstrap-icons.css";
-import { waitMs } from './util';
+import { getDomainNameWithoutSubdomains, waitMs } from './util';
 import { removeDuplicateLinesRoute } from './remove-duplicate-lines';
 import { commands } from './commands';
 import { mkRouteFromCommand } from './command';
 import * as plainTextEditor from './plain-text-editor';
-import { translate } from './localization';
+import { getSubdomainForLocale, supportedLanguages, translate } from './localization';
 
 export const copyToClipboardButton = (getTextContainerElem: () => HTMLTextAreaElement) => {
   let successTextElem: HTMLSpanElement;
@@ -46,3 +46,19 @@ export const appList = () =>
       a({ href: translate(mkRouteFromCommand(c).pathname) }, [text(c.name)])
     ]))
   ]);
+
+export const languageList = () => {
+  const domainName = getDomainNameWithoutSubdomains();
+  const protocol = window.location.protocol;
+
+  return ul([
+    ...supportedLanguages.map(lang => {
+      const subdomain = getSubdomainForLocale(lang);
+      const url = (subdomain === undefined) ? `${protocol}//${domainName}` : `${protocol}//${subdomain}.${domainName}`;
+
+      return li([
+        a({ href: url }, [text(lang)])
+      ]);
+    })
+  ]);
+}
