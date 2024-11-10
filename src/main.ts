@@ -9,43 +9,45 @@ import './style.css'
 import { mkRouteFromCommand } from './command';
 import { commands } from './commands';
 import { gtag, initGoogleAnalytics } from './analytics';
-import { MaybeLocalizedString, translate } from './localization';
+import { MaybeLocalizedString, setLanguage as setLocale, toLocalizedString, translate } from './localization';
 
 const appElem = document.getElementById('app')!;
+let routeContainerElem: HTMLElement;
 
-appElem.append(
-  div([
-    div({ class: 'header' }, [
-      div([
-        h1({ class: 'logo' }, [
-          a({ href: '/' }, [
-            img({ src: 'favicon.svg', alt: 'Free App Kit' }),
-            text('Free App Kit')
+function renderPageTemplate() {
+  appElem.append(
+    div([
+      div({ class: 'header' }, [
+        div([
+          h1({ class: 'logo' }, [
+            a({ href: '/' }, [
+              img({ src: 'favicon.svg', alt: 'Free App Kit' }),
+              text('Free App Kit')
+            ])
+          ]),
+          h2({ class: 'tag-line' }, [
+            text('Free web applications!')
           ])
         ]),
-        h2({ class: 'tag-line' }, [
-          text('Free web applications!')
+        div({ class: 'support-us-container' }, [
+          select({ style: "display: none; margin-bottom: 1rem;" }, [
+            option({ value: 'en' }, [text('English')]),
+            option({ value: 'es' }, [text('Español')]),
+          ]),
+          button({ style: "margin-bottom: 1rem;" }, [
+            a({ href: 'https://www.patreon.com/bePatron?u=4644571', target: "_blank", class: 'patreon-button' }, [text('Support us on Patreon!')])
+          ])
         ])
       ]),
-      div({ class: 'support-us-container' }, [
-        select({ style: "display: none; margin-bottom: 1rem;" }, [
-          option({ value: 'en' }, [text('English')]),
-          option({ value: 'es' }, [text('Español')]),
-        ]),
-        button({ style: "margin-bottom: 1rem;" }, [
-          a({ href: 'https://www.patreon.com/bePatron?u=4644571', target: "_blank", class: 'patreon-button' }, [text('Support us on Patreon!')])
-        ])
+      (routeContainerElem = div({ id: "route-container" })),
+      div([
+        p([text('Our apps:')]),
+        appList()
       ])
-    ]),
-    div({ id: "route-container" }),
-    div([
-      p([text('Our apps:')]),
-      appList()
     ])
-  ])
-);
+  );
+}
 
-const routeContainerElem = document.getElementById('route-container')!;
 
 // #region Pages
 
@@ -87,15 +89,30 @@ function equalsAnyTranslation(a: string, b: MaybeLocalizedString): boolean {
   }
 }
 
-function findRoute(pathname: string): Route {
-  let route = routes.find(route => equalsAnyTranslation(pathname, route.pathname));
-  if (route === undefined) { route = notFoundRoute; }
+function findRouteAndLocale(pathname: string): [Route, string] {
+  const pathnamesToRouteAndLocales: { [pathname: string]: [Route, string] } = {};
+  
+  for (const route of routes) {
+    const localizedPathname = toLocalizedString(route.pathname);
 
-  return route;
+    for (const locale in localizedPathname) {
+      pathnamesToRouteAndLocales[(localizedPathname as any)[locale]] = [route, locale];
+    }
+  }
+
+  if (pathnamesToRouteAndLocales[pathname] !== undefined) {
+    return pathnamesToRouteAndLocales[pathname];
+  } else {
+    return [notFoundRoute, 'en'];
+  }
 }
 
 function changeRoute(pathname: string) {
-  let route = findRoute(pathname);
+  let [route, locale] = findRouteAndLocale(pathname);
+
+  setLocale(locale);
+  
+  renderPageTemplate();
 
   document.title = (route.title !== undefined)
     ? `${translate(route.title)} - Free App Kit`

@@ -1,6 +1,6 @@
 import { shuffleLines, removeEmptyLines, sortLines } from './util';
 import { ICommand } from './command';
-import { strings, translate } from './strings';
+import { strings } from './strings';
 
 export const randomizeLinesCommand: ICommand = {
   name: "Randomize Lines",
@@ -77,7 +77,7 @@ export const convertToLowerCaseCommand: ICommand = {
 export const convertToUpperCaseCommand: ICommand = {
   name: strings.convertToUpperCase,
   pathname: strings.convertToUpperCasePath,
-  description: "Convert text to uppercase with this free online uppercase converter. Simply paste your text into the 1st box below and click the \"Convert to uppercase\" button.",
+  description: strings.convertToUpperCaseDescription,
   parameters: [
     {
       name: "text",

@@ -20,7 +20,7 @@ export type IType = BoolType | TextType | NumberType;
 export interface ICommand {
   name: MaybeLocalizedString;
   pathname?: MaybeLocalizedString;
-  description: string;
+  description: MaybeLocalizedString;
   parameters: ICommandParameter[];
   returnType: IType;
   runFn: (args: { [key: string]: any }) => any;
@@ -50,7 +50,7 @@ function mkArgView(param: ICommandParameter, args: { [key: string]: any }) {
       {
         const defaultValue = param.defaultValue ?? '';
         return div({ style: containerStyle }, [
-          h3([text(param.description ?? '')]),
+          h3([text(translate(param.description ?? ''))]),
           textArea({ onInput, value: defaultValue, style: 'min-height: 300px' }),
         ]);
       }
