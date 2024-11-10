@@ -4,6 +4,11 @@ export function isDevEnv() {
   return process.env.NODE_ENV === 'development';
 }
 
+export function getFreeAppKitApexHost() {
+  return isDevEnv()
+    ? `localhost:${window.location.port}` : 'freeappkit.com';
+}
+
 export async function waitMs(delayMs: number) {
   return new Promise(resolve => setTimeout(resolve, delayMs));
 }
@@ -164,11 +169,6 @@ export function changeSubdomain(newSubdomain: string | undefined) {
   const newUrl = getUrlWithNewSubdomain(new URL(window.location.href), newSubdomain);
   window.location.href = newUrl.href;
 }
-
-export const getDomainNameWithoutSubdomains = () => {
-  const hostParts = window.location.host.split('.');
-  return arrayLast(hostParts);
-};
 
 export function arrayLast<T>(arr: T[]) {
   return arr[arr.length - 1];

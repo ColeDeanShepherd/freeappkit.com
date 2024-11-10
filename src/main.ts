@@ -135,8 +135,6 @@ function findRouteAndLocale(pathname: string): [Route, string | undefined] {
     }
   }
 
-  console.log(pathname, pathnamesToRouteAndLocales);
-
   if (pathnamesToRouteAndLocales[pathname] !== undefined) {
     const routeAndLocale = pathnamesToRouteAndLocales[pathname];
     const route = routeAndLocale[0];

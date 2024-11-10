@@ -1,6 +1,6 @@
 import { text, button, i, span, ul, li, a } from './ui-core';
 import "bootstrap-icons/font/bootstrap-icons.css";
-import { getDomainNameWithoutSubdomains, waitMs } from './util';
+import { getFreeAppKitApexHost, waitMs } from './util';
 import { removeDuplicateLinesRoute } from './remove-duplicate-lines';
 import { commands } from './commands';
 import { mkRouteFromCommand } from './command';
@@ -48,7 +48,7 @@ export const appList = () =>
   ]);
 
 export const languageList = () => {
-  const domainName = getDomainNameWithoutSubdomains();
+  const domainName = getFreeAppKitApexHost();
   const protocol = window.location.protocol;
 
   return ul([
