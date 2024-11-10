@@ -3,7 +3,7 @@ import { Route } from './router';
 import { removeDuplicateLinesRoute, removeDuplicateLinesRoute2 } from './remove-duplicate-lines';
 import * as plainTextEditor from './plain-text-editor';
 import { appList, languageList } from './ui-components';
-import { changeSubdomain, except, getSubdomain, getUrlWithNewSubdomain, isDevEnv } from './util';
+import { changeSubdomain, except, getSubdomain, getUrlWithNewSubdomain, isDevEnv, removeAccents } from './util';
 
 import './style.css'
 import { mkRouteFromCommand } from './command';
@@ -55,7 +55,7 @@ function renderPageTemplate() {
   function changeLocale(e: Event) {
     const selectElem = e.target as HTMLSelectElement;
     const newLocale = selectElem.value;
-    const pathname = window.location.pathname;
+    const pathname = decodeURIComponent(window.location.pathname);
     const [route, _] = findRouteAndLocale(pathname);
     const localizedPathname = toLocalizedString(route.pathname) as any;
 
@@ -120,9 +120,22 @@ function findRouteAndLocale(pathname: string): [Route, string | undefined] {
     const localizedPathname = toLocalizedString(route.pathname);
 
     for (const locale in localizedPathname) {
-      pathnamesToRouteAndLocales[(localizedPathname as any)[locale]] = [route, locale];
+      const pathname = (localizedPathname as any)[locale];
+
+      if (pathnamesToRouteAndLocales[pathname] !== undefined) {
+        throw new Error(`Duplicate pathname: ${pathname}`);
+      }
+      
+      pathnamesToRouteAndLocales[pathname] = [route, locale];
+      
+      const normalizedPathname = removeAccents(pathname);
+      if (normalizedPathname !== pathname) {
+        pathnamesToRouteAndLocales[normalizedPathname] = [route, locale];
+      }
     }
   }
+
+  console.log(pathname, pathnamesToRouteAndLocales);
 
   if (pathnamesToRouteAndLocales[pathname] !== undefined) {
     const routeAndLocale = pathnamesToRouteAndLocales[pathname];
@@ -182,7 +195,7 @@ function changeRoute(pathname: string) {
 // #endregion Router
 
 function run() {
-  changeRoute(location.pathname);
+  changeRoute(decodeURIComponent(location.pathname));
 }
 
 function setPageElem(pageElem: Node) {

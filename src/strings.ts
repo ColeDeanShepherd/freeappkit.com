@@ -75,7 +75,7 @@ export const strings = {
   },
   convertToUpperCasePath: {
     en: "/convert-to-uppercase",
-    es: "/convertir-a-mayusculas",
+    es: "/convertir-a-mayúsculas",
   },
   convertToUpperCaseDescription: {
     en: "Convert text to uppercase with this free online uppercase converter. Simply paste your text into the 1st box below and click the \"Convert to uppercase\" button.",
@@ -130,5 +130,10 @@ export const strings = {
   countSentencesCommand: {
     en: "Count Sentences",
     es: "Contar Oraciones",
+  },
+
+  keytuneLink: {
+    en: "KeyTune - Learn to play songs on piano for free!",
+    es: "KeyTune - ¡Aprende a tocar canciones en el piano gratis!",
   }
 };

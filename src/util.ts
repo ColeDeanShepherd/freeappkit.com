@@ -173,3 +173,7 @@ export const getDomainNameWithoutSubdomains = () => {
 export function arrayLast<T>(arr: T[]) {
   return arr[arr.length - 1];
 }
+
+export function removeAccents(str: string): string {
+  return str.normalize("NFD").replace(/[\u0300-\u036f]/g, "");
+}
