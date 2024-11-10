@@ -165,10 +165,11 @@ function selectLocale(localeFromRoute: string | undefined) {
 }
 
 function changeRoute(pathname: string) {
+  setStrings(strings);
+  
   let [route, localeFromRoute] = findRouteAndLocale(pathname);
 
   const locale = selectLocale(localeFromRoute);
-  setStrings(strings);
   setLocale(locale);
   
   renderPageTemplate();

@@ -1,3 +1,5 @@
+import { removeDuplicateLines } from "./util";
+
 export const strings = {
   freeAppKit: {
     en: "Free App Kit",
@@ -53,20 +55,36 @@ export const strings = {
     en: "Randomize Lines",
     es: "Aleatorizar Líneas",
   },
+  randomizeLinesPath: {
+    en: "/randomize-lines",
+    es: "/aleatorizar-líneas",
+  },
 
   removeEmptyLines: {
     en: "Remove Empty Lines",
     es: "Eliminar Líneas Vacías",
+  },
+  removeEmptyLinesPath: {
+    en: "/remove-empty-lines",
+    es: "/eliminar-líneas-vacías",
   },
 
   sortLines: {
     en: "Sort Lines",
     es: "Ordenar Líneas",
   },
+  sortLinesPath: {
+    en: "/sort-lines",
+    es: "/ordenar-líneas",
+  },
 
   convertToLowerCase: {
     en: "Convert to Lowercase",
     es: "Convertir a Minúsculas",
+  },
+  convertToLowerCasePath: {
+    en: "/convert-to-lowercase",
+    es: "/convertir-a-minúsculas",
   },
 
   convertToUpperCase: {
@@ -86,28 +104,54 @@ export const strings = {
     en: "Base64 Encode",
     es: "Codificar Base64",
   },
+  base64EncodePath: {
+    en: "/base64-encode",
+    es: "/codificar-base64",
+  },
+
   base64Decode: {
     en: "Base64 Decode",
     es: "Decodificar Base64",
+  },
+  base64DecodePath: {
+    en: "/base64-decode",
+    es: "/decodificar-base64",
   },
 
   urlEncode: {
     en: "URL Encode",
     es: "Codificar URL",
   },
+  urlEncodePath: {
+    en: "/url-encode",
+    es: "/codificar-url",
+  },
+
   urlDecode: {
     en: "URL Decode",
     es: "Decodificar URL",
+  },
+  urlDecodePath: {
+    en: "/url-decode",
+    es: "/decodificar-url",
   },
 
   addToEndOfEachLine: {
     en: "Add to End of Each Line",
     es: "Agregar al Final de Cada Línea",
   },
+  addToEndOfEachLinePath: {
+    en: "/add-to-end-of-each-line",
+    es: "/agregar-al-final-de-cada-línea",
+  },
 
   removeDuplicateLines: {
     en: "Remove Duplicate Lines",
     es: "Eliminar Líneas Duplicadas",
+  },
+  removeDuplicateLinesPath: {
+    en: "/remove-duplicate-lines",
+    es: "/eliminar-líneas-duplicadas",
   },
 
   plainTextEditor: {
@@ -119,21 +163,45 @@ export const strings = {
     en: "Count Characters",
     es: "Contar Caracteres",
   },
+  countCharactersPath: {
+    en: "/count-characters",
+    es: "/contar-caracteres",
+  },
+
   countWords: {
     en: "Count Words",
     es: "Contar Palabras",
   },
+  countWordsPath: {
+    en: "/count-words",
+    es: "/contar-palabras",
+  },
+
   countLines: {
     en: "Count Lines",
     es: "Contar Líneas",
   },
+  countLinesPath: {
+    en: "/count-lines",
+    es: "/contar-líneas",
+  },
+
   countSentencesCommand: {
     en: "Count Sentences",
-    es: "Contar Oraciones",
+    es: "Contar Sentencias",
+  },
+  countSentencesPath: {
+    en: "/count-sentences",
+    es: "/contar-sentencias",
   },
 
   keytuneLink: {
     en: "KeyTune - Learn to play songs on piano for free!",
     es: "KeyTune - ¡Aprende a tocar canciones en el piano gratis!",
+  },
+
+  plainTextEditorPath: {
+    en: "/plain-text-editor",
+    es: "/editor-de-texto-plano",
   }
 };
