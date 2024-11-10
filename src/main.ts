@@ -1,4 +1,4 @@
-import { text, h1, h2, h3, h4, div, p, ul, li, a, textArea, button, img } from './ui-core';
+import { text, h1, h2, h3, h4, div, p, ul, li, a, textArea, button, img, select, option } from './ui-core';
 import { Route } from './router';
 import { removeDuplicateLinesRoute, removeDuplicateLinesRoute2 } from './remove-duplicate-lines';
 import * as plainTextEditor from './plain-text-editor';
@@ -27,6 +27,10 @@ appElem.append(
         ])
       ]),
       div({ class: 'support-us-container' }, [
+        select({ style: "margin-bottom: 1rem;" }, [
+          option({ value: 'en' }, [text('English')]),
+          option({ value: 'es' }, [text('Español')]),
+        ]),
         button({ style: "margin-bottom: 1rem;" }, [
           a({ href: 'https://www.patreon.com/bePatron?u=4644571', target: "_blank", class: 'patreon-button' }, [text('Support us on Patreon!')])
         ])
