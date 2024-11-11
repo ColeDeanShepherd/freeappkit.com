@@ -6,6 +6,7 @@ import { appList, languageList } from './ui-components';
 import { changeSubdomain, except, getSubdomain, getUrlWithNewSubdomain, isDevEnv, removeAccents } from './util';
 
 import './style.css'
+
 import { mkRouteFromCommand } from './command';
 import { commands } from './commands';
 import { gtag, initGoogleAnalytics } from './analytics';
