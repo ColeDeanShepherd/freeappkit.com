@@ -115,7 +115,7 @@ function mkReturnValueView(returnType: IType): [node: Node, updateValue: (value:
 
         returnValueElem =  div([
           h3([
-            text('Output'),
+            span({ style: "margin-right: 1rem;"}, [ text('Output') ]),
             copyToClipboardButton(() => outputElem)
           ]),
           (outputElem = textArea({ readonly: true, style: 'min-height: 300px' })),

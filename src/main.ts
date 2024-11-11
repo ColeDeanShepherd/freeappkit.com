@@ -103,8 +103,9 @@ const routes: Route[] = [
   removeDuplicateLinesRoute,
   removeDuplicateLinesRoute2,
   plainTextEditor.route,
-  ...plainTextEditor.plainTextEditorCommands.map(plainTextEditor.mkRouteFromPlainTextEditorCommand),
-  ...except(commands, plainTextEditor.plainTextEditorCommands).map(mkRouteFromCommand)
+  ...commands.map(mkRouteFromCommand)
+  //...plainTextEditor.plainTextEditorCommands.map(plainTextEditor.mkRouteFromPlainTextEditorCommand),
+  //...except(commands, plainTextEditor.plainTextEditorCommands).map(mkRouteFromCommand)
 ];
 
 const notFoundRoute: Route = {
