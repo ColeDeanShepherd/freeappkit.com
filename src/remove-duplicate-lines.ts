@@ -17,8 +17,8 @@ const mkRemoveDuplicateLinesPage = () => {
     div([
       h3([text('Paste your text below')]),
       (inputElem = textArea({ style: 'min-height: 300px' })),
-      div([
-        button({ onClick: removeDuplicateLinesOnClick, style: 'margin-right: 1rem;' }, [text('Remove Duplicate Lines')]),
+      div({ class: 'button-bar' }, [
+        button({ onClick: removeDuplicateLinesOnClick }, [text('Remove Duplicate Lines')]),
         button({ onClick: resetOnClick }, [text('Reset')]),
       ])
     ]),

@@ -110,6 +110,10 @@ textarea {
   box-sizing: border-box;
 }
 
+.button-bar > button {
+  margin-right: 1rem;
+}
+
 .toolbar {
 }
 

@@ -307,5 +307,20 @@ export const strings = {
   output: {
     en: "Output",
     es: "Salida",
-  }
+  },
+
+  clearVerb: {
+    en: "Clear",
+    es: "Limpiar",
+  },
+
+  loadFromFile: {
+    en: "Load from file",
+    es: "Cargar desde archivo",
+  },
+
+  saveToFile: {
+    en: "Save to file",
+    es: "Guardar en archivo",
+  },
 };

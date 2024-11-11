@@ -2,6 +2,7 @@ import { MaybeLocalizedString, translate } from './localization';
 import { Route } from './router';
 import { copyToClipboardButton } from './ui-components';
 import { text, h1, h2, h3, h4, div, p, ul, li, a, textArea, button, i, span, checkbox, label, textInput } from './ui-core';
+import { openFilePicker, saveStringToFile } from './util';
 
 interface BoolType {
   kind: 'bool';
@@ -48,11 +49,38 @@ function mkArgView(param: ICommandParameter, args: { [key: string]: any }) {
   switch (param.type.kind) {
     case 'text':
       {
+        let _textArea: HTMLTextAreaElement;
         const defaultValue = param.defaultValue ?? '';
+
         return div({ style: containerStyle }, [
           h3([text(translate(param.description ?? ''))]),
-          textArea({ onInput, value: defaultValue, style: 'min-height: 300px' }),
+          div({ class: 'button-bar', style: 'margin-bottom: 1rem;' }, [
+            button({ onClick: loadFromFile }, [ text('Load from file') ]),
+            button({ onClick: clear }, [ text('Clear') ]),
+          ]),
+          (_textArea = textArea({ onInput, value: defaultValue, style: 'min-height: 300px' })),
         ]);
+
+        function setValue(newValue: string) {
+          _textArea.value = newValue;
+          args[param.name] = newValue;
+        }
+
+        function loadFromFile() {
+          openFilePicker()
+            .then(file => {
+              if (file) {
+                file.text()
+                  .then(contents => setValue(contents))
+                  .catch(err => alert(`Error reading file: ${err}`));
+              }
+            })
+            .catch(err => alert(`Error opening file: ${err}`));
+        }
+
+        function clear() {
+          setValue('');
+        }
       }
 
     case 'bool':
@@ -116,12 +144,19 @@ function mkReturnValueView(returnType: IType): [node: Node, updateValue: (value:
         returnValueElem =  div([
           h3([
             span({ style: "margin-right: 1rem;"}, [ text('Output') ]),
-            copyToClipboardButton(() => outputElem)
+            copyToClipboardButton(() => outputElem),
+            button({ onClick: saveToFile }, [ text('Save to file') ])
           ]),
           (outputElem = textArea({ readonly: true, style: 'min-height: 300px' })),
         ]);
 
         return [returnValueElem, (value) => outputElem.value = value];
+
+        
+        function saveToFile() {
+          const filename = prompt('Enter a filename:', 'New Document') + '.txt';
+          saveStringToFile(outputElem.value, filename, "text/plain");
+        }
       }
     
     case 'number':
@@ -131,7 +166,7 @@ function mkReturnValueView(returnType: IType): [node: Node, updateValue: (value:
 
         numberElem = div([
           h3([ text('Output') ]),
-          (outputElem = p([ text('') ])),
+          (outputElem = p([ text('0') ])),
         ]);
 
         return [numberElem, (value) => outputElem.innerText = value.toString()];
