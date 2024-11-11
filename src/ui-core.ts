@@ -220,6 +220,7 @@ export const option = (propsOrChildren?: OptionProps | Node[], children?: Node[]
 interface TextInputProps extends NodeProps {
   value?: string;
   onInput?: (e: Event) => void;
+  disabled?: boolean;
 }
 
 export const textInput = (propsOrChildren?: TextInputProps | Node[], children?: Node[]) => {
@@ -234,6 +235,10 @@ export const textInput = (propsOrChildren?: TextInputProps | Node[], children?: 
 
     if (props.onInput) {
       _elem.addEventListener('input', e => props.onInput!(e));
+    }
+
+    if (props.disabled) {
+      _elem.setAttribute('disabled', '');
     }
   }
 

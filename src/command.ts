@@ -144,8 +144,10 @@ function mkReturnValueView(returnType: IType): [node: Node, updateValue: (value:
         returnValueElem =  div([
           h3([
             span({ style: "margin-right: 1rem;"}, [ text('Output') ]),
-            copyToClipboardButton(() => outputElem),
-            button({ onClick: saveToFile }, [ text('Save to file') ])
+            div({ class: 'button-bar', style: 'display: inline' }, [
+              copyToClipboardButton(() => outputElem),
+              button({ onClick: saveToFile }, [ text('Save to file') ])
+            ])
           ]),
           (outputElem = textArea({ readonly: true, style: 'min-height: 300px' })),
         ]);
@@ -162,14 +164,14 @@ function mkReturnValueView(returnType: IType): [node: Node, updateValue: (value:
     case 'number':
       {
         let numberElem: Element;
-        let outputElem: HTMLParagraphElement;
+        let outputElem: HTMLInputElement;
 
         numberElem = div([
           h3([ text('Output') ]),
-          (outputElem = p([ text('0') ])),
+          (outputElem = textInput({ value: '0', disabled: true })),
         ]);
 
-        return [numberElem, (value) => outputElem.innerText = value.toString()];
+        return [numberElem, (value) => outputElem.value = value.toString()];
       }
 
     default:
