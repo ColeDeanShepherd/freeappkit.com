@@ -155,20 +155,17 @@ export function getSubdomain(): string | undefined {
 }
 
 export function getUrlWithNewSubdomain(url: URL, newSubdomain: string | undefined) {
-  const hostnameParts = url.hostname.split('.');
-
-  if (hostnameParts.length > 1) {
-    if (newSubdomain === undefined) {
-      hostnameParts.shift();
-    } else {
-      hostnameParts[0] = newSubdomain;
-    }
-  } else if (newSubdomain !== undefined) {
-    hostnameParts.unshift(newSubdomain);
-  }
+  const subdomain = getSubdomain();
+  
+  const hostnameWithoutSubdomain = (subdomain !== undefined)
+    ? url.hostname.replace(`${subdomain}.`, '')
+    : url.hostname;
+  const hostnameWithNewSubdomain = (newSubdomain !== undefined)
+    ? `${newSubdomain}.${hostnameWithoutSubdomain}`
+    : hostnameWithoutSubdomain;
 
   const newUrl = new URL(url.href);
-  newUrl.hostname = hostnameParts.join('.');
+  newUrl.hostname = hostnameWithNewSubdomain;
   return newUrl;
 }
 
