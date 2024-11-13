@@ -1,17 +1,17 @@
-import { text, h1, h2, h3, h4, div, p, ul, li, a, textArea, button, img, select, option } from './ui-core';
+import { text, h1, h2, h3, h4, div, p, ul, li, a, textArea, button, img, select, option } from './ui/lib/ui-core';
 import { Route } from './router';
-import { removeDuplicateLinesRoute, removeDuplicateLinesRoute2 } from './remove-duplicate-lines';
-import * as plainTextEditor from './plain-text-editor';
-import { appList, languageList } from './ui-components';
+import { removeDuplicateLinesRoute, removeDuplicateLinesRoute2 } from './ui/remove-duplicate-lines';
+import * as plainTextEditor from './ui/plain-text-editor';
+import { appList, languageList } from './ui/ui-components';
 import { changeSubdomain, except, getSubdomain, getUrlWithNewSubdomain, isDevEnv, removeAccents } from './util';
 
-import './style.css'
+import './ui/style.css'
 
-import { mkRouteFromCommand } from './command';
 import { commands } from './commands';
 import { gtag, initGoogleAnalytics } from './analytics';
 import { getFirstSupportedPreferredLanguage, getLanguage, MaybeLocalizedString, setLanguage, setStrings, toLocalizedString, translate } from './localization';
 import { strings } from './strings';
+import { mkRouteFromCommand } from './ui/command-view';
 
 const appElem = document.getElementById('app')!;
 let routeContainerElem: HTMLElement;

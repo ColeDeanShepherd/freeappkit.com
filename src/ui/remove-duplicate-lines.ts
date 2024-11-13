@@ -1,8 +1,8 @@
-import { text, h1, h2, h3, h4, div, p, ul, li, a, textArea, button, i, span } from './ui-core';
-import { Route } from './router';
-import { detectAndRemoveDuplicateLines, removeDuplicateLines } from './util';
+import { text, h1, h2, h3, h4, div, p, ul, li, a, textArea, button, i, span } from './lib/ui-core';
+import { Route } from '../router';
+import { detectAndRemoveDuplicateLines, removeDuplicateLines } from '../util';
 import { copyToClipboardButton } from './ui-components';
-import { strings } from './strings';
+import { strings } from '../strings';
 
 const mkRemoveDuplicateLinesPage = () => {
   let inputElem: HTMLTextAreaElement;

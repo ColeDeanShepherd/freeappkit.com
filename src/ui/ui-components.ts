@@ -1,11 +1,11 @@
-import { text, button, i, span, ul, li, a } from './ui-core';
+import { text, button, i, span, ul, li, a } from './lib/ui-core';
 import "bootstrap-icons/font/bootstrap-icons.css";
-import { getFreeAppKitApexHost, waitMs } from './util';
+import { getFreeAppKitApexHost, waitMs } from '../util';
 import { removeDuplicateLinesRoute } from './remove-duplicate-lines';
-import { commands } from './commands';
-import { mkRouteFromCommand } from './command';
+import { commands } from '../commands';
 import * as plainTextEditor from './plain-text-editor';
-import { getSubdomainForLocale, languageCodeToName, supportedLanguages, translate } from './localization';
+import { getSubdomainForLocale, languageCodeToName, supportedLanguages, translate } from '../localization';
+import { mkRouteFromCommand } from './command-view';
 
 export const copyToClipboardButton = (getTextContainerElem: () => HTMLTextAreaElement) => {
   let successTextElem: HTMLSpanElement;

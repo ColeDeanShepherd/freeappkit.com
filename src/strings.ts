@@ -1,5 +1,3 @@
-import { removeDuplicateLines, removeEmptyLines } from "./util";
-
 export const strings = {
   freeAppKit: {
     en: "Free App Kit",
