@@ -1,5 +1,5 @@
 import { text, h1, h2, h3, h4, div, p, ul, li, a, textArea, button, img, select, option } from './ui/lib/ui-core';
-import { Route } from './router';
+import { findRouteAndLocale, Route, setRoutes } from './router';
 import { removeDuplicateLinesRoute, removeDuplicateLinesRoute2 } from './ui/remove-duplicate-lines';
 import * as plainTextEditor from './ui/plain-text-editor';
 import { appList, languageList } from './ui/ui-components';
@@ -13,7 +13,6 @@ import { getFirstSupportedPreferredLanguage, getLanguage, MaybeLocalizedString, 
 import { strings } from './strings';
 import { mkRouteFromCommand } from './ui/command-view';
 import { isDevEnv } from './config';
-import { removeAccents } from './textUtil';
 
 const appElem = document.getElementById('app')!;
 let routeContainerElem: HTMLElement;
@@ -117,41 +116,7 @@ const notFoundRoute: Route = {
   mkPageElem: mkNotFoundPage,
 };
 
-function findRouteAndLocale(pathname: string): [Route, string | undefined] {
-  const pathnamesToRouteAndLocales: { [pathname: string]: [Route, string] } = {};
-  
-  for (const route of routes) {
-    const localizedPathname = toLocalizedString(route.pathname);
-
-    for (const locale in localizedPathname) {
-      const pathname = (localizedPathname as any)[locale];
-
-      if (pathnamesToRouteAndLocales[pathname] !== undefined) {
-        throw new Error(`Duplicate pathname: ${pathname}`);
-      }
-      
-      pathnamesToRouteAndLocales[pathname] = [route, locale];
-      
-      const normalizedPathname = removeAccents(pathname);
-      if (normalizedPathname !== pathname) {
-        pathnamesToRouteAndLocales[normalizedPathname] = [route, locale];
-      }
-    }
-  }
-
-  if (pathnamesToRouteAndLocales[pathname] !== undefined) {
-    const routeAndLocale = pathnamesToRouteAndLocales[pathname];
-    const route = routeAndLocale[0];
-    
-    if (pathname === '/') {
-      return [route, undefined];
-    } else {
-      return routeAndLocale;
-    }
-  } else {
-    return [notFoundRoute, undefined];
-  }
-}
+setRoutes(routes, notFoundRoute);
 
 function selectLocale(localeFromRoute: string | undefined) {
   const subdomain = getSubdomain();
