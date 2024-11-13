@@ -46,8 +46,18 @@ export function removeDuplicateLines(text: string) {
   return Array.from(new Set(lines(text))).join('\n');
 }
 
-export function sortLines(text: string, descending: boolean, caseSensitive: boolean) {
-  const sortedLines = lines(text).sort((a, b) => {
+export function sortLines(text: string, descending: boolean, caseSensitive: boolean, deleteEmptyLines: boolean, trimLinesBeforeSorting: boolean) {
+  let _lines = lines(text);
+
+  if (deleteEmptyLines) {
+    _lines = _lines.filter(line => line.trim() !== '');
+  }
+
+  if (trimLinesBeforeSorting) {
+    _lines = _lines.map(line => line.trim());
+  }
+
+  const sortedLines = _lines.sort((a, b) => {
     if (!caseSensitive) {
       a = a.toLowerCase();
       b = b.toLowerCase();

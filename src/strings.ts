@@ -97,6 +97,18 @@ export const strings = {
     en: "Sort case-sensitively",
     es: "Ordenar con distinción entre mayúsculas y minúsculas",
   },
+  ignoreCase: {
+    en: "Ignore case",
+    es: "Ignorar distinción entre mayúsculas y minúsculas",
+  },
+  deleteEmptyLines: {
+    en: "Delete empty lines",
+    es: "Eliminar líneas vacías",
+  },
+  trimLinesBeforeSorting: {
+    en: "Trim lines before sorting",
+    es: "Recortar líneas antes de ordenar",
+  },
 
   convertToLowerCase: {
     en: "Convert to Lowercase",

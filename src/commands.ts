@@ -50,14 +50,32 @@ export const sortLinesCommand: ICommand = {
       type: { kind: 'bool' }
     },
     {
-      name: "Case Sensitive",
-      description: "Sort case-sensitively",
+      name: "Ignore Case",
+      description: "Ignore case",
       type: { kind: 'bool' },
       defaultValue: true
+    },
+    {
+      name: "Delete Empty Lines",
+      description: "Delete empty lines",
+      type: { kind: 'bool' },
+      defaultValue: false
+    },
+    {
+      name: "Trim Lines Before Sorting",
+      description: "Trim lines before sorting",
+      type: { kind: 'bool' },
+      defaultValue: false
     }
   ],
   returnType: { kind: 'text' },
-  runFn: (args) => sortLines(args['text'], args['Descending Order'], args['Case Sensitive']),
+  runFn: (args) => sortLines(
+    args['text'],
+    args['Descending Order'],
+    !args['Ignore Case'],
+    args['Delete Empty Lines'],
+    args['Trim Lines Before Sorting']
+  ),
 };
 
 export const convertToLowerCaseCommand: ICommand = {

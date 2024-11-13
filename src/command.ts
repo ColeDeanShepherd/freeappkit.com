@@ -54,11 +54,11 @@ function mkArgView(param: ICommandParameter, args: { [key: string]: any }) {
 
         return div({ style: containerStyle }, [
           h3([text(translate(param.description ?? ''))]),
+          (_textArea = textArea({ onInput, value: defaultValue, style: 'min-height: 300px' })),
           div({ class: 'button-bar', style: 'margin-bottom: 1rem;' }, [
             button({ onClick: loadFromFile }, [ text('Load from file') ]),
             button({ onClick: clear }, [ text('Clear') ]),
           ]),
-          (_textArea = textArea({ onInput, value: defaultValue, style: 'min-height: 300px' })),
         ]);
 
         function setValue(newValue: string) {
