@@ -3,7 +3,7 @@ import { Route } from './router';
 import { removeDuplicateLinesRoute, removeDuplicateLinesRoute2 } from './ui/remove-duplicate-lines';
 import * as plainTextEditor from './ui/plain-text-editor';
 import { appList, languageList } from './ui/ui-components';
-import { changeSubdomain, except, getSubdomain, getUrlWithNewSubdomain, removeAccents } from './util';
+import { changeSubdomain, getSubdomain, getUrlWithNewSubdomain } from './urlUtil';
 
 import './ui/style.css'
 
@@ -13,6 +13,7 @@ import { getFirstSupportedPreferredLanguage, getLanguage, MaybeLocalizedString, 
 import { strings } from './strings';
 import { mkRouteFromCommand } from './ui/command-view';
 import { isDevEnv } from './config';
+import { removeAccents } from './textUtil';
 
 const appElem = document.getElementById('app')!;
 let routeContainerElem: HTMLElement;

@@ -1,6 +1,6 @@
 import { text, h1, h2, h3, h4, div, p, ul, li, a, textArea, button, i, span } from './lib/ui-core';
 import { Route } from '../router';
-import { detectAndRemoveDuplicateLines, removeDuplicateLines } from '../util';
+import { detectAndRemoveDuplicateLines } from '../textUtil';
 import { copyToClipboardButton } from './ui-components';
 import { strings } from '../strings';
 

@@ -2,7 +2,7 @@ import { text, h1, h2, h3, h4, div, p, ul, li, a, textArea, button, i, span } fr
 import { Route } from '../router';
 import { commands } from '../commands';
 import { ICommand, mkDefaultArgs } from '../command';
-import { openFilePicker, saveStringToFile } from '../util';
+import { openFilePicker, saveStringToFile } from '../fileSystemUtil';
 import { copyToClipboardButton } from './ui-components';
 import { strings } from '../strings';
 import { trackCommandRun } from '../analytics';

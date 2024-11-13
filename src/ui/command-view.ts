@@ -3,7 +3,7 @@ import { translate } from '../localization';
 import { Route } from '../router';
 import { copyToClipboardButton } from '../ui/ui-components';
 import { text, h1, h2, h3, h4, div, p, ul, li, a, textArea, button, i, span, checkbox, label, textInput } from '../ui/lib/ui-core';
-import { openFilePicker, saveStringToFile } from '../util';
+import { openFilePicker, saveStringToFile } from '../fileSystemUtil';
 import { ICommand, ICommandParameter, IType, mkDefaultArgs } from '../command';
 
 function mkArgView(param: ICommandParameter, args: { [key: string]: any }) {

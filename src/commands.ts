@@ -1,4 +1,4 @@
-import { shuffleLines, removeEmptyLines, sortLines } from './util';
+import { shuffleLines, removeEmptyLines, sortLines } from './textUtil';
 import { ICommand } from './command';
 import { strings } from './strings';
 
