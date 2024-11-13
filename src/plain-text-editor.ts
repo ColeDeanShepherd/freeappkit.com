@@ -5,6 +5,7 @@ import { commandArgsView, getCommandPathName, ICommand, mkDefaultArgs } from './
 import { openFilePicker, saveStringToFile } from './util';
 import { copyToClipboardButton } from './ui-components';
 import { strings } from './strings';
+import { trackCommandRun } from './analytics';
 
 export const plainTextEditorCommands = commands.filter(c =>
   c.parameters.length >= 1 &&
@@ -156,6 +157,7 @@ export const mkPlainTextEditorView = (preSelectedCommand: ICommand | undefined =
     if (curCommand) {
       curCommandArgs[curCommand.parameters[0].name] = curTextArea.value;
       const returnValue = curCommand.runFn(curCommandArgs);
+      trackCommandRun(curCommand, curCommandArgs);
       curTextArea.value = returnValue;
     }
   }

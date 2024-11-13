@@ -1,3 +1,5 @@
+import { ICommand } from "./command";
+
 export function gtag(...args: any[]) {
   const dataLayer = (window as any).dataLayer;
 
@@ -13,4 +15,11 @@ export function initGoogleAnalytics() {
 
   gtag('js', new Date());
   gtag('config', 'G-JZQEMPD2QS', { send_page_view: false });
+}
+
+export function trackCommandRun(command: ICommand, args: { [key: string]: any }) {
+  gtag('event', 'run_command', {
+    name: command.name,
+    args: JSON.stringify(args),
+  });
 }

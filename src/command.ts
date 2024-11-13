@@ -1,3 +1,4 @@
+import { trackCommandRun } from './analytics';
 import { MaybeLocalizedString, translate } from './localization';
 import { Route } from './router';
 import { copyToClipboardButton } from './ui-components';
@@ -197,6 +198,7 @@ export const mkCommandView = (command: ICommand) => {
 
   function onSubmit() {
     const returnVal = command.runFn(args);
+    trackCommandRun(command, args);
     updateReturnVal(returnVal);
   }
 }
