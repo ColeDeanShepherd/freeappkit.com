@@ -238,6 +238,27 @@ export const addToEndOfEachLineCommand: ICommand = {
   runFn: (args) => args['text'].split('\n').map((line: string) => line + args['textToAdd']).join('\n'),
 };
 
+export const jsonFormatterCommand: ICommand = {
+  name: "JSON Formatter",
+  description: strings.jsonFormatterDescription,
+  parameters: [
+    {
+      name: "text",
+      type: { kind: 'text' },
+      description: "Paste your JSON below"
+    }
+  ],
+  returnType: { kind: 'text' },
+  runFn: (args) => {
+    try {
+      return JSON.stringify(JSON.parse(args['text']), null, 2);
+    } catch (e) {
+      alert(`JSON is not valid. Error: ${e}`);
+      return '';
+    }
+  },
+};
+
 export const commands = [
   randomizeLinesCommand,
   removeEmptyLinesCommand,
@@ -252,5 +273,6 @@ export const commands = [
   countSentencesCommand,
   urlEncodeCommand,
   urlDecodeCommand,
-  addToEndOfEachLineCommand
+  addToEndOfEachLineCommand,
+  jsonFormatterCommand
 ];

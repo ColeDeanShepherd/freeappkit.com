@@ -333,4 +333,21 @@ export const strings = {
     en: "Save to file",
     es: "Guardar en archivo",
   },
+
+  jsonFormatterPath: {
+    en: "/json-formatter",
+    es: "/formateador-json",
+  },
+  jsonFormatter: {
+    en: "JSON Formatter",
+    es: "Formateador JSON",
+  },
+  jsonFormatterDescription: {
+    en: "Format JSON with this free online tool. Simply paste your JSON into the 1st box below and click the \"Format\" button.",
+    es: "Formatee JSON con esta herramienta en línea gratuita. Simplemente pegue su JSON en la 1ª casilla a continuación y haga clic en el botón \"Formatear\"."
+  },
+  pasteYourJsonBelow: {
+    en: "Paste your JSON below",
+    es: "Pegue su JSON a continuación",
+  },
 };
