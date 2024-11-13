@@ -3,15 +3,16 @@ import { Route } from './router';
 import { removeDuplicateLinesRoute, removeDuplicateLinesRoute2 } from './ui/remove-duplicate-lines';
 import * as plainTextEditor from './ui/plain-text-editor';
 import { appList, languageList } from './ui/ui-components';
-import { changeSubdomain, except, getSubdomain, getUrlWithNewSubdomain, isDevEnv, removeAccents } from './util';
+import { changeSubdomain, except, getSubdomain, getUrlWithNewSubdomain, removeAccents } from './util';
 
 import './ui/style.css'
 
 import { commands } from './commands';
-import { gtag, initGoogleAnalytics } from './analytics';
+import { initAnalytics, trackPageView, trackPageViewConversion } from './analytics';
 import { getFirstSupportedPreferredLanguage, getLanguage, MaybeLocalizedString, setLanguage, setStrings, toLocalizedString, translate } from './localization';
 import { strings } from './strings';
 import { mkRouteFromCommand } from './ui/command-view';
+import { isDevEnv } from './config';
 
 const appElem = document.getElementById('app')!;
 let routeContainerElem: HTMLElement;
@@ -180,14 +181,10 @@ function changeRoute(pathname: string) {
 
   // Send page view to Google Analytics now that the page title is set.
   if (!isDevEnv()) {
-    initGoogleAnalytics();
+    initAnalytics();
 
-    gtag('event', 'page_view');
-    gtag('event', 'conversion', {
-      'send_to': 'AW-16763524210/YqTZCObdg-UZEPKovLk-',
-      'value': 1.0,
-      'currency': 'USD'
-    });
+    trackPageView();
+    trackPageViewConversion();
   }
 
   setPageElem(route.mkPageElem());

@@ -1,17 +1,13 @@
-import { get } from "http";
+import { isDevEnv, productionSiteHostname } from "./config";
 
-export function isDevEnv() {
-  return process.env.NODE_ENV === 'development';
+export function getApexHost() {
+  return isDevEnv()
+    ? `localhost:${window.location.port}` : productionSiteHostname;
 }
 
-export function getFreeAppKitApexHost() {
+export function getApexHostname() {
   return isDevEnv()
-    ? `localhost:${window.location.port}` : 'freeappkit.com';
-}
-
-export function getFreeAppKitApexHostname() {
-  return isDevEnv()
-    ? `localhost` : 'freeappkit.com';
+    ? `localhost` : productionSiteHostname;
 }
 
 export async function waitMs(delayMs: number) {
@@ -158,7 +154,7 @@ export function except<T>(array: T[], valuesToExclude: T[]): T[] {
 }
 
 export function getSubdomain(): string | undefined {
-  const apexHost = getFreeAppKitApexHostname();
+  const apexHost = getApexHostname();
   let subdomain = window.location.hostname.replace(`${apexHost}`, '');
   subdomain = subdomain.replace(/\.$/, '');
   return (subdomain.length >= 1) ? subdomain : undefined;

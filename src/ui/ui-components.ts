@@ -1,6 +1,6 @@
 import { text, button, i, span, ul, li, a } from './lib/ui-core';
 import "bootstrap-icons/font/bootstrap-icons.css";
-import { getFreeAppKitApexHost, waitMs } from '../util';
+import { getApexHost, waitMs } from '../util';
 import { removeDuplicateLinesRoute } from './remove-duplicate-lines';
 import { commands } from '../commands';
 import * as plainTextEditor from './plain-text-editor';
@@ -48,7 +48,7 @@ export const appList = () =>
   ]);
 
 export const languageList = () => {
-  const domainName = getFreeAppKitApexHost();
+  const domainName = getApexHost();
   const protocol = window.location.protocol;
 
   return ul([
