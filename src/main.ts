@@ -1,5 +1,5 @@
 import { text, h1, h2, h3, h4, div, p, ul, li, a, textArea, button, img, select, option } from './ui/lib/ui-core';
-import { findRouteAndLocale, Route, setRoutes } from './router';
+import { routerFindRouteAndLocale, Route, Router } from './router';
 import { removeDuplicateLinesRoute, removeDuplicateLinesRoute2 } from './ui/remove-duplicate-lines';
 import * as plainTextEditor from './ui/plain-text-editor';
 import { appList, languageList } from './ui/ui-components';
@@ -58,7 +58,7 @@ function renderPageTemplate() {
     const selectElem = e.target as HTMLSelectElement;
     const newLocale = selectElem.value;
     const pathname = decodeURIComponent(window.location.pathname);
-    const [route, _] = findRouteAndLocale(pathname);
+    const [route, _] = routerFindRouteAndLocale(router, pathname);
     const localizedPathname = toLocalizedString(route.pathname) as any;
 
     if (localizedPathname[newLocale] !== undefined) {
@@ -107,7 +107,7 @@ const routes: Route[] = [
   plainTextEditor.route,
   ...commands.map(mkRouteFromCommand)
   //...plainTextEditor.plainTextEditorCommands.map(plainTextEditor.mkRouteFromPlainTextEditorCommand),
-  //...except(commands, plainTextEditor.plainTextEditorCommands).map(mkRouteFromCommand)
+  //...commands.except(plainTextEditor.plainTextEditorCommands).map(mkRouteFromCommand)
 ];
 
 const notFoundRoute: Route = {
@@ -116,7 +116,10 @@ const notFoundRoute: Route = {
   mkPageElem: mkNotFoundPage,
 };
 
-setRoutes(routes, notFoundRoute);
+const router: Router = {
+  routes,
+  notFoundRoute,
+}
 
 function selectLocale(localeFromRoute: string | undefined) {
   const subdomain = getSubdomain();
@@ -134,7 +137,7 @@ function selectLocale(localeFromRoute: string | undefined) {
 function changeRoute(pathname: string) {
   setStrings(strings);
   
-  let [route, localeFromRoute] = findRouteAndLocale(pathname);
+  let [route, localeFromRoute] = routerFindRouteAndLocale(router, pathname);
 
   const locale = selectLocale(localeFromRoute);
   setLanguage(locale);

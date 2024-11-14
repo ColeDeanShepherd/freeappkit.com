@@ -7,18 +7,15 @@ export interface Route {
   mkPageElem: () => Node;
 }
 
-let routes: Route[] = [];
-let notFoundRoute: Route;
-
-export function setRoutes(newRoutes: Route[], newNotFoundRoute: Route) {
-  routes = newRoutes;
-  notFoundRoute = newNotFoundRoute;
+export interface Router {
+  routes: Route[];
+  notFoundRoute: Route;
 }
 
-export function findRouteAndLocale(pathname: string): [Route, string | undefined] {
+export function routerFindRouteAndLocale(router: Router, pathname: string): [Route, string | undefined] {
   const pathnamesToRouteAndLocales: { [pathname: string]: [Route, string] } = {};
   
-  for (const route of routes) {
+  for (const route of router.routes) {
     const localizedPathname = toLocalizedString(route.pathname);
 
     for (const locale in localizedPathname) {
@@ -47,6 +44,6 @@ export function findRouteAndLocale(pathname: string): [Route, string | undefined
       return routeAndLocale;
     }
   } else {
-    return [notFoundRoute, undefined];
+    return [router.notFoundRoute, undefined];
   }
 }

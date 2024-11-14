@@ -1,4 +1,4 @@
-import { shuffleArray } from "./arrayUtil";
+import './arrayUtil';
 
 export function lines(text: string) {
   return text.split('\n');
@@ -74,7 +74,7 @@ export function removeEmptyLines(text: string, alsoRemoveLinesOfBlankChars: bool
 }
 
 export function shuffleLines(text: string) {
-  return shuffleArray(lines(text)).join('\n');
+  return lines(text).shuffle().join('\n');
 }
 
 export function removeAccents(str: string): string {
