@@ -246,12 +246,18 @@ export const jsonFormatterCommand: ICommand = {
       name: "text",
       type: { kind: 'text' },
       description: "Paste your JSON below"
+    },
+    {
+      name: "spacesPerIndent",
+      type: { kind: 'number' },
+      description: "Spaces per indent",
+      defaultValue: 2
     }
   ],
   returnType: { kind: 'text' },
   runFn: (args) => {
     try {
-      return JSON.stringify(JSON.parse(args['text']), null, 2);
+      return JSON.stringify(JSON.parse(args['text']), null, args['spacesPerIndent']);
     } catch (e) {
       return `JSON is not valid. Error: ${e}`;
     }

@@ -350,4 +350,9 @@ export const strings = {
     en: "Paste your JSON below",
     es: "Pegue su JSON a continuación",
   },
+
+  spacesPerIndent: {
+    en: "Spaces per indent",
+    es: "Espacios por sangría",
+  }
 };

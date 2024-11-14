@@ -27,6 +27,11 @@ function mkArgView(
             button({ onClick: clear }, [ text('Clear') ]),
           ]),
         ]);
+        
+        function onInput(e: Event) {
+          args[param.name] = (e.target as HTMLTextAreaElement).value;
+          onArgsChange?.(args);
+        }
 
         function setValue(newValue: string) {
           _textArea.value = newValue;
@@ -63,6 +68,17 @@ function mkArgView(
     case 'number':
       {
         const defaultValue = param.defaultValue ?? 0;
+        
+        function onInput(e: Event) {
+          const valueStr = (e.target as HTMLTextAreaElement).value;
+          const value = parseInt(valueStr);
+
+          if (!isNaN(value)) {
+            args[param.name] = value;
+            onArgsChange?.(args);
+          }
+        }
+
         return div({ style: containerStyle }, [
           label([text(param.description ?? '')]),
           textInput({ onInput, value: defaultValue.toString() }),
@@ -71,11 +87,6 @@ function mkArgView(
 
     default:
       return text('Unknown type');
-  }
-
-  function onInput(e: Event) {
-    args[param.name] = (e.target as HTMLTextAreaElement).value;
-    onArgsChange?.(args);
   }
 
   function onChange(e: Event) {
