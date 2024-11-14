@@ -160,7 +160,7 @@ export const countWordsCommand: ICommand = {
     }
   ],
   returnType: { kind: 'number' },
-  runFn: (args) => args['text'].split(/\s+/).length.toString(),
+  runFn: (args) => args['text'].split(/\s+/).filter(x => x.length > 0).length.toString(),
 };
 
 export const countLinesCommand: ICommand = {
