@@ -4,7 +4,7 @@ import { Route } from '../router';
 import { copyToClipboardButton } from '../ui/ui-components';
 import { text, h1, h2, h3, h4, div, p, ul, li, a, textArea, button, i, span, checkbox, label, textInput } from '../ui/lib/ui-core';
 import { openFilePicker, saveStringToFile } from '../fileSystemUtil';
-import { ICommand, ICommandParameter, IType, mkDefaultArgs } from '../command';
+import { ICommand, ICommandParameter, IType, mkDefaultArgs, NamedValue } from '../command';
 
 function mkArgView(
   param: ICommandParameter,
@@ -118,7 +118,6 @@ function mkReturnValueView(returnType: IType): [node: Node, updateValue: (value:
 
         returnValueElem =  div([
           h3([
-            span({ style: "margin-right: 1rem;"}, [ text('Output') ]),
             div({ class: 'button-bar', style: 'display: inline' }, [
               copyToClipboardButton(() => outputElem),
               button({ onClick: saveToFile }, [ text('Save to file') ])
@@ -129,7 +128,6 @@ function mkReturnValueView(returnType: IType): [node: Node, updateValue: (value:
 
         return [returnValueElem, (value) => outputElem.value = value];
 
-        
         function saveToFile() {
           const filename = prompt('Enter a filename:', 'New Document') + '.txt';
           saveStringToFile(outputElem.value, filename, "text/plain");
@@ -138,15 +136,42 @@ function mkReturnValueView(returnType: IType): [node: Node, updateValue: (value:
     
     case 'number':
       {
-        let numberElem: Element;
         let outputElem: HTMLInputElement;
 
-        numberElem = div([
-          h3([ text('Output') ]),
+        const numberElem = div([
           (outputElem = textInput({ value: '0', disabled: true })),
         ]);
 
         return [numberElem, (value) => outputElem.value = value.toString()];
+      }
+    
+    case 'object':
+      {
+        const objPropElemsAndUpdateValueFns: [NamedValue, HTMLElement, (value: any) => void][] =
+          returnType.properties.map(prop => {
+            const [elem, updateValue] = mkReturnValueView(prop.type);
+
+            return [
+              prop,
+              div([
+                label([text(prop.description ?? '')]),
+                elem
+              ]),
+              updateValue
+            ];
+          });
+
+        const objElem = div({ class: 'rounded-bordered flex-left-to-right-wrap' }, [
+          ...objPropElemsAndUpdateValueFns.map(([_1, elem, _2]) => elem)
+        ]);
+
+        const updateValue = (value: any) => {
+          objPropElemsAndUpdateValueFns.forEach(([prop, _1, updateValue]) => {
+            updateValue(value[prop.name]);
+          });
+        };
+
+        return [objElem, updateValue];
       }
 
     default:
@@ -171,7 +196,10 @@ export const mkCommandView = (command: ICommand, props: CommandViewProps) => {
     !props.autoRunOnArgChange
       ? button({ onClick: onSubmit }, [text(command.name)])
       : span(),
-    returnValueNode,
+    div([
+      h3([text('Output')]),
+      returnValueNode
+    ]),
   ]);
 
   return page;

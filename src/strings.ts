@@ -354,5 +354,30 @@ export const strings = {
   spacesPerIndent: {
     en: "Spaces per indent",
     es: "Espacios por sangría",
+  },
+
+  characters: {
+    en: "Characters",
+    es: "Caracteres",
+  },
+  nonSpaceCharacters: {
+    en: "Non-space characters",
+    es: "Caracteres no espaciales",
+  },
+  words: {
+    en: "Words",
+    es: "Palabras",
+  },
+  sentences: {
+    en: "Sentences",
+    es: "Sentencias",
+  },
+  lines: {
+    en: "Lines",
+    es: "Líneas",
+  },
+  nonEmptyLines: {
+    en: "Non-empty lines",
+    es: "Líneas no vacías",
   }
 };

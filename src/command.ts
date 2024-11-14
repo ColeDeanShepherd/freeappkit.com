@@ -1,5 +1,11 @@
 import { MaybeLocalizedString } from './localization';
 
+export interface NamedValue {
+  name: string;
+  type: IType
+  description?: string;
+}
+
 interface BoolType {
   kind: 'bool';
 }
@@ -12,7 +18,12 @@ interface NumberType {
   kind: 'number';
 }
 
-export type IType = BoolType | TextType | NumberType;
+interface ObjectType {
+  kind: 'object';
+  properties: NamedValue[];
+}
+
+export type IType = BoolType | TextType | NumberType | ObjectType;
 
 export interface ICommand {
   name: MaybeLocalizedString;
@@ -23,10 +34,7 @@ export interface ICommand {
   runFn: (args: { [key: string]: any }) => any;
 }
 
-export interface ICommandParameter {
-  name: string;
-  type: IType
-  description?: string;
+export interface ICommandParameter extends NamedValue {
   defaultValue?: any;
 }
 

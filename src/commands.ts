@@ -1,5 +1,5 @@
 import { shuffleLines, removeEmptyLines, sortLines } from './textUtil';
-import { ICommand } from './command';
+import { ICommand, IType } from './command';
 import { strings } from './strings';
 
 export const randomizeLinesCommand: ICommand = {
@@ -135,6 +135,29 @@ export const base64DecodeCommand: ICommand = {
   runFn: (args) => atob(args['text']),
 };
 
+export const textCountsReturnType: IType = {
+  kind: 'object',
+  properties: [
+    { name: 'numChars', type: { kind: 'number' }, description: 'Characters' },
+    { name: 'numNonSpaceChars', type: { kind: 'number' }, description: 'Non-space characters' },
+    { name: 'numWords', type: { kind: 'number' }, description: 'Words' },
+    { name: 'numSentences', type: { kind: 'number' }, description: 'Sentences' },
+    { name: 'numLines', type: { kind: 'number' }, description: 'Lines' },
+    { name: 'numNonEmptyLines', type: { kind: 'number' }, description: 'Non-empty lines' }
+  ]
+};
+
+export function getTextCounts(text: string) {
+  return {
+    numChars: text.length,
+    numNonSpaceChars: text.replace(/\s/g, '').length,
+    numWords: text.split(/\s+/).filter((x: string) => x.length > 0).length,
+    numSentences: text.split(/[.!?\n]/).filter((s: string) => s.length > 0).length,
+    numLines: text.split('\n').length,
+    numNonEmptyLines: text.split('\n').filter((s: string) => s.length > 0).length
+  };
+}
+
 export const countCharactersCommand: ICommand = {
   name: "Count Characters",
   description: strings.countCharactersDescription,
@@ -145,8 +168,8 @@ export const countCharactersCommand: ICommand = {
       description: "Paste your text below"
     }
   ],
-  returnType: { kind: 'number' },
-  runFn: (args) => args['text'].length.toString(),
+  returnType: textCountsReturnType,
+  runFn: (args) => getTextCounts(args['text']),
 };
 
 export const countWordsCommand: ICommand = {
@@ -159,8 +182,8 @@ export const countWordsCommand: ICommand = {
       description: "Paste your text below"
     }
   ],
-  returnType: { kind: 'number' },
-  runFn: (args) => args['text'].split(/\s+/).filter(x => x.length > 0).length.toString(),
+  returnType: textCountsReturnType,
+  runFn: (args) => getTextCounts(args['text']),
 };
 
 export const countLinesCommand: ICommand = {
@@ -173,8 +196,8 @@ export const countLinesCommand: ICommand = {
       description: "Paste your text below"
     }
   ],
-  returnType: { kind: 'number' },
-  runFn: (args) => args['text'].split('\n').length.toString(),
+  returnType: textCountsReturnType,
+  runFn: (args) => getTextCounts(args['text']),
 };
 
 export const countSentencesCommand: ICommand = {
@@ -187,8 +210,8 @@ export const countSentencesCommand: ICommand = {
       description: "Paste your text below"
     }
   ],
-  returnType: { kind: 'number' },
-  runFn: (args) => args['text'].split(/[.!?]/).filter((s: string) => s.length > 0).length.toString(),
+  returnType: textCountsReturnType,
+  runFn: (args) => getTextCounts(args['text']),
 };
 
 export const urlEncodeCommand: ICommand = {

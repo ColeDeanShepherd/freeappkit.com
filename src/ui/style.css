@@ -167,6 +167,22 @@ textarea {
   display: none !important;
 }
 
+.flex-left-to-right-wrap {
+  display: flex;
+  flex-wrap: wrap;
+}
+
+.flex-left-to-right-wrap > * {
+  margin-right: 1rem;
+  margin-bottom: 1rem;
+}
+
+.rounded-bordered {
+  border: 1px solid #333;
+  border-radius: 8px;
+  padding: 1rem;
+}
+
 @media (prefers-color-scheme: light) {
   :root {
     background-color: #f8f9fa;
