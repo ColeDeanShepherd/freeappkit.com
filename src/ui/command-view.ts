@@ -6,7 +6,11 @@ import { text, h1, h2, h3, h4, div, p, ul, li, a, textArea, button, i, span, che
 import { openFilePicker, saveStringToFile } from '../fileSystemUtil';
 import { ICommand, ICommandParameter, IType, mkDefaultArgs } from '../command';
 
-function mkArgView(param: ICommandParameter, args: { [key: string]: any }) {
+function mkArgView(
+  param: ICommandParameter,
+  args: { [key: string]: any },
+  onArgsChange?: (args: { [key: string]: any }) => void
+) {
   const containerStyle = 'margin-bottom: 1rem';
 
   switch (param.type.kind) {
@@ -27,6 +31,7 @@ function mkArgView(param: ICommandParameter, args: { [key: string]: any }) {
         function setValue(newValue: string) {
           _textArea.value = newValue;
           args[param.name] = newValue;
+          onArgsChange?.(args);
         }
 
         function loadFromFile() {
@@ -70,17 +75,23 @@ function mkArgView(param: ICommandParameter, args: { [key: string]: any }) {
 
   function onInput(e: Event) {
     args[param.name] = (e.target as HTMLTextAreaElement).value;
+    onArgsChange?.(args);
   }
 
   function onChange(e: Event) {
     args[param.name] = (e.target as HTMLInputElement).checked;
+    onArgsChange?.(args);
   }
 }
 
-export const commandArgsView = (parameters: ICommandParameter[], args: { [key: string]: any }) => {
+export const commandArgsView = (
+  parameters: ICommandParameter[],
+  args: { [key: string]: any },
+  onArgsChange?: (args: { [key: string]: any }) => void
+) => {
   const paramsView = div(
     parameters.map(param => div([
-      mkArgView(param, args)
+      mkArgView(param, args, onArgsChange)
     ]))
   );
 
@@ -132,7 +143,11 @@ function mkReturnValueView(returnType: IType): [node: Node, updateValue: (value:
   }
 }
 
-export const mkCommandView = (command: ICommand) => {
+export interface CommandViewProps {
+  autoRunOnArgChange: boolean;
+}
+
+export const mkCommandView = (command: ICommand, props: CommandViewProps) => {
   let args: { [key: string]: any } = mkDefaultArgs(command.parameters);
   const [returnValueNode, updateReturnVal] = mkReturnValueView(command.returnType)
 
@@ -141,16 +156,24 @@ export const mkCommandView = (command: ICommand) => {
       text(command.name)
     ]),
     p([text(command.description)]),
-    commandArgsView(command.parameters, args),
-    button({ onClick: onSubmit }, [text(command.name)]),
+    commandArgsView(command.parameters, args, onArgsChange),
+    !props.autoRunOnArgChange
+      ? button({ onClick: onSubmit }, [text(command.name)])
+      : span(),
     returnValueNode,
   ]);
 
   return page;
 
+  function onArgsChange() {
+    if (props.autoRunOnArgChange) {
+      onSubmit();
+    }
+  }
+
   function onSubmit() {
     const returnVal = command.runFn(args);
-    trackCommandRun(command, args);
+    trackCommandRun(command, args); // TODO: disable because we send an event every keypress?
     updateReturnVal(returnVal);
   }
 }
@@ -163,10 +186,16 @@ export const getCommandPathName = (command: ICommand) => {
   }
 }
 
-export const mkRouteFromCommand = (command: ICommand): Route => {
+export const mkDefaultCommandViewProps = (): CommandViewProps => {
+  return {
+    autoRunOnArgChange: true
+  };
+}
+
+export const mkRouteFromCommand = (command: ICommand, viewProps?: CommandViewProps): Route => {
   return {
     pathname: getCommandPathName(command),
     title: command.name,
-    mkPageElem: () => mkCommandView(command)
+    mkPageElem: () => mkCommandView(command, viewProps ?? mkDefaultCommandViewProps())
   };
 }

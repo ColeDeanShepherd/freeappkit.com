@@ -7,11 +7,11 @@ import { changeSubdomain, getSubdomain, getUrlWithNewSubdomain } from './urlUtil
 
 import './ui/style.css'
 
-import { commands } from './commands';
+import { commands, randomizeLinesCommand } from './commands';
 import { initAnalytics, trackPageView, trackPageViewConversion } from './analytics';
 import { getFirstSupportedPreferredLanguage, getLanguage, MaybeLocalizedString, setLanguage, setStrings, toLocalizedString, translate } from './localization';
 import { strings } from './strings';
-import { mkRouteFromCommand } from './ui/command-view';
+import { CommandViewProps, mkRouteFromCommand } from './ui/command-view';
 import { isDevEnv } from './config';
 
 const appElem = document.getElementById('app')!;
@@ -95,6 +95,15 @@ function mkNotFoundPage() {
 
 // #region Router
 
+const commandViewPropsOverrides = [
+  {
+    command: randomizeLinesCommand,
+    viewProps: {
+      autoRunOnArgChange: false
+    } as CommandViewProps
+  }
+];
+
 const routes: Route[] = [
   {
     pathname: '/',
@@ -105,7 +114,10 @@ const routes: Route[] = [
   removeDuplicateLinesRoute,
   removeDuplicateLinesRoute2,
   plainTextEditor.route,
-  ...commands.map(mkRouteFromCommand)
+  ...commands.map(c => {
+    const viewProps = commandViewPropsOverrides.find(o => o.command === c)?.viewProps;
+    return mkRouteFromCommand(c, viewProps);
+  })
   //...plainTextEditor.plainTextEditorCommands.map(plainTextEditor.mkRouteFromPlainTextEditorCommand),
   //...commands.except(plainTextEditor.plainTextEditorCommands).map(mkRouteFromCommand)
 ];

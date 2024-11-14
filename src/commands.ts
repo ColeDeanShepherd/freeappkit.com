@@ -253,8 +253,7 @@ export const jsonFormatterCommand: ICommand = {
     try {
       return JSON.stringify(JSON.parse(args['text']), null, 2);
     } catch (e) {
-      alert(`JSON is not valid. Error: ${e}`);
-      return '';
+      return `JSON is not valid. Error: ${e}`;
     }
   },
 };

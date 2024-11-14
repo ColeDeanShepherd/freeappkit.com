@@ -71,8 +71,8 @@ export const strings = {
     es: "/eliminar-líneas-vacías",
   },
   removeEmptyLinesDescription: {
-    en: "Remove empty/blank lines of text with this free online tool. Simply paste your text/list into the 1st box below and click the \"Remove empty lines\" button.",
-    es: "Elimine líneas vacías en blanco de texto con esta herramienta en línea gratuita. Simplemente pegue su texto/lista en la 1ª casilla a continuación y haga clic en el botón \"Eliminar líneas vacías\"."
+    en: "Remove empty/blank lines of text with this free online tool.",
+    es: "Elimine líneas de texto vacías/en blanco con esta herramienta en línea gratuita."
   },
 
   sortLines: {
@@ -117,8 +117,8 @@ export const strings = {
     es: "/convertir-a-minúsculas",
   },
   convertToLowerCaseDescription: {
-    en: "Convert text to lowercase with this free online lowercase converter. Simply paste your text into the 1st box below and click the \"Convert to lowercase\" button.",
-    es: "Convierte texto a minúsculas con este convertidor de minúsculas en línea gratuito. Simplemente pegue su texto en la 1ª casilla a continuación y haga clic en el botón \"Convertir a minúsculas\"."
+    en: "Convert text to lowercase with this free online lowercase converter.",
+    es: "Convierta texto a minúsculas con este convertidor de minúsculas en línea gratuito."
   },
 
   convertToUpperCase: {
@@ -130,8 +130,8 @@ export const strings = {
     es: "/convertir-a-mayúsculas",
   },
   convertToUpperCaseDescription: {
-    en: "Convert text to uppercase with this free online uppercase converter. Simply paste your text into the 1st box below and click the \"Convert to uppercase\" button.",
-    es: "Convierte texto a mayúsculas con este convertidor de mayúsculas en línea gratuito. Simplemente pegue su texto en la 1ª casilla a continuación y haga clic en el botón \"Convertir a mayúsculas\"."
+    en: "Convert text to uppercase with this free online uppercase converter.",
+    es: "Convierta texto a mayúsculas con este convertidor de mayúsculas en línea gratuito."
   },
 
   base64Encode: {
@@ -143,8 +143,8 @@ export const strings = {
     es: "/codificar-base64",
   },
   base64EncodeDescription: {
-    en: "Base64 encode text with this free online tool. Simply paste your text into the 1st box below and click the \"Base64 Encode\" button.",
-    es: "Codifique en Base64 el texto con esta herramienta en línea gratuita. Simplemente pegue su texto en la 1ª casilla a continuación y haga clic en el botón \"Codificar Base64\"."
+    en: "Base64 encode text with this free online tool.",
+    es: "Codifique en Base64 el texto con esta herramienta en línea gratuita."
   },
 
   base64Decode: {
@@ -156,8 +156,8 @@ export const strings = {
     es: "/decodificar-base64",
   },
   base64DecodeDescription: {
-    en: "Base64 decode text with this free online tool. Simply paste your text into the 1st box below and click the \"Base64 Decode\" button.",
-    es: "Decodifique en Base64 el texto con esta herramienta en línea gratuita. Simplemente pegue su texto en la 1ª casilla a continuación y haga clic en el botón \"Decodificar Base64\"."
+    en: "Base64 decode text with this free online tool.",
+    es: "Decodifique en Base64 el texto con esta herramienta en línea gratuita."
   },
 
   urlEncode: {
@@ -169,8 +169,8 @@ export const strings = {
     es: "/codificar-url",
   },
   urlEncodeDescription: {
-    en: "URL encode text with this free online tool. Simply paste your text into the 1st box below and click the \"URL Encode\" button.",
-    es: "Codifique en URL el texto con esta herramienta en línea gratuita. Simplemente pegue su texto en la 1ª casilla a continuación y haga clic en el botón \"Codificar URL\"."
+    en: "URL encode text with this free online tool.",
+    es: "Codifique en URL el texto con esta herramienta en línea gratuita."
   },
 
   urlDecode: {
@@ -182,8 +182,8 @@ export const strings = {
     es: "/decodificar-url",
   },
   urlDecodeDescription: {
-    en: "URL decode text with this free online tool. Simply paste your text into the 1st box below and click the \"URL Decode\" button.",
-    es: "Decodifique en URL el texto con esta herramienta en línea gratuita. Simplemente pegue su texto en la 1ª casilla a continuación y haga clic en el botón \"Decodificar URL\"."
+    en: "URL decode text with this free online tool.",
+    es: "Decodifique en URL el texto con esta herramienta en línea gratuita."
   },
 
   addToEndOfEachLine: {
@@ -195,8 +195,8 @@ export const strings = {
     es: "/agregar-al-final-de-cada-línea",
   },
   addToEndOfEachLineDescription: {
-    en: "Add text to the end of each line with this free online tool. Simply paste your text into the 1st box below, type the text you want to add into the 2nd box below, click the \"Add to End of Each Line\" button, then copy the output from the 3rd box below.",
-    es: "Agregue texto al final de cada línea con esta herramienta en línea gratuita. Simplemente pegue su texto en la 1ª casilla a continuación, escriba el texto que desea agregar en la 2ª casilla a continuación, haga clic en el botón \"Agregar al Final de Cada Línea\", luego copie la salida de la 3ª casilla a continuación."
+    en: "Add text to the end of each line with this free online tool.",
+    es: "Agregue texto al final de cada línea con esta herramienta en línea gratuita."
   },
   textToAdd: {
     en: "Text to add",
@@ -212,8 +212,8 @@ export const strings = {
     es: "/eliminar-líneas-duplicadas",
   },
   removeDuplicateLinesDescription: {
-    en: "Delete duplicate lines with this free online tool. Simply paste your text/list into the 1st box below and click the \"Remove Duplicate Lines\" button, then copy the de-duplicated lines from the 2nd box. The duplicate lines that were detected are also displayed in the 3rd box below.",
-    es: "Elimine líneas duplicadas con esta herramienta en línea gratuita. Simplemente pegue su texto/lista en la 1ª casilla a continuación y haga clic en el botón \"Eliminar Líneas Duplicadas\", luego copie las líneas sin duplicados de la 2ª casilla. Las líneas duplicadas detectadas también se muestran en la 3ª casilla a continuación."
+    en: "Delete duplicate lines with this free online tool.",
+    es: "Elimine líneas duplicadas con esta herramienta en línea gratuita."
   },
   alsoRemoveLinesOfBlankCharacters: {
     en: "Also remove lines of blank characters",
@@ -242,8 +242,8 @@ export const strings = {
     es: "/contar-caracteres",
   },
   countCharactersDescription: {
-    en: "Count characters with this free online tool. Simply paste your text into the 1st box below and click the \"Count Characters\" button.",
-    es: "Cuenta caracteres con esta herramienta en línea gratuita. Simplemente pegue su texto en la 1ª casilla a continuación y haga clic en el botón \"Contar Caracteres\"."
+    en: "Count characters with this free online tool.",
+    es: "Cuenta caracteres con esta herramienta en línea gratuita."
   },
 
   countWords: {
@@ -255,8 +255,8 @@ export const strings = {
     es: "/contar-palabras",
   },
   countWordsDescription: {
-    en: "Count words with this free online tool. Simply paste your text into the 1st box below and click the \"Count Words\" button.",
-    es: "Cuenta palabras con esta herramienta en línea gratuita. Simplemente pegue su texto en la 1ª casilla a continuación y haga clic en el botón \"Contar Palabras\"."
+    en: "Count words with this free online tool.",
+    es: "Cuenta palabras con esta herramienta en línea gratuita."
   },
 
   countLines: {
@@ -268,8 +268,8 @@ export const strings = {
     es: "/contar-líneas",
   },
   countLinesDescription: {
-    en: "Count lines with this free online tool. Simply paste your text into the 1st box below and click the \"Count Lines\" button.",
-    es: "Cuenta líneas con esta herramienta en línea gratuita. Simplemente pegue su texto en la 1ª casilla a continuación y haga clic en el botón \"Contar Líneas\"."
+    en: "Count lines with this free online tool.",
+    es: "Cuenta líneas con esta herramienta en línea gratuita."
   },
 
   countSentencesCommand: {
@@ -281,8 +281,8 @@ export const strings = {
     es: "/contar-sentencias",
   },
   countSentencesDescription: {
-    en: "Count sentences with this free online tool. Simply paste your text into the 1st box below and click the \"Count Sentences\" button.",
-    es: "Cuenta oraciones con esta herramienta en línea gratuita. Simplemente pegue su texto en la 1ª casilla a continuación y haga clic en el botón \"Contar Oraciones\"."
+    en: "Count sentences with this free online tool.",
+    es: "Cuenta sentencias con esta herramienta en línea gratuita."
   },
 
   keytuneLink: {
@@ -343,8 +343,8 @@ export const strings = {
     es: "Formateador JSON",
   },
   jsonFormatterDescription: {
-    en: "Format JSON with this free online tool. Simply paste your JSON into the 1st box below and click the \"Format\" button.",
-    es: "Formatee JSON con esta herramienta en línea gratuita. Simplemente pegue su JSON en la 1ª casilla a continuación y haga clic en el botón \"Formatear\"."
+    en: "Format JSON with this free online tool.",
+    es: "Formatee JSON con esta herramienta en línea gratuita."
   },
   pasteYourJsonBelow: {
     en: "Paste your JSON below",
