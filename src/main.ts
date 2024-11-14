@@ -122,6 +122,19 @@ const routes: Route[] = [
   //...commands.except(plainTextEditor.plainTextEditorCommands).map(mkRouteFromCommand)
 ];
 
+export function generateSitemap() {
+  const urlNodes = routes.flatMap(route => {
+    const localizedPathname = toLocalizedString(route.pathname);
+
+    // TODO: routes without accented characters
+    
+    return Object.keys(localizedPathname)
+      .map(locale => `<url><loc>https://freeappkit.com${(localizedPathname as any)[locale]}</loc></url>`);
+  }).join('\n');
+
+  return `<?xml version="1.0" encoding="UTF-8"?><urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">${urlNodes}</urlset>`;
+}
+
 const notFoundRoute: Route = {
   pathname: '/page-not-found',
   title: 'Page Not Found',
@@ -153,7 +166,7 @@ function changeRoute(pathname: string) {
 
   const locale = selectLocale(localeFromRoute);
   setLanguage(locale);
-  
+
   renderPageTemplate();
 
   document.title = (route.title !== undefined)
