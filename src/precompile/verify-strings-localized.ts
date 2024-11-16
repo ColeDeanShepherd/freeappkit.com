@@ -37,30 +37,30 @@ function loadTranslations(filePath: string): Record<string, Record<string, strin
   let translations: Record<string, Record<string, string>> = {};
 
   function traverseNode(node: ts.Node) {
-      if (ts.isVariableDeclaration(node) && node.name.getText() === "strings") {
-          const initializer = node.initializer;
-          if (initializer && ts.isObjectLiteralExpression(initializer)) {
-              translations = extractTranslations(initializer);
-          }
+    if (ts.isVariableDeclaration(node) && node.name.getText() === "strings") {
+      const initializer = node.initializer;
+      if (initializer && ts.isObjectLiteralExpression(initializer)) {
+        translations = extractTranslations(initializer);
       }
-      ts.forEachChild(node, traverseNode);
+    }
+    ts.forEachChild(node, traverseNode);
   }
 
   function extractTranslations(objectLiteral: ts.ObjectLiteralExpression): Record<string, Record<string, string>> {
-      const result: Record<string, Record<string, string>> = {};
-      objectLiteral.properties.forEach((prop) => {
-          if (ts.isPropertyAssignment(prop) && ts.isObjectLiteralExpression(prop.initializer)) {
-              const key = prop.name.getText().replace(/["']/g, "");
-              result[key] = {};
-              prop.initializer.properties.forEach((innerProp) => {
-                  if (ts.isPropertyAssignment(innerProp) && ts.isStringLiteral(innerProp.initializer)) {
-                      const lang = innerProp.name.getText().replace(/["']/g, "");
-                      result[key][lang] = innerProp.initializer.text;
-                  }
-              });
+    const result: Record<string, Record<string, string>> = {};
+    objectLiteral.properties.forEach((prop) => {
+      if (ts.isPropertyAssignment(prop) && ts.isObjectLiteralExpression(prop.initializer)) {
+        const key = prop.name.getText().replace(/["']/g, "");
+        result[key] = {};
+        prop.initializer.properties.forEach((innerProp) => {
+          if (ts.isPropertyAssignment(innerProp) && ts.isStringLiteral(innerProp.initializer)) {
+            const lang = innerProp.name.getText().replace(/["']/g, "");
+            result[key][lang] = innerProp.initializer.text;
           }
-      });
-      return result;
+        });
+      }
+    });
+    return result;
   }
 
   traverseNode(sourceFile);
@@ -70,8 +70,8 @@ function loadTranslations(filePath: string): Record<string, Record<string, strin
 function isTextFunctionCall(node: ts.Node, sourceFile: ts.SourceFile): boolean {
   // Check if the node is a CallExpression and the function name is 'text'
   if (ts.isCallExpression(node)) {
-      const functionName = node.expression.getText(sourceFile);
-      return functionName === "text";
+    const functionName = node.expression.getText(sourceFile);
+    return functionName === "text";
   }
   return false;
 }
@@ -79,8 +79,8 @@ function isTextFunctionCall(node: ts.Node, sourceFile: ts.SourceFile): boolean {
 function getStringLiteralArguments(node: ts.CallExpression): string[] {
   // Extract and return all string literal arguments
   return node.arguments
-      .filter(ts.isStringLiteral)
-      .map((arg) => arg.text);
+    .filter(ts.isStringLiteral)
+    .map((arg) => arg.text);
 }
 
 function isStringLiteralTranslated(literal: string): boolean {
@@ -95,16 +95,16 @@ function isStringLiteralTranslated(literal: string): boolean {
 
 function traverseNode(node: ts.Node, sourceFile: ts.SourceFile) {
   if (isTextFunctionCall(node, sourceFile)) {
-      const callExpression = node as ts.CallExpression;
-      const stringLiterals = getStringLiteralArguments(callExpression);
+    const callExpression = node as ts.CallExpression;
+    const stringLiterals = getStringLiteralArguments(callExpression);
 
-      stringLiterals.forEach((literal) => {
-        const isTranslated = isStringLiteralTranslated(literal);
+    stringLiterals.forEach((literal) => {
+      const isTranslated = isStringLiteralTranslated(literal);
 
-        if (!isTranslated) {
-          console.error(`Validation failed: "${literal}" is missing or lacks translations.`);
-        }
-      });
+      if (!isTranslated) {
+        console.error(`Validation failed: "${literal}" is missing or lacks translations.`);
+      }
+    });
   }
 
   ts.forEachChild(node, (child) => traverseNode(child, sourceFile));
