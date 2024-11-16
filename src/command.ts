@@ -1,4 +1,4 @@
-import { MaybeLocalizedString } from './localization';
+import { MaybeLocalizedString } from './framework/localization';
 
 export interface NamedValue {
   name: string;

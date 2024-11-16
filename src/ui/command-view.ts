@@ -1,9 +1,9 @@
-import { trackCommandRun } from '../analytics';
-import { translate } from '../localization';
-import { Route } from '../router';
+import { trackCommandRun } from '../framework/analytics';
+import { translate } from '../framework/localization';
+import { Route } from '../framework/router';
 import { copyToClipboardButton } from '../ui/ui-components';
-import { text, h1, h2, h3, h4, div, p, ul, li, a, textArea, button, i, span, checkbox, label, textInput } from '../ui/lib/ui-core';
-import { openFilePicker, saveStringToFile } from '../fileSystemUtil';
+import { text, h1, h2, h3, h4, div, p, ul, li, a, textArea, button, i, span, checkbox, label, textInput } from '../framework/ui/ui-core';
+import { openFilePicker, saveStringToFile } from '../framework/fileSystemUtil';
 import { ICommand, ICommandParameter, IType, mkDefaultArgs, NamedValue } from '../command';
 
 function mkArgView(

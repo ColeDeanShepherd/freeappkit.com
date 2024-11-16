@@ -1,15 +1,15 @@
-import { text, h1, h2, h3, h4, div, p, ul, li, a, textArea, button, img, select, option } from './ui/lib/ui-core';
-import { routerFindRouteAndLocale, Route, Router } from './router';
+import { text, h1, h2, h3, h4, div, p, ul, li, a, textArea, button, img, select, option } from './framework/ui/ui-core';
+import { routerFindRouteAndLocale, Route, Router } from './framework/router';
 import { removeDuplicateLinesRoute, removeDuplicateLinesRoute2 } from './ui/remove-duplicate-lines';
 import * as plainTextEditor from './ui/plain-text-editor';
 import { appList, languageList } from './ui/ui-components';
-import { changeSubdomain, getSubdomain, getUrlWithNewSubdomain } from './urlUtil';
+import { changeSubdomain, getSubdomain, getUrlWithNewSubdomain } from './framework/urlUtil';
 
 import './ui/style.css'
 
 import { commands, randomizeLinesCommand } from './commands';
-import { initAnalytics, trackPageView, trackPageViewConversion } from './analytics';
-import { getFirstSupportedPreferredLanguage, getLanguage, MaybeLocalizedString, setLanguage, setStrings, toLocalizedString, translate } from './localization';
+import { initAnalytics, trackPageView, trackPageViewConversion } from './framework/analytics';
+import { getFirstSupportedPreferredLanguage, getLanguage, MaybeLocalizedString, setLanguage, setStrings, toLocalizedString, translate } from './framework/localization';
 import { strings } from './strings';
 import { CommandViewProps, mkRouteFromCommand } from './ui/command-view';
 import { isDevEnv } from './config';

@@ -1,4 +1,4 @@
-import { isDevEnv, productionSiteHostname } from "./config";
+import { isDevEnv, productionSiteHostname } from "../config";
 
 export function getApexHost() {
   return isDevEnv()

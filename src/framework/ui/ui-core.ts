@@ -1,4 +1,4 @@
-import { MaybeLocalizedString, translate } from "../../localization";
+import { MaybeLocalizedString, translate } from "../../framework/localization";
 
 interface NodeProps {
   id?: string;

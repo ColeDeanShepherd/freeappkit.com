@@ -1,11 +1,11 @@
-import { text, h1, h2, h3, h4, div, p, ul, li, a, textArea, button, i, span } from './lib/ui-core';
-import { Route } from '../router';
+import { text, h1, h2, h3, h4, div, p, ul, li, a, textArea, button, i, span } from '../framework/ui/ui-core';
+import { Route } from '../framework/router';
 import { commands } from '../commands';
 import { ICommand, mkDefaultArgs } from '../command';
-import { openFilePicker, saveStringToFile } from '../fileSystemUtil';
+import { openFilePicker, saveStringToFile } from '../framework/fileSystemUtil';
 import { copyToClipboardButton } from './ui-components';
 import { strings } from '../strings';
-import { trackCommandRun } from '../analytics';
+import { trackCommandRun } from '../framework/analytics';
 import { commandArgsView, getCommandPathName } from './command-view';
 
 export const plainTextEditorCommands = commands.filter(c =>

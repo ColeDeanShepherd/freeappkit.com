@@ -1,5 +1,5 @@
-import { ICommand } from "./command";
-import { googleAnalyticsMeasurementId, googlePageViewConversionRecipient } from "./config";
+import { ICommand } from "../command";
+import { googleAnalyticsMeasurementId, googlePageViewConversionRecipient } from "../config";
 
 function gtag(...args: any[]) {
   const dataLayer = (window as any).dataLayer;
