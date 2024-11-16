@@ -1,6 +1,12 @@
 import * as ts from "typescript";
 import * as path from "path";
+import dotenv from 'dotenv';
+
 import { getStringLiteralArguments, isTextFunctionCall, loadTranslations, loadTsConfig } from "../framework/precompile/precompileUtil";
+
+dotenv.config();
+
+//console.log(process.env.OPEN_AI_API_KEY);
 
 let translations: Record<string, Record<string, string>>;
 
