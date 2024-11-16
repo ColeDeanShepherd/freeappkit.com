@@ -34,8 +34,8 @@ function renderPageTemplate() {
         ]),
         div({ class: 'support-us-container' }, [
           select({ value: getLanguage(), onChange: changeLocale, style: "margin-bottom: 1rem;" }, [
-            option({ value: 'en' }, [text('English')]),
-            option({ value: 'es' }, [text('Español')]),
+            option({ value: 'en' }, [text('English', /* disableTranslation: */ true)]),
+            option({ value: 'es' }, [text('Español', /* disableTranslation: */ true)]),
           ]),
           button({ style: "margin-bottom: 1rem;" }, [
             a({ href: 'https://www.patreon.com/bePatron?u=4644571', target: "_blank", class: 'patreon-button' }, [text('Support us on Patreon!')])

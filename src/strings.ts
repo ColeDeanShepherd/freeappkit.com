@@ -1,4 +1,38 @@
 export const strings = {
+  empty: {
+    en: "",
+    es: "",
+  },
+  space: {
+    en: " ",
+    es: " ",
+  },
+
+  freeappkitdotcom: {
+    en: "freeappkit.com",
+    es: "freeappkit.com",
+  },
+
+  unknownType: {
+    en: "Unknown type",
+    es: "Tipo desconocido",
+  },
+
+  english: {
+    en: "English",
+    es: "Inglés",
+  },
+  
+  spanish: {
+    en: "Spanish",
+    es: "Español",
+  },
+
+  espanol: {
+    en: "Español",
+    es: "Español",
+  },
+
   freeAppKit: {
     en: "Free App Kit",
     es: "Kit de Aplicación Gratuita",

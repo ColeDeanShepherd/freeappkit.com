@@ -58,7 +58,7 @@ export const languageList = () => {
       const url = (subdomain === undefined) ? `${protocol}//${domainName}` : `${protocol}//${subdomain}.${domainName}`;
 
       return li([
-        a({ href: url }, [text(languageCodeToName[lang])])
+        a({ href: url }, [text(languageCodeToName[lang], /* disableTranslation: */ true)])
       ]);
     })
   ]);
