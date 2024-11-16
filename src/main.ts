@@ -44,11 +44,11 @@ function renderPageTemplate() {
       ]),
       (routeContainerElem = div({ id: "route-container" })),
       div([
-        p([text('Our apps:')]),
+        h3([text('Our apps:')]),
         appList()
       ]),
       div([
-        p([text('Supported languages:')]),
+        h3([text('Supported languages:')]),
         languageList()
       ])
     ])

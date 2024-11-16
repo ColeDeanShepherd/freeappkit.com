@@ -1,6 +1,7 @@
 import { shuffleLines, removeEmptyLines, sortLines } from './framework/textUtil';
 import { ICommand, IType } from './command';
 import { strings } from './strings';
+import { div, h2, h3, li, p, text, ul } from './framework/ui/ui-core';
 
 export const randomizeLinesCommand: ICommand = {
   name: "Randomize Lines",
@@ -184,6 +185,27 @@ export const countWordsCommand: ICommand = {
   ],
   returnType: textCountsReturnType,
   runFn: (args) => getTextCounts(args['text']),
+  mkSeoContent: () => div([
+    h2([ text("Free Online Word Counter Tool: Count Words and Text Metrics Effortlessly") ]),
+    p([ text("Welcome to FreeAppKit's Word Counter, the ultimate free tool designed to help you analyze and optimize your text quickly and efficiently. Whether you're a writer, editor, student, or content creator, this tool offers an easy way to count words, characters, and more in seconds.") ]),
+
+    h3([ text("Why Use Our Word Counter?") ]),
+    p([ text("Text metrics matter in many scenarios, such as crafting essays, writing social media posts, or preparing professional documents. Knowing the exact number of words or characters can help you stay within limits or optimize your content for better readability.") ]),
+    
+    p([ text("Our word counter can be used by:") ]),
+    ul([
+      li([ text("Writers and Authors: Keep track of word counts for chapters, articles, and blogs.") ]),
+      li([ text("Students and Academics: Ensure assignments and essays meet word count requirements.") ]),
+      li([ text("Social Media Managers: Stay within character limits for Twitter, LinkedIn, or Instagram captions.") ]),
+      li([ text("SEO Enthusiasts: Analyze content for optimal length to rank better in search engines.") ]),
+    ]),
+
+    h3([ text("Features") ]),
+    p([ text("Our word counter tool can count more than just characters, it also counts words, sentences, and lines in real time as you type your text. Your privacy is important to us -- we do not store or share any text you input into the tool.") ]),
+
+    h3([ text("How to Use the Word Counter") ]),
+    p([ text("To use our free word counter tool, simply paste your text into the input box above. The tool will automatically count the number of characters, words, sentences, and lines in your text. You can also upload a text file by clicking \"Load from file\", or clear the text with the \"Clear\" button.") ]),
+  ])
 };
 
 export const countLinesCommand: ICommand = {

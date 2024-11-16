@@ -200,6 +200,9 @@ export const mkCommandView = (command: ICommand, props: CommandViewProps) => {
       h3([text('Output')]),
       returnValueNode
     ]),
+    (command.mkSeoContent !== undefined)
+      ? div([command.mkSeoContent()])
+      : span()
   ]);
 
   return page;

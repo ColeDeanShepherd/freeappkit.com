@@ -379,5 +379,58 @@ export const strings = {
   nonEmptyLines: {
     en: "Non-empty lines",
     es: "Líneas no vacías",
-  }
+  },
+
+  _1: {
+    en: "Free Online Word Counter Tool: Count Words and Text Metrics Effortlessly",
+    es: "Herramienta gratuita de conteo de palabras en línea: cuenta palabras y métricas de texto fácilmente",
+  },
+  _2: {
+    en: "Welcome to FreeAppKit's Word Counter, the ultimate free tool designed to help you analyze and optimize your text quickly and efficiently. Whether you're a writer, editor, student, or content creator, this tool offers an easy way to count words, characters, and more in seconds.",
+    es: "Bienvenido al Contador de Palabras de FreeAppKit, la herramienta gratuita definitiva diseñada para ayudarte a analizar y optimizar tu texto rápida y eficientemente. Ya seas escritor, editor, estudiante o creador de contenido, esta herramienta ofrece una forma sencilla de contar palabras, caracteres y más en segundos.",
+  },
+  _3: {
+    en: "Why Use Our Word Counter?",
+    es: "¿Por qué usar nuestro contador de palabras?",
+  },
+  _4: {
+    en: "Text metrics matter in many scenarios, such as crafting essays, writing social media posts, or preparing professional documents. Knowing the exact number of words or characters can help you stay within limits or optimize your content for better readability.",
+    es: "Las métricas de texto son importantes en muchos escenarios, como redactar ensayos, escribir publicaciones en redes sociales o preparar documentos profesionales. Conocer el número exacto de palabras o caracteres puede ayudarte a mantenerte dentro de los límites o a optimizar tu contenido para una mejor legibilidad.",
+  },
+  _5: {
+    en: "Our word counter can be used by:",
+    es: "Nuestro contador de palabras puede ser usado por:",
+  },
+  _6: {
+    en: "Writers and Authors: Keep track of word counts for chapters, articles, and blogs.",
+    es: "Escritores y autores: Lleva un registro del conteo de palabras para capítulos, artículos y blogs.",
+  },
+  _7: {
+    en: "Students and Academics: Ensure assignments and essays meet word count requirements.",
+    es: "Estudiantes y académicos: Asegúrate de que los trabajos y ensayos cumplan con los requisitos de conteo de palabras.",
+  },
+  _8: {
+    en: "Social Media Managers: Stay within character limits for Twitter, LinkedIn, or Instagram captions.",
+    es: "Gestores de redes sociales: Mantente dentro de los límites de caracteres para publicaciones en Twitter, LinkedIn o subtítulos de Instagram.",
+  },
+  _9: {
+    en: "SEO Enthusiasts: Analyze content for optimal length to rank better in search engines.",
+    es: "Entusiastas del SEO: Analiza el contenido para una longitud óptima y mejorar el posicionamiento en motores de búsqueda.",
+  },
+  _10: {
+    en: "Features",
+    es: "Características",
+  },
+  _11: {
+    en: "Our word counter tool can count more than just characters, it also counts words, sentences, and lines in real time as you type your text. Your privacy is important to us -- we do not store or share any text you input into the tool.",
+    es: "Nuestra herramienta de contador de palabras puede contar más que solo caracteres; también cuenta palabras, oraciones y líneas en tiempo real mientras escribes tu texto. Tu privacidad es importante para nosotros: no almacenamos ni compartimos ningún texto que introduzcas en la herramienta.",
+  },
+  _12: {
+    en: "How to Use the Word Counter",
+    es: "Cómo usar el contador de palabras",
+  },
+  _13: {
+    en: "To use our free word counter tool, simply paste your text into the input box above. The tool will automatically count the number of characters, words, sentences, and lines in your text. You can also upload a text file by clicking \"Load from file\", or clear the text with the \"Clear\" button.",
+    es: "Para usar nuestra herramienta gratuita de contador de palabras, simplemente pega tu texto en el cuadro de entrada arriba. La herramienta contará automáticamente el número de caracteres, palabras, oraciones y líneas en tu texto. También puedes cargar un archivo de texto haciendo clic en \"Cargar desde archivo\" o borrar el texto con el botón \"Borrar\".",
+  },
 };

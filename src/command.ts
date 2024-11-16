@@ -32,6 +32,7 @@ export interface ICommand {
   parameters: ICommandParameter[];
   returnType: IType;
   runFn: (args: { [key: string]: any }) => any;
+  mkSeoContent?: () => Node;
 }
 
 export interface ICommandParameter extends NamedValue {
