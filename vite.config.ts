@@ -1,6 +1,6 @@
 import { defineConfig } from 'vite';
-import vitePluginPrecompile from './vite-plugin-precompile';
+import vitePluginValidate from './vite-plugin-validate';
 
 export default defineConfig({
-  plugins: [vitePluginPrecompile()],
+  plugins: [vitePluginValidate()],
 });

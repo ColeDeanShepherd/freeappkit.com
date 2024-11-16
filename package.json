@@ -4,6 +4,7 @@
   "version": "0.0.0",
   "type": "module",
   "scripts": {
+    "localize": "node --loader ts-node/esm verify-strings-localized.ts",
     "dev": "vite",
     "build": "tsc && vite build",
     "preview": "vite preview"
@@ -11,6 +12,7 @@
   "devDependencies": {
     "@types/gtag.js": "^0.0.20",
     "@types/node": "^22.9.0",
+    "ts-node": "^10.9.2",
     "typescript": "~5.6.2",
     "vite": "^5.4.10"
   },
