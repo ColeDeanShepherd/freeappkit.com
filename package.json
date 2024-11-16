@@ -4,7 +4,7 @@
   "version": "0.0.0",
   "type": "module",
   "scripts": {
-    "localize": "node --loader ts-node/esm --experimental-specifier-resolution=node src/precompile/verify-strings-localized.ts",
+    "localize": "node --loader ts-node/esm --experimental-specifier-resolution=node src/precompile/localize-strings.ts",
     "dev": "vite",
     "build": "tsc && vite build",
     "preview": "vite preview"
