@@ -570,5 +570,85 @@ export const strings = {
     "afa5cd4e-607b-4982-8fb8-226fbac1cc72": {
         "en": "Free App Kit offers a variety of free web applications to simplify your tasks. From randomizing lines of text to analyzing word counts, we have tools designed to make your life easier. Check them out and see how they can help you!",
         "es": "Free App Kit ofrece una variedad de aplicaciones web gratuitas para simplificar tus tareas. Desde la aleatorizaci\u00F3n de l\u00EDneas de texto hasta el an\u00E1lisis de recuentos de palabras, tenemos herramientas dise\u00F1adas para hacer tu vida m\u00E1s f\u00E1cil. \u00A1\u00C9chalas un vistazo y mira c\u00F3mo te pueden ayudar!"
+    },
+    "5d45814c-3ce7-4e1b-9a8e-8565c74786a0": {
+        "en": "text",
+        "es": "texto"
+    },
+    "44668f0d-d7d7-46fe-8bba-eb71851561b1": {
+        "en": "bool",
+        "es": "bool"
+    },
+    "8698a34c-6273-464e-a959-d0c486143fbc": {
+        "en": "Descending Order",
+        "es": "Orden Descendente"
+    },
+    "17353fbd-2328-4c37-8185-9014307286a6": {
+        "en": "Ignore Case",
+        "es": "Ignorar may\u00FAsculas y min\u00FAsculas"
+    },
+    "f392ae55-661d-4768-bc24-d79b134106bc": {
+        "en": "Delete Empty Lines",
+        "es": "Eliminar L\u00EDneas Vac\u00EDas"
+    },
+    "f4bba2a4-b58f-4a6a-9176-370579bf75d0": {
+        "en": "Trim Lines Before Sorting",
+        "es": "Recortar l\u00EDneas antes de ordenar"
+    },
+    "ffe3241e-7a6f-4c51-87ed-29f9c7fad1c7": {
+        "en": "object",
+        "es": "objeto"
+    },
+    "70808553-8104-41c1-9653-308a6fd1e81a": {
+        "en": "Number of Characters",
+        "es": "N\u00FAmero de Caracteres"
+    },
+    "d4219bdc-9ca0-4cdd-ae42-134040b51b00": {
+        "en": "number",
+        "es": "n\u00FAmero"
+    },
+    "ed3231d3-b8fc-4713-8800-a3e30ac8b123": {
+        "en": "Number of non-space characters",
+        "es": "N\u00FAmero de caracteres sin espacio"
+    },
+    "ab34aeb4-f8e1-4cef-b03d-05c08a19acc8": {
+        "en": "number of words",
+        "es": "n\u00FAmero de palabras"
+    },
+    "bd9dfc10-f057-460d-915d-5462b02904d4": {
+        "en": "Number of sentences",
+        "es": "N\u00FAmero de oraciones"
+    },
+    "5fa32f76-b60d-406a-b1c4-7ed3fa487a10": {
+        "en": "Number of Lines",
+        "es": "N\u00FAmero de L\u00EDneas"
+    },
+    "9d7638a9-2034-4cb7-b6b1-77f3b2d2c9f0": {
+        "en": "Number of non-empty lines",
+        "es": "N\u00FAmero de l\u00EDneas no vac\u00EDas"
+    },
+    "bf4f4d79-a930-49df-9df6-01f21472f219": {
+        "en": "textToAdd",
+        "es": "textoParaAgregar"
+    },
+    "e15c3a80-d67c-46cc-9840-c8f1e09f056c": {
+        "en": "spacesPerIndent",
+        "es": "espaciosPorIndentaci\u00F3n"
+    },
+    "a580e2fe-bd41-4d29-8feb-a0e9a8cf068e": {
+        "en": "Remove Accents From Text",
+        "es": "Eliminar Acentos Del Texto"
+    },
+    "ac91ce01-f789-4e1c-8b96-eb6dcae3b088": {
+        "en": "Replace accented characters with their non-accented equivalents",
+        "es": "Reemplazar caracteres acentuados por sus equivalentes sin acento"
+    },
+    "9cb6bb8a-2c6d-4858-ac2a-97cb521b7123": {
+        "en": "Trim Line Space",
+        "es": "Espacio de L\u00EDnea de Corte"
+    },
+    "e8a6f920-58dd-43dd-ab82-758ca7eb7958": {
+        "en": "Trim spaces from the beginning and end of each line",
+        "es": "Recorta los espacios del principio y el final de cada l\u00EDnea"
     }
 };

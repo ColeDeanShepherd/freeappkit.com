@@ -361,7 +361,7 @@ export const jsonFormatterCommand: ICommand = {
 
 export const removeAccentsFromTextCommand: ICommand = {
   name: "Remove Accents From Text",
-  description: "Remove accents from text",
+  description: "Replace accented characters with their non-accented equivalents",
   parameters: [
     {
       name: "text",
@@ -375,7 +375,7 @@ export const removeAccentsFromTextCommand: ICommand = {
 
 export const trimLeadingTrailingSpaceCommand: ICommand = {
   name: "Trim Line Space",
-  description: "Trim line space",
+  description: "Trim spaces from the beginning and end of each line",
   parameters: [
     {
       name: "text",

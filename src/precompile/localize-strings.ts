@@ -5,6 +5,7 @@ import OpenAI from 'openai';
 
 import { addTranslationObjsAndSave, getStringLiteralArguments, isTextFunctionCall, loadTranslations, loadTsConfig } from "../framework/precompile/precompileUtil";
 import { getOpenAiApiKey } from "../config";
+import { isWhitespace } from "../framework/textUtil";
 
 dotenv.config();
 
@@ -23,7 +24,21 @@ function isStringLiteralTranslated(literal: string): boolean {
   );
 }
 
-async function traverseNode(node: ts.Node, sourceFile: ts.SourceFile, newTranslations: object[]) {
+const relativeFilePathsToTranslateAllStringsFor = new Set<string>([
+  'src/commands.ts',
+]);
+const absoluteFilePathsToTranslateAllStringsFor =
+  new Set<string>(Array.from(relativeFilePathsToTranslateAllStringsFor).map(p => path.resolve(p).replace(/\\/g, '/')));
+
+function isTranslatableString(str: string) {
+  return (str.length > 0) && !isWhitespace(str);
+}
+
+function traverseNode(node: ts.Node, sourceFile: ts.SourceFile, stringsToTranslate: Set<string>) {
+  if (ts.isImportDeclaration(node)) {
+    return;
+  }
+
   if (isTextFunctionCall(node, sourceFile)) {
     const callExpression = node as ts.CallExpression;
     const stringLiterals = getStringLiteralArguments(callExpression);
@@ -31,22 +46,41 @@ async function traverseNode(node: ts.Node, sourceFile: ts.SourceFile, newTransla
     for (const literal of stringLiterals) {
       const isTranslated = isStringLiteralTranslated(literal);
 
-      if (!isTranslated) {
-        console.log(`Generating translations for: "${literal}"`);
-        const translations = await autoTranslate(literal)
-        newTranslations.push(translations);
-        console.log(`Translations for "${literal}": ${JSON.stringify(translations)}`);
-
-        //console.error(`Validation failed: "${literal}" is missing or lacks translations.`);
+      if (!isTranslated && isTranslatableString(literal)) {
+        stringsToTranslate.add(literal);
       }
+    }
+  } else if (ts.isStringLiteral(node)) {
+    if (absoluteFilePathsToTranslateAllStringsFor.has(sourceFile.fileName)) {
+      const literal = node.text;
+      const isTranslated = isStringLiteralTranslated(literal);
+  
+      if (!isTranslated && isTranslatableString(literal)) {
+        stringsToTranslate.add(literal);
+      }
+    } else {
+      //console.log(`Skipping string literal "${node.text}" in file "${sourceFile.fileName}"`);
     }
   }
 
   const children: readonly ts.Node[] = node.getChildren(sourceFile);
 
   for (const child of children) {
-    await traverseNode(child, sourceFile, newTranslations);
+    traverseNode(child, sourceFile, stringsToTranslate);
   }
+}
+
+async function translateStrings(stringsToTranslate: Set<string>): Promise<object[]> {
+  const newTranslations: object[] = [];
+
+  for (const literal of stringsToTranslate) {
+    console.log(`Generating translations for: "${literal}"`);
+    const translations = await autoTranslate(literal)
+    newTranslations.push(translations);
+    console.log(`Translations for "${literal}": ${JSON.stringify(translations)}`);
+  }
+
+  return newTranslations;
 }
 
 // Load and analyze source files
@@ -54,15 +88,21 @@ async function analyzeFiles(files: string[], compilerOptions: ts.CompilerOptions
   const program = ts.createProgram(files, compilerOptions);
   //const checker = program.getTypeChecker();
 
-  const newTranslations: object[] = [];
+  const stringsToTranslate = new Set<string>();
 
   for (const sourceFile of program.getSourceFiles()) {
     if (!sourceFile.isDeclarationFile) {
-      //console.log(`Analyzing file: ${sourceFile.fileName}`);
-      await traverseNode(sourceFile, sourceFile, newTranslations);
+      console.log(`Analyzing file: ${sourceFile.fileName}`);
+      traverseNode(sourceFile, sourceFile, stringsToTranslate);
     }
   }
 
+  // console.log(`Strings to translate: ${stringsToTranslate.size}`);
+  // for (const str of stringsToTranslate) {
+  //   console.log(`"${str}"`);
+  // }
+
+  const newTranslations = await translateStrings(stringsToTranslate);
   addTranslationObjsAndSave(path.resolve("src/strings.ts"), newTranslations);
 }
 
@@ -150,12 +190,15 @@ function ensureOpenAiClientInitialized() {
 
 // Main function
 async function main() {
+  console.log("Loading tsconfig.json...");
   const configPath = path.resolve("tsconfig.json");
   const parsedCommandLine = loadTsConfig(configPath);
 
+  console.log("Loading translations...");
   const translationsFile = path.resolve("src/strings.ts");
   translations = loadTranslations(translationsFile);
 
+  console.log("Analyzing files...");
   await analyzeFiles(parsedCommandLine.fileNames, parsedCommandLine.options);
 }
 
