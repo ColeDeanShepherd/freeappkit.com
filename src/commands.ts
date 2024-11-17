@@ -1,7 +1,7 @@
 import { shuffleLines, removeEmptyLines, sortLines } from './framework/textUtil';
 import { ICommand, IType } from './command';
 import { strings } from './strings';
-import { div, h2, h3, li, p, text, ul } from './framework/ui/ui-core';
+import { div, h2, h3, li, ol, p, text, ul } from './framework/ui/ui-core';
 
 export const randomizeLinesCommand: ICommand = {
   name: "Randomize Lines",
@@ -307,6 +307,56 @@ export const jsonFormatterCommand: ICommand = {
       return `JSON is not valid. Error: ${e}`;
     }
   },
+  mkSeoContent: () => div([
+    h2([ text("JSON Formatter - Free Online Tool to Format Your JSON Data") ]),
+    p([ text("Welcome to Free App Kit’s JSON Formatter, your go-to tool for easily formatting JSON data. Whether you're a developer working on APIs, a data enthusiast parsing JSON files, or someone learning about JSON, our tool is here to help. It's fast, reliable, and completely free to use.") ]),
+
+    h2([ text("Why Use a JSON Formatter?") ]),
+    p([ text("JSON (JavaScript Object Notation) is widely used for transmitting data in web applications, APIs, and more. However, JSON data can sometimes be compact or minified, making it hard to read and debug. A JSON Formatter makes the data human-readable by adding proper indentation and line breaks.") ]),
+    p([ text("With our JSON Formatter, you can quickly and efficiently format your JSON data, saving time and reducing errors. Plus, you can choose the number of spaces per indent to match your preferred style.") ]),
+
+    h2([ text("Features of Our JSON Formatter Tool") ]),
+    ul([
+      li([ text("Free and easy to use with no signup required.") ]),
+      li([ text("Format JSON instantly by pasting your data or uploading a file.") ]),
+      li([ text("Adjustable spaces per indent to customize the output.") ]),
+      li([ text("Copy formatted JSON to your clipboard with a single click.") ]),
+      li([ text("Download the formatted JSON as a file for offline use.") ]),
+      li([ text("Works entirely in your browser for privacy and security.") ])
+    ]),
+
+    h2([ text("How to Use the JSON Formatter") ]),
+    ol([
+      li([ text("Paste your JSON data into the text area or load it from a file.") ]),
+      li([ text("Set your preferred number of spaces per indent (default is 2).") ]),
+      li([ text("Click the 'Format' button to format your JSON.") ]),
+      li([ text("Copy the formatted JSON to your clipboard or save it as a file.") ]),
+      li([ text("Enjoy cleaner, more readable JSON data!") ])
+    ]),
+
+    h2([ text("Who Can Benefit from This Tool?") ]),
+    p([ text("Our JSON Formatter is perfect for:") ]),
+    ul([
+      li([ text("Web developers debugging API responses or working on front-end/back-end integration.") ]),
+      li([ text("Data analysts processing JSON data from various sources.") ]),
+      li([ text("Students learning about JSON in programming or data science courses.") ]),
+      li([ text("Anyone working with JSON who wants a simple and effective formatting tool.") ])
+    ]),
+
+    h2([ text("Frequently Asked Questions") ]),
+    h3([ text("Is this tool free to use?") ]),
+    p([ text("Yes! The JSON Formatter is completely free. There are no hidden fees, subscriptions, or signups required.") ]),
+    h3([ text("Is my data secure?") ]),
+    p([ text("Absolutely. All formatting is done locally in your browser. Your JSON data never leaves your device, ensuring complete privacy and security.") ]),
+    h3([ text("Can I format large JSON files?") ]),
+    p([ text("Yes, our tool can handle large JSON files. However, the performance may depend on your device's capabilities.") ]),
+
+    h2([ text("Support Us") ]),
+    p([ text("If you find our JSON Formatter helpful, consider supporting us on Patreon. Your support helps us keep the tool free and allows us to develop more useful web applications.") ]),
+
+    h2([ text("Try Our Other Free Tools") ]),
+    p([ text("Free App Kit offers a variety of free web applications to simplify your tasks. From randomizing lines of text to analyzing word counts, we have tools designed to make your life easier. Check them out and see how they can help you!") ])
+  ])
 };
 
 export const commands = [

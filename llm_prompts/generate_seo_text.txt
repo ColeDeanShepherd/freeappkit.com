@@ -1,0 +1,12 @@
+I have a free web tool that can _______. I'm trying to improve the SEO of the webpage, and I need content. Can you come up with human-sounding content to fill out the webpage? At least 500 words if possible.
+
+Please generate HTML in the following format:
+
+```
+h2([ text("h2 text here") ]),
+p([ text("p text ere") ]),
+...
+```
+
+Here's some text I copy/pasted from the page for reference:
+

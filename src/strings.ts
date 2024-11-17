@@ -426,5 +426,149 @@ export const strings = {
     _13: {
         en: "To use our free word counter tool, simply paste your text into the input box above. The tool will automatically count the number of characters, words, sentences, and lines in your text. You can also upload a text file by clicking \"Load from file\", or clear the text with the \"Clear\" button.",
         es: "Para usar nuestra herramienta gratuita de contador de palabras, simplemente pega tu texto en el cuadro de entrada arriba. La herramienta contará automáticamente el número de caracteres, palabras, oraciones y líneas en tu texto. También puedes cargar un archivo de texto haciendo clic en \"Cargar desde archivo\" o borrar el texto con el botón \"Borrar\".",
+    },
+    "ee121015-57da-40d3-bc8e-a8f5d9f42060": {
+        "en": "Free Online JSON Formatter Tool: Format JSON Data in Seconds",
+        "es": "Herramienta gratuita en l\u00EDnea para formatear JSON: Formatear datos JSON en segundos"
+    },
+    "68da79d1-822d-46f9-868a-59d1b9d055f8": {
+        "en": "JSON Formatter - Free Online Tool to Format Your JSON Data",
+        "es": "Formateador JSON - Herramienta en l\u00EDnea gratuita para formatear sus datos JSON"
+    },
+    "edd00aee-eeb6-42d3-8d01-902e96513980": {
+        "en": "Welcome to Free App Kit\u2019s JSON Formatter, your go-to tool for easily formatting JSON data. Whether you're a developer working on APIs, a data enthusiast parsing JSON files, or someone learning about JSON, our tool is here to help. It's fast, reliable, and completely free to use.",
+        "es": "Bienvenido al Formateador JSON de Free App Kit, su herramienta indispensable para formatear f\u00E1cilmente datos JSON. Ya sea que seas un desarrollador trabajando en APIs, un entusiasta de los datos analizando archivos JSON, o alguien aprendiendo acerca de JSON, nuestra herramienta est\u00E1 aqu\u00ED para ayudarte. Es r\u00E1pido, confiable y completamente gratis de usar."
+    },
+    "1147b53e-4757-446c-bc43-00c2ee1b73eb": {
+        "en": "Why Use a JSON Formatter?",
+        "es": "\u00BFPor qu\u00E9 usar un formateador JSON?"
+    },
+    "daae6fd5-1269-4b9d-a4c1-3aa3832d6af9": {
+        "en": "JSON (JavaScript Object Notation) is widely used for transmitting data in web applications, APIs, and more. However, JSON data can sometimes be compact or minified, making it hard to read and debug. A JSON Formatter makes the data human-readable by adding proper indentation and line breaks.",
+        "es": "JSON (JavaScript Object Notation) se utiliza ampliamente para transmitir datos en aplicaciones web, APIs y m\u00E1s. Sin embargo, los datos JSON a veces pueden ser compactos o minificados, lo que dificulta leerlos y depurarlos. Un Formateador de JSON hace que los datos sean legibles para humanos agregando la indentaci\u00F3n y los saltos de l\u00EDnea adecuados."
+    },
+    "ae192580-b54a-4f7e-a4b4-50787b0ca600": {
+        "en": "With our JSON Formatter, you can quickly and efficiently format your JSON data, saving time and reducing errors. Plus, you can choose the number of spaces per indent to match your preferred style.",
+        "es": "Con nuestro Formateador JSON, puedes formatear r\u00E1pidamente y eficientemente tus datos JSON, ahorrando tiempo y reduciendo errores. Adem\u00E1s, puedes elegir el n\u00FAmero de espacios por sangr\u00EDa para que coincida con tu estilo preferido."
+    },
+    "9a9cf115-4d95-4eb0-9c99-26f4ac6346cb": {
+        "en": "Features of Our JSON Formatter Tool",
+        "es": "Caracter\u00EDsticas de Nuestra Herramienta Formateadora de JSON"
+    },
+    "f70fd391-45c3-4228-a2be-77cc470dbf44": {
+        "en": "Free and easy to use with no signup required.",
+        "es": "Gratis y f\u00E1cil de usar sin necesidad de registro."
+    },
+    "b24ac69e-c81a-4b78-92e4-5ec2b9dc81f4": {
+        "en": "Format JSON instantly by pasting your data or uploading a file.",
+        "es": "Formatea JSON al instante pegando tus datos o subiendo un archivo."
+    },
+    "2dba46b8-59a3-4ed6-bff6-28c7e3583ad1": {
+        "en": "Adjustable spaces per indent to customize the output.",
+        "es": "Espacios ajustables por sangr\u00EDa para personalizar la salida."
+    },
+    "2c2685a9-c07c-4e07-98fb-3f25104adc29": {
+        "en": "Copy formatted JSON to your clipboard with a single click.",
+        "es": "Copia el JSON formateado en tu portapapeles con un solo clic."
+    },
+    "fecbd15b-d173-4abe-8a49-71ade62a928f": {
+        "en": "Download the formatted JSON as a file for offline use.",
+        "es": "Descarga el JSON formateado como archivo para uso sin conexi\u00F3n."
+    },
+    "f77c2e86-58c5-4a34-a2a0-dfa441333bb6": {
+        "en": "Works entirely in your browser for privacy and security.",
+        "es": "Funciona completamente en su navegador para privacidad y seguridad."
+    },
+    "7be0dddc-55d7-4bb2-aca3-1ab4dc62693d": {
+        "en": "How to Use the JSON Formatter",
+        "es": "C\u00F3mo usar el formateador JSON"
+    },
+    "ed7b9476-49d8-45a2-9b62-a786a8150394": {
+        "en": "Paste your JSON data into the text area or load it from a file.",
+        "es": "Pega tus datos JSON en el \u00E1rea de texto o c\u00E1rgalos desde un archivo."
+    },
+    "adf96fd0-155e-4b3d-87aa-d7b7266cd7bc": {
+        "en": "Set your preferred number of spaces per indent (default is 2).",
+        "es": "Establezca su n\u00FAmero preferido de espacios por indentaci\u00F3n (por defecto son 2)."
+    },
+    "2e796fb1-8687-4562-9360-b261df1ce8c3": {
+        "en": "Click the 'Format' button to format your JSON.",
+        "es": "Haga clic en el bot\u00F3n 'Formato' para formatear su JSON."
+    },
+    "286cf28b-30db-4b28-999f-41996b035c48": {
+        "en": "Copy the formatted JSON to your clipboard or save it as a file.",
+        "es": "Copia el JSON formateado a tu portapapeles o gu\u00E1rdalo como un archivo."
+    },
+    "b4f581dd-cb6b-4b38-b2fe-018391b0c612": {
+        "en": "Enjoy cleaner, more readable JSON data!",
+        "es": "Disfruta de datos JSON m\u00E1s limpios y legibles!"
+    },
+    "7212bd7e-9cba-482b-b324-6b1cf8bad72c": {
+        "en": "Who Can Benefit from This Tool?",
+        "es": "\u00BFQui\u00E9n puede beneficiarse de esta herramienta?"
+    },
+    "3f15a62b-202f-4b48-a774-bb53a4dc9926": {
+        "en": "Our JSON Formatter is perfect for:",
+        "es": "Nuestro Formateador JSON es perfecto para:"
+    },
+    "3344d058-e04d-45bd-a567-7e657723933b": {
+        "en": "Web developers debugging API responses or working on front-end/back-end integration.",
+        "es": "Desarrolladores web depurando respuestas de API o trabajando en la integraci\u00F3n de front-end/back-end."
+    },
+    "c12ad039-2428-4e01-9546-5091169f555f": {
+        "en": "Data analysts processing JSON data from various sources.",
+        "es": "Analistas de datos procesando datos JSON de diversas fuentes."
+    },
+    "f7b684c3-31c0-40bb-9427-605e2fb331c0": {
+        "en": "Students learning about JSON in programming or data science courses.",
+        "es": "Estudiantes aprendiendo sobre JSON en cursos de programaci\u00F3n o ciencia de datos."
+    },
+    "5c4112aa-28aa-42c0-9b73-aca3484bcbb7": {
+        "en": "Anyone working with JSON who wants a simple and effective formatting tool.",
+        "es": "Cualquiera que trabaje con JSON y quiera una herramienta de formato simple y efectiva."
+    },
+    "47eedc11-ae32-475f-a8ee-5f307b268956": {
+        "en": "Frequently Asked Questions",
+        "es": "Preguntas frecuentes"
+    },
+    "a7668152-2a7b-427d-bfdd-e585559c0f0f": {
+        "en": "Is this tool free to use?",
+        "es": "\u00BFEs este la herramienta gratis para usar?"
+    },
+    "7ac66444-1373-470d-9a28-9bfb23a499b9": {
+        "en": "Yes! The JSON Formatter is completely free. There are no hidden fees, subscriptions, or signups required.",
+        "es": "\u00A1S\u00ED! El JSON Formatter es completamente gratuito. No hay tarifas ocultas, suscripciones ni registros requeridos."
+    },
+    "f3c11d9b-72cf-4b16-996f-00db8c8e93e6": {
+        "en": "Is my data secure?",
+        "es": "\u00BFEst\u00E1n seguros mis datos?"
+    },
+    "de3064d4-59c9-4743-b86b-e122fe64fe1a": {
+        "en": "Absolutely. All formatting is done locally in your browser. Your JSON data never leaves your device, ensuring complete privacy and security.",
+        "es": "Absolutamente. Todo el formato se realiza localmente en tu navegador. Tus datos JSON nunca salen de tu dispositivo, asegurando completa privacidad y seguridad."
+    },
+    "e4feeed2-f814-4279-abd5-196ff8b02fe4": {
+        "en": "Can I format large JSON files?",
+        "es": "\u00BFPuedo formatear archivos JSON grandes?"
+    },
+    "d7b93e5b-2322-44f0-b297-76537f660559": {
+        "en": "Yes, our tool can handle large JSON files. However, the performance may depend on your device's capabilities.",
+        "es": "S\u00ED, nuestra herramienta puede manejar archivos JSON grandes. Sin embargo, el rendimiento puede depender de las capacidades de su dispositivo."
+    },
+    "26938d2b-f31c-4f05-b17e-03af3cfae8f5": {
+        "en": "Support Us",
+        "es": "Ap\u00F3yanos"
+    },
+    "b655ae68-1fb1-41fe-8d8c-f4eb4ef8a634": {
+        "en": "If you find our JSON Formatter helpful, consider supporting us on Patreon. Your support helps us keep the tool free and allows us to develop more useful web applications.",
+        "es": "Si encuentra \u00FAtil nuestro Formateador JSON, considere apoyarnos en Patreon. Su apoyo nos ayuda a mantener la herramienta gratuita y nos permite desarrollar aplicaciones web m\u00E1s \u00FAtiles."
+    },
+    "44d32449-4684-4b94-9f4e-6bca223cd028": {
+        "en": "Try Our Other Free Tools",
+        "es": "Prueba nuestras otras herramientas gratuitas"
+    },
+    "afa5cd4e-607b-4982-8fb8-226fbac1cc72": {
+        "en": "Free App Kit offers a variety of free web applications to simplify your tasks. From randomizing lines of text to analyzing word counts, we have tools designed to make your life easier. Check them out and see how they can help you!",
+        "es": "Free App Kit ofrece una variedad de aplicaciones web gratuitas para simplificar tus tareas. Desde la aleatorizaci\u00F3n de l\u00EDneas de texto hasta el an\u00E1lisis de recuentos de palabras, tenemos herramientas dise\u00F1adas para hacer tu vida m\u00E1s f\u00E1cil. \u00A1\u00C9chalas un vistazo y mira c\u00F3mo te pueden ayudar!"
     }
 };

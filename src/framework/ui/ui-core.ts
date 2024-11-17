@@ -57,6 +57,7 @@ export const div = (propsOrChildren?: NodeProps | Node[], children?: Node[]) => 
 export const span = (propsOrChildren?: NodeProps | Node[], children?: Node[]) => elem('span', propsOrChildren, children);
 export const p = (propsOrChildren?: NodeProps | Node[], children?: Node[]) => elem('p', propsOrChildren, children);
 export const ul = (propsOrChildren?: NodeProps | Node[], children?: Node[]) => elem('ul', propsOrChildren, children);
+export const ol = (propsOrChildren?: NodeProps | Node[], children?: Node[]) => elem('ol', propsOrChildren, children);
 export const li = (propsOrChildren?: NodeProps | Node[], children?: Node[]) => elem('li', propsOrChildren, children);
 
 interface ANodeProps extends NodeProps {
