@@ -1,6 +1,7 @@
 import * as ts from "typescript";
 import * as fs from "fs";
 import * as path from "path";
+import { v4 as uuidv4 } from 'uuid';
 
 export function loadTsConfig(configPath: string): ts.ParsedCommandLine {
   const configFile = ts.readConfigFile(configPath, ts.sys.readFile);
@@ -61,6 +62,49 @@ export function loadTranslations(filePath: string): Record<string, Record<string
 
   traverseNode(sourceFile);
   return translations;
+}
+
+export function addTranslationObjsAndSave(
+  dstFilePath: string,
+  newTranslations: object[]
+) {
+  // Read and parse the source file
+  const fileContent = fs.readFileSync(dstFilePath, "utf-8");
+  const sourceFile = ts.createSourceFile(dstFilePath, fileContent, ts.ScriptTarget.Latest, true);
+  const printer = ts.createPrinter();
+
+  // Transform the AST
+  function traverseNode(node: ts.Node): ts.Node {
+    if (ts.isVariableDeclaration(node) && node.name.getText() === "strings") {
+      const initializer = node.initializer;
+      if (initializer && ts.isObjectLiteralExpression(initializer)) {
+        const newProperties = newTranslations.map((translation, index) => {
+          const translationProperties = Object.entries(translation).map(([lang, text]) =>
+            ts.factory.createPropertyAssignment(ts.factory.createStringLiteral(lang), ts.factory.createStringLiteral(text))
+          );
+          const key = uuidv4();
+          return ts.factory.createPropertyAssignment(
+            ts.factory.createStringLiteral(key), // Assign a unique key name
+            ts.factory.createObjectLiteralExpression(translationProperties, true)
+          );
+        });
+
+        const newInitializer = ts.factory.createObjectLiteralExpression([
+          ...initializer.properties,
+          ...newProperties,
+        ], true);
+
+        return ts.factory.updateVariableDeclaration(node, node.name, node.exclamationToken, node.type, newInitializer);
+      }
+    }
+    return ts.visitEachChild(node, traverseNode, undefined);
+  }
+
+  const result = ts.visitNode(sourceFile, traverseNode);
+
+  // Print and save the updated file
+  const newFileContent = printer.printNode(ts.EmitHint.Unspecified, result, sourceFile);
+  fs.writeFileSync(dstFilePath, newFileContent);
 }
 
 export function isTextFunctionCall(node: ts.Node, sourceFile: ts.SourceFile): boolean {

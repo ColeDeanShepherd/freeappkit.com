@@ -1,14 +1,17 @@
 import * as ts from "typescript";
 import * as path from "path";
 import dotenv from 'dotenv';
+import OpenAI from 'openai';
 
-import { getStringLiteralArguments, isTextFunctionCall, loadTranslations, loadTsConfig } from "../framework/precompile/precompileUtil";
+import { addTranslationObjsAndSave, getStringLiteralArguments, isTextFunctionCall, loadTranslations, loadTsConfig } from "../framework/precompile/precompileUtil";
+import { getOpenAiApiKey } from "../config";
 
 dotenv.config();
 
-//console.log(process.env.OPEN_AI_API_KEY);
-
 let translations: Record<string, Record<string, string>>;
+let locales: Set<string> = new Set(["en", "es"]);
+
+let openAiClient: OpenAI;
 
 function isStringLiteralTranslated(literal: string): boolean {
   return Object.keys(translations).some(
@@ -20,7 +23,7 @@ function isStringLiteralTranslated(literal: string): boolean {
   );
 }
 
-function traverseNode(node: ts.Node, sourceFile: ts.SourceFile) {
+function traverseNode(node: ts.Node, sourceFile: ts.SourceFile, newTranslations: object[]) {
   if (isTextFunctionCall(node, sourceFile)) {
     const callExpression = node as ts.CallExpression;
     const stringLiterals = getStringLiteralArguments(callExpression);
@@ -29,24 +32,110 @@ function traverseNode(node: ts.Node, sourceFile: ts.SourceFile) {
       const isTranslated = isStringLiteralTranslated(literal);
 
       if (!isTranslated) {
-        console.error(`Validation failed: "${literal}" is missing or lacks translations.`);
+        console.log(`Generating translations for: "${literal}"`);
+        const translations = autoTranslate(literal);
+        newTranslations.push(translations);
+        console.log(`Translations: ${JSON.stringify(translations)}`);
+
+        //console.error(`Validation failed: "${literal}" is missing or lacks translations.`);
       }
     });
   }
 
-  ts.forEachChild(node, (child) => traverseNode(child, sourceFile));
+  ts.forEachChild(node, (child) => traverseNode(child, sourceFile, newTranslations));
 }
 
 // Load and analyze source files
 function analyzeFiles(files: string[], compilerOptions: ts.CompilerOptions) {
   const program = ts.createProgram(files, compilerOptions);
-  const checker = program.getTypeChecker();
+  //const checker = program.getTypeChecker();
+
+  const newTranslations: object[] = [];
 
   for (const sourceFile of program.getSourceFiles()) {
     if (!sourceFile.isDeclarationFile) {
       //console.log(`Analyzing file: ${sourceFile.fileName}`);
-      traverseNode(sourceFile, sourceFile);
+      traverseNode(sourceFile, sourceFile, newTranslations);
     }
+  }
+
+  addTranslationObjsAndSave(path.resolve("src/strings.ts"), newTranslations);
+}
+
+async function autoTranslate(text: string) {
+  ensureOpenAiClientInitialized();
+  
+  const escapedText = text.replace(/"/g, '\\"');
+
+  const localizedStrObj = await attemptNTimes(3, async () => {
+    const chatCompletion = await openAiClient.chat.completions.create({
+      messages: [{
+        role: 'user',
+        content: `Please generate a JSON object (and nothing else) containing English and Spanish translations of the string "${escapedText}" in the following format:
+
+                  \`\`\`
+                  {
+                    "en": "English translation here",
+                    "es": "Spanish translation here"
+                  }
+                  \`\`\``
+      }],
+      model: 'gpt-3.5-turbo',
+    });
+
+    const responseText = chatCompletion.choices[0].message.content;
+    if (responseText === null) {
+      throw new Error('Failed to get response from OpenAI ChatGPT.');
+    }
+
+    const jsonObj = extractJsonObjFromChatGptResponse(responseText);
+    if (jsonObj === undefined) {
+      throw new Error('Failed to extract JSON object string from OpenAI ChatGPT response.');
+    }
+
+    if (!jsonObj.hasOwnProperty('en') || !jsonObj.hasOwnProperty('es')) {
+      throw new Error('OpenAI ChatGPT response does not contain the expected JSON object.');
+    }
+
+    return jsonObj;
+  });
+
+  return localizedStrObj;
+}
+
+function attemptNTimes<T>(n: number, fn: () => Promise<T>): Promise<T> {
+  return fn().catch((err) => {
+    if (n === 1) {
+      throw err;
+    }
+
+    return attemptNTimes(n - 1, fn);
+  });
+}
+
+function extractJsonObjFromChatGptResponse(responseText: string): object | undefined {
+  const firstLeftCurlyBraceIndex = responseText.indexOf('{');
+  if (firstLeftCurlyBraceIndex === -1) {
+    return undefined;
+  }
+
+  const lastRightCurlyBraceIndex = responseText.lastIndexOf('}');
+  if (lastRightCurlyBraceIndex === -1) {
+    return undefined;
+  }
+  
+  const jsonObjStr = responseText.substring(firstLeftCurlyBraceIndex, lastRightCurlyBraceIndex + 1);
+  const jsonObj = JSON.parse(jsonObjStr);
+
+  return jsonObj;
+}
+
+function ensureOpenAiClientInitialized() {
+  if (!openAiClient) {
+    const apiKey = getOpenAiApiKey();
+    openAiClient = new OpenAI({
+      apiKey: apiKey
+    });
   }
 }
 
