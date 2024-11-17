@@ -23,30 +23,34 @@ function isStringLiteralTranslated(literal: string): boolean {
   );
 }
 
-function traverseNode(node: ts.Node, sourceFile: ts.SourceFile, newTranslations: object[]) {
+async function traverseNode(node: ts.Node, sourceFile: ts.SourceFile, newTranslations: object[]) {
   if (isTextFunctionCall(node, sourceFile)) {
     const callExpression = node as ts.CallExpression;
     const stringLiterals = getStringLiteralArguments(callExpression);
 
-    stringLiterals.forEach((literal) => {
+    for (const literal of stringLiterals) {
       const isTranslated = isStringLiteralTranslated(literal);
 
       if (!isTranslated) {
         console.log(`Generating translations for: "${literal}"`);
-        const translations = autoTranslate(literal);
+        const translations = await autoTranslate(literal)
         newTranslations.push(translations);
-        console.log(`Translations: ${JSON.stringify(translations)}`);
+        console.log(`Translations for "${literal}": ${JSON.stringify(translations)}`);
 
         //console.error(`Validation failed: "${literal}" is missing or lacks translations.`);
       }
-    });
+    }
   }
 
-  ts.forEachChild(node, (child) => traverseNode(child, sourceFile, newTranslations));
+  const children: readonly ts.Node[] = node.getChildren(sourceFile);
+
+  for (const child of children) {
+    await traverseNode(child, sourceFile, newTranslations);
+  }
 }
 
 // Load and analyze source files
-function analyzeFiles(files: string[], compilerOptions: ts.CompilerOptions) {
+async function analyzeFiles(files: string[], compilerOptions: ts.CompilerOptions) {
   const program = ts.createProgram(files, compilerOptions);
   //const checker = program.getTypeChecker();
 
@@ -55,7 +59,7 @@ function analyzeFiles(files: string[], compilerOptions: ts.CompilerOptions) {
   for (const sourceFile of program.getSourceFiles()) {
     if (!sourceFile.isDeclarationFile) {
       //console.log(`Analyzing file: ${sourceFile.fileName}`);
-      traverseNode(sourceFile, sourceFile, newTranslations);
+      await traverseNode(sourceFile, sourceFile, newTranslations);
     }
   }
 
@@ -140,14 +144,14 @@ function ensureOpenAiClientInitialized() {
 }
 
 // Main function
-function main() {
+async function main() {
   const configPath = path.resolve("tsconfig.json");
   const parsedCommandLine = loadTsConfig(configPath);
 
   const translationsFile = path.resolve("src/strings.ts");
   translations = loadTranslations(translationsFile);
 
-  analyzeFiles(parsedCommandLine.fileNames, parsedCommandLine.options);
+  await analyzeFiles(parsedCommandLine.fileNames, parsedCommandLine.options);
 }
 
-main();
+await main();

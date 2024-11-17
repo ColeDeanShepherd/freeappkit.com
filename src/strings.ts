@@ -426,5 +426,5 @@ export const strings = {
     _13: {
         en: "To use our free word counter tool, simply paste your text into the input box above. The tool will automatically count the number of characters, words, sentences, and lines in your text. You can also upload a text file by clicking \"Load from file\", or clear the text with the \"Clear\" button.",
         es: "Para usar nuestra herramienta gratuita de contador de palabras, simplemente pega tu texto en el cuadro de entrada arriba. La herramienta contará automáticamente el número de caracteres, palabras, oraciones y líneas en tu texto. También puedes cargar un archivo de texto haciendo clic en \"Cargar desde archivo\" o borrar el texto con el botón \"Borrar\".",
-    },
+    }
 };
