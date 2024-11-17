@@ -38,6 +38,6 @@ export function trackCommandRun(command: ICommand, args: { [key: string]: any })
   trackEvent('run_command', {
     name: command.name,
     //args: JSON.stringify(args),
-    args: "REDACTED"
+    //args: "REDACTED"
   });
 }
