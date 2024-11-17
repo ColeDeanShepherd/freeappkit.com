@@ -650,5 +650,18 @@ export const strings = {
     "e8a6f920-58dd-43dd-ab82-758ca7eb7958": {
         "en": "Trim spaces from the beginning and end of each line",
         "es": "Recorta los espacios del principio y el final de cada l\u00EDnea"
+    },
+
+    "08c727bb-d56f-40fd-83c5-db6767912862": {
+        "en": "/remove-accents-from-text",
+        "es": "/eliminar-acentos-del-texto"
+    },
+    "549dd73f-a01d-43d4-bf6b-6ea9ce46ce8c": {
+        "en": "/trim-line-space",
+        "es": "/espacio-de-línea-de-corte"
+    },
+    "83d8a9b2-5320-4f8a-ae23-4f9b992ec5cf": {
+        "en": "/generate-guids",
+        "es": "/generar-guids"
     }
 };

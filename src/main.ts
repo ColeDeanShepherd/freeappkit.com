@@ -7,7 +7,7 @@ import { changeSubdomain, getSubdomain, getUrlWithNewSubdomain } from './framewo
 
 import './ui/style.css'
 
-import { commands, randomizeLinesCommand } from './commands';
+import { commands, generateGuidsCommand, randomizeLinesCommand } from './commands';
 import { initAnalytics, trackPageView, trackPageViewConversion } from './framework/analytics';
 import { getFirstSupportedPreferredLanguage, getLanguage, MaybeLocalizedString, setLanguage, setStrings, toLocalizedString, translate } from './framework/localization';
 import { strings } from './strings';
@@ -98,6 +98,12 @@ function mkNotFoundPage() {
 const commandViewPropsOverrides = [
   {
     command: randomizeLinesCommand,
+    viewProps: {
+      autoRunOnArgChange: false
+    } as CommandViewProps
+  },
+  {
+    command: generateGuidsCommand,
     viewProps: {
       autoRunOnArgChange: false
     } as CommandViewProps

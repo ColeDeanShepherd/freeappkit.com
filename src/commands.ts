@@ -1,6 +1,7 @@
 import { shuffleLines, removeEmptyLines, sortLines, removeAccents, lines } from './framework/textUtil';
 import { ICommand, IType } from './command';
 import { strings } from './strings';
+import { v4 as uuidv4 } from 'uuid';
 import { div, h2, h3, li, ol, p, text, ul } from './framework/ui/ui-core';
 
 export const randomizeLinesCommand: ICommand = {
@@ -387,6 +388,25 @@ export const trimLeadingTrailingSpaceCommand: ICommand = {
   runFn: (args) => lines(args['text']).map((line: string) => line.trim()).join('\n'),
 };
 
+export const generateGuidsCommand: ICommand = {
+  name: "Generate GUIDs",
+  description: "Generate GUIDs",
+  parameters: [
+    {
+      name: "numGuids",
+      type: { kind: 'number' },
+      description: "Number of GUIDs to generate",
+      defaultValue: 5
+    }
+  ],
+  returnType: { kind: 'text' },
+  runFn: (args) => {
+    const numGuids = args['numGuids'];
+    const guids = Array.from({ length: numGuids }, () => uuidv4());
+    return guids.join('\n');
+  },
+};
+
 export const commands = [
   randomizeLinesCommand,
   removeEmptyLinesCommand,
@@ -404,5 +424,6 @@ export const commands = [
   addToEndOfEachLineCommand,
   jsonFormatterCommand,
   removeAccentsFromTextCommand,
-  trimLeadingTrailingSpaceCommand
+  trimLeadingTrailingSpaceCommand,
+  generateGuidsCommand
 ];
