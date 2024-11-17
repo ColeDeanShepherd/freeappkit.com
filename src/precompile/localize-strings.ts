@@ -84,7 +84,7 @@ async function autoTranslate(text: string) {
                   }
                   \`\`\``
       }],
-      model: 'gpt-3.5-turbo',
+      model: 'gpt-4o'
     });
 
     const responseText = chatCompletion.choices[0].message.content;
@@ -137,6 +137,11 @@ function extractJsonObjFromChatGptResponse(responseText: string): object | undef
 function ensureOpenAiClientInitialized() {
   if (!openAiClient) {
     const apiKey = getOpenAiApiKey();
+
+    if (!apiKey) {
+      throw new Error('OpenAI API key not found in environment variables.');
+    }
+
     openAiClient = new OpenAI({
       apiKey: apiKey
     });

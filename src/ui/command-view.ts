@@ -224,7 +224,7 @@ export const getCommandPathName = (command: ICommand) => {
   if (command.pathname) {
     return command.pathname;
   } else {
-    return '/' + translate(command.name).toLowerCase().replace(/ /g, '-');
+    return '/' + translate(command.name).toLowerCase().replace(/[ /]/g, '-');
   }
 }
 

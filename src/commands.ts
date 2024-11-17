@@ -1,4 +1,4 @@
-import { shuffleLines, removeEmptyLines, sortLines } from './framework/textUtil';
+import { shuffleLines, removeEmptyLines, sortLines, removeAccents, lines } from './framework/textUtil';
 import { ICommand, IType } from './command';
 import { strings } from './strings';
 import { div, h2, h3, li, ol, p, text, ul } from './framework/ui/ui-core';
@@ -359,6 +359,34 @@ export const jsonFormatterCommand: ICommand = {
   ])
 };
 
+export const removeAccentsFromTextCommand: ICommand = {
+  name: "Remove Accents From Text",
+  description: "Remove accents from text",
+  parameters: [
+    {
+      name: "text",
+      type: { kind: 'text' },
+      description: "Paste your text below"
+    }
+  ],
+  returnType: { kind: 'text' },
+  runFn: (args) => removeAccents(args['text']),
+};
+
+export const trimLeadingTrailingSpaceCommand: ICommand = {
+  name: "Trim Line Space",
+  description: "Trim line space",
+  parameters: [
+    {
+      name: "text",
+      type: { kind: 'text' },
+      description: "Paste your text below"
+    }
+  ],
+  returnType: { kind: 'text' },
+  runFn: (args) => lines(args['text']).map((line: string) => line.trim()).join('\n'),
+};
+
 export const commands = [
   randomizeLinesCommand,
   removeEmptyLinesCommand,
@@ -374,5 +402,7 @@ export const commands = [
   urlEncodeCommand,
   urlDecodeCommand,
   addToEndOfEachLineCommand,
-  jsonFormatterCommand
+  jsonFormatterCommand,
+  removeAccentsFromTextCommand,
+  trimLeadingTrailingSpaceCommand
 ];
