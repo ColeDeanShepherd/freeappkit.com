@@ -611,22 +611,6 @@ export const strings = {
         "en": "Number of non-space characters",
         "es": "N\u00FAmero de caracteres sin espacio"
     },
-    "ab34aeb4-f8e1-4cef-b03d-05c08a19acc8": {
-        "en": "number of words",
-        "es": "n\u00FAmero de palabras"
-    },
-    "bd9dfc10-f057-460d-915d-5462b02904d4": {
-        "en": "Number of sentences",
-        "es": "N\u00FAmero de oraciones"
-    },
-    "5fa32f76-b60d-406a-b1c4-7ed3fa487a10": {
-        "en": "Number of Lines",
-        "es": "N\u00FAmero de L\u00EDneas"
-    },
-    "9d7638a9-2034-4cb7-b6b1-77f3b2d2c9f0": {
-        "en": "Number of non-empty lines",
-        "es": "N\u00FAmero de l\u00EDneas no vac\u00EDas"
-    },
     "bf4f4d79-a930-49df-9df6-01f21472f219": {
         "en": "textToAdd",
         "es": "textoParaAgregar"
@@ -651,7 +635,6 @@ export const strings = {
         "en": "Trim spaces from the beginning and end of each line",
         "es": "Recorta los espacios del principio y el final de cada l\u00EDnea"
     },
-
     "08c727bb-d56f-40fd-83c5-db6767912862": {
         "en": "/remove-accents-from-text",
         "es": "/eliminar-acentos-del-texto"
@@ -663,5 +646,69 @@ export const strings = {
     "83d8a9b2-5320-4f8a-ae23-4f9b992ec5cf": {
         "en": "/generate-guids",
         "es": "/generar-guids"
+    },
+    "2d29187f-6956-4982-8e6e-457aebcb5e63": {
+        "en": "Number of Characters",
+        "es": "N\u00FAmero de Caracteres"
+    },
+    "a602fccf-e79c-49c7-839c-8cc21b17ad0f": {
+        "en": "number of non-space characters",
+        "es": "n\u00FAmero de caracteres sin espacio"
+    },
+    "5a481e52-7141-4a40-854d-4082756d2106": {
+        "en": "Number of Words",
+        "es": "N\u00FAmero de Palabras"
+    },
+    "cc2e7ea8-7752-4626-9f7c-601fc14a4bd3": {
+        "en": "number of sentences",
+        "es": "n\u00FAmero de oraciones"
+    },
+    "c22522eb-56d0-46bc-9127-a31427e27294": {
+        "en": "Number of lines",
+        "es": "N\u00FAmero de l\u00EDneas"
+    },
+    "d593ca37-5fd4-4494-9dbd-82c9245e907d": {
+        "en": "Number of non-empty lines",
+        "es": "N\u00FAmero de l\u00EDneas no vac\u00EDas"
+    },
+    "8a409854-dfcb-449d-bb02-1e2c632699a5": {
+        "en": "Generate GUIDs",
+        "es": "Generar GUIDs"
+    },
+    "ca312db1-6781-492d-81ad-ee88c33a1d05": {
+        "en": "number of unique identifiers",
+        "es": "n\u00FAmero de identificadores \u00FAnicos"
+    },
+    "21d58050-6ef5-404d-bf5d-3c3d3c72ff8a": {
+        "en": "Number of GUIDs to generate",
+        "es": "N\u00FAmero de GUIDs para generar"
+    },
+    "38d975a9-24bf-4e27-af14-293ef60828a4": {
+        "en": "numChars",
+        "es": "n\u00FAmeroDeCaracteres"
+    },
+    "e466fb28-a214-41e1-8f03-3715250e742f": {
+        "en": "numNonSpaceChars",
+        "es": "numCaracteresNoEspacio"
+    },
+    "73fc5b63-f344-4cc9-a609-828b37a836be": {
+        "en": "numWords",
+        "es": "numPalabras"
+    },
+    "ed8036d4-edd1-40df-8b9c-84e5403f9882": {
+        "en": "numSentences",
+        "es": "numOraciones"
+    },
+    "e2eb1fb2-69fc-416d-9de9-f8c674f70a52": {
+        "en": "numLines",
+        "es": "n\u00FAmeroDeL\u00EDneas"
+    },
+    "13f6343e-f38c-4c4b-8580-0283b430c5de": {
+        "en": "numNonEmptyLines",
+        "es": "l\u00EDneasNoVac\u00EDas"
+    },
+    "cd10e127-74a8-4a55-821c-bcf524804bba": {
+        "en": "numGuids",
+        "es": "n\u00FAmeroDeGu\u00EDas"
     }
 };

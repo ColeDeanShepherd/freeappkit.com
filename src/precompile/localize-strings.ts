@@ -122,7 +122,9 @@ async function autoTranslate(text: string) {
                     "en": "English translation here",
                     "es": "Spanish translation here"
                   }
-                  \`\`\``
+                  \`\`\`
+                  
+                  NOTE: The "en" property should be the exact string "${escapedText}"`
       }],
       model: 'gpt-4o'
     });
