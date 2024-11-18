@@ -637,8 +637,8 @@ const unitConversionCommands: ICommand[] =
         const toUnitInFromUnits = convertUnit(new Decimal(1), toUnit, fromUnit);
 
         const command: ICommand = {
-          name: `Convert ${fromUnit.name} to ${toUnit.name} (${unitKind.name})`,
-          description: `Convert ${fromUnit.name} to ${toUnit.name} (${unitKind.name}). 1 ${fromUnit.abbreviation} = ${fromUnitInToUnits.toNumber()} ${toUnit.abbreviation}. 1 ${toUnit.abbreviation} = ${toUnitInFromUnits.toNumber()} ${fromUnit.abbreviation}.`,
+          name: `Convert ${unitKind.name} - ${fromUnit.name} to ${toUnit.name}`,
+          description: `Convert ${unitKind.name} - ${fromUnit.name} to ${toUnit.name} (${fromUnit.abbreviation} to ${toUnit.abbreviation}). 1 ${fromUnit.abbreviation} = ${fromUnitInToUnits.toNumber()} ${toUnit.abbreviation}. 1 ${toUnit.abbreviation} = ${toUnitInFromUnits.toNumber()} ${fromUnit.abbreviation}.`,
           parameters: [
             {
               name: "value",
