@@ -3,6 +3,7 @@ import { ICommand, IType } from './command';
 import { strings } from './strings';
 import { v4 as uuidv4 } from 'uuid';
 import { div, h2, h3, li, ol, p, text, ul } from './framework/ui/ui-core';
+import Decimal from 'decimal.js';
 
 export const randomizeLinesCommand: ICommand = {
   name: "Randomize Lines",
@@ -407,6 +408,254 @@ export const generateGuidsCommand: ICommand = {
   },
 };
 
+// #region Unit Conversion
+
+interface IUnit {
+  name: string;
+  abbreviation: string;
+  numBaseUnits: Decimal;
+}
+
+interface IUnitKind {
+  name: string;
+  units: IUnit[];
+  baseUnitName: string;
+}
+
+const unitKinds: IUnitKind[] = [
+  {
+    name: "Length",
+    baseUnitName: "Meters",
+    units: [
+      { name: "Meters", abbreviation: "m", numBaseUnits: new Decimal('1') },
+      { name: "Kilometers", abbreviation: "km", numBaseUnits: new Decimal('1000') },
+      { name: "Centimeters", abbreviation: "cm", numBaseUnits: new Decimal('0.01') },
+      { name: "Millimeters", abbreviation: "mm", numBaseUnits: new Decimal('0.001') },
+      { name: "Miles", abbreviation: "mi", numBaseUnits: new Decimal('1609.344') },
+      { name: "Yards", abbreviation: "yd", numBaseUnits: new Decimal('0.9144') },
+      { name: "Feet", abbreviation: "ft", numBaseUnits: new Decimal('0.3048') },
+      { name: "Inches", abbreviation: "in", numBaseUnits: new Decimal('0.0254') }
+    ]
+  },
+  {
+    name: "Mass",
+    baseUnitName: "Kilograms",
+    units: [
+      { name: "Kilograms", abbreviation: "kg", numBaseUnits: new Decimal('1') },
+      { name: "Grams", abbreviation: "g", numBaseUnits: new Decimal('0.001') },
+      { name: "Milligrams", abbreviation: "mg", numBaseUnits: new Decimal('0.000001') },
+      { name: "Pounds", abbreviation: "lb", numBaseUnits: new Decimal('0.45359237') },
+      { name: "Ounces", abbreviation: "oz", numBaseUnits: new Decimal('0.028349523125') }
+    ]
+  },
+  {
+    name: "Volume",
+    baseUnitName: "Liters",
+    units: [
+      { name: "Liters", abbreviation: "L", numBaseUnits: new Decimal('1') },
+      { name: "Milliliters", abbreviation: "mL", numBaseUnits: new Decimal('0.001') },
+      { name: "Cubic Meters", abbreviation: "m³", numBaseUnits: new Decimal('1000') },
+      { name: "Cubic Centimeters", abbreviation: "cm³", numBaseUnits: new Decimal('0.001') },
+      { name: "Gallons", abbreviation: "gal", numBaseUnits: new Decimal('3.78541') },
+      { name: "Quarts", abbreviation: "qt", numBaseUnits: new Decimal('0.946353') },
+      { name: "Pints", abbreviation: "pt", numBaseUnits: new Decimal('0.473176') },
+      { name: "Cups", abbreviation: "cup", numBaseUnits: new Decimal('0.236588') },
+      { name: "Fluid Ounces", abbreviation: "fl oz", numBaseUnits: new Decimal('0.0295735') }
+    ]
+  },
+  {
+    name: "Temperature",
+    baseUnitName: "Celsius",
+    units: [
+      { name: "Celsius", abbreviation: "°C", numBaseUnits: new Decimal('1') },
+      { name: "Fahrenheit", abbreviation: "°F", numBaseUnits: new Decimal('1').times(5).div(9).plus(32) },
+      { name: "Kelvin", abbreviation: "K", numBaseUnits: new Decimal('1').plus(273.15) }
+    ]
+  },
+  {
+    name: "Time",
+    baseUnitName: "Seconds",
+    units: [
+      { name: "Seconds", abbreviation: "s", numBaseUnits: new Decimal('1') },
+      { name: "Minutes", abbreviation: "min", numBaseUnits: new Decimal('60') },
+      { name: "Hours", abbreviation: "hr", numBaseUnits: new Decimal('3600') },
+      { name: "Days", abbreviation: "days", numBaseUnits: new Decimal('86400') },
+      { name: "Weeks", abbreviation: "weeks", numBaseUnits: new Decimal('604800') },
+      { name: "Years", abbreviation: "years", numBaseUnits: new Decimal('31536000') }
+    ]
+  },
+  {
+    name: "Area",
+    baseUnitName: "Square Meters",
+    units: [
+      { name: "Square Meters", abbreviation: "m²", numBaseUnits: new Decimal('1') },
+      { name: "Square Kilometers", abbreviation: "km²", numBaseUnits: new Decimal('1000000') },
+      { name: "Square Centimeters", abbreviation: "cm²", numBaseUnits: new Decimal('0.0001') },
+      { name: "Square Millimeters", abbreviation: "mm²", numBaseUnits: new Decimal('0.000001') },
+      { name: "Hectares", abbreviation: "ha", numBaseUnits: new Decimal('10000') },
+      { name: "Acres", abbreviation: "ac", numBaseUnits: new Decimal('4046.86') }
+    ]
+  },
+  {
+    name: "Speed",
+    baseUnitName: "Meters per Second",
+    units: [
+      { name: "Meters per Second", abbreviation: "m/s", numBaseUnits: new Decimal('1') },
+      { name: "Kilometers per Hour", abbreviation: "km/h", numBaseUnits: new Decimal('1').times(3600).div(1000) },
+      { name: "Miles per Hour", abbreviation: "mph", numBaseUnits: new Decimal('1').times(3600).div(1609.344) },
+      { name: "Knots", abbreviation: "kn", numBaseUnits: new Decimal('1').times(1852).div(3600) },
+      { name: "Feet per Second", abbreviation: "ft/s", numBaseUnits: new Decimal('0.3048') },
+    ]
+  },
+  {
+    name: "Pressure",
+    baseUnitName: "Pascals",
+    units: [
+      { name: "Pascals", abbreviation: "Pa", numBaseUnits: new Decimal('1') },
+      { name: "Kilopascals", abbreviation: "kPa", numBaseUnits: new Decimal('1000') },
+      { name: "Megapascals", abbreviation: "MPa", numBaseUnits: new Decimal('1000000') },
+      { name: "Bars", abbreviation: "bar", numBaseUnits: new Decimal('100000') },
+      { name: "Millibars", abbreviation: "mbar", numBaseUnits: new Decimal('100') },
+      { name: "Pounds per Square Inch", abbreviation: "psi", numBaseUnits: new Decimal('6894.76') },
+      { name: "Atmospheres", abbreviation: "atm", numBaseUnits: new Decimal('101325') },
+      { name: "Millimeters of Mercury", abbreviation: "mmHg", numBaseUnits: new Decimal('133.322') },
+      { name: "Inches of Mercury", abbreviation: "inHg", numBaseUnits: new Decimal('3386.39') }
+    ]
+  },
+  {
+    name: "Energy",
+    baseUnitName: "Joules",
+    units: [
+      { name: "Joules", abbreviation: "J", numBaseUnits: new Decimal('1') },
+      { name: "Kilojoules", abbreviation: "kJ", numBaseUnits: new Decimal('1000') },
+      { name: "Calories", abbreviation: "cal", numBaseUnits: new Decimal('4.184') },
+      { name: "Kilocalories", abbreviation: "kcal", numBaseUnits: new Decimal('4184') },
+      { name: "Watt-Hours", abbreviation: "Wh", numBaseUnits: new Decimal('3600') },
+      { name: "Kilowatt-Hours", abbreviation: "kWh", numBaseUnits: new Decimal('3600000') },
+      { name: "Electronvolts", abbreviation: "eV", numBaseUnits: new Decimal('1.60218e-19') }
+    ]
+  },
+  {
+    name: "Power",
+    baseUnitName: "Watts",
+    units: [
+      { name: "Watts", abbreviation: "W", numBaseUnits: new Decimal('1') },
+      { name: "Kilowatts", abbreviation: "kW", numBaseUnits: new Decimal('1000') },
+      { name: "Megawatts", abbreviation: "MW", numBaseUnits: new Decimal('1000000') },
+      { name: "Gigawatts", abbreviation: "GW", numBaseUnits: new Decimal('1000000000') },
+      { name: "Horsepower", abbreviation: "hp", numBaseUnits: new Decimal('745.7') }
+    ]
+  },
+  {
+    name: "Force",
+    baseUnitName: "Newtons",
+    units: [
+      { name: "Newtons", abbreviation: "N", numBaseUnits: new Decimal('1') },
+      { name: "Kilonewtons", abbreviation: "kN", numBaseUnits: new Decimal('1000') },
+      { name: "Pounds of Force", abbreviation: "lbf", numBaseUnits: new Decimal('4.44822') }
+    ]
+  },
+  {
+    name: "Data",
+    baseUnitName: "Bytes",
+    units: [
+      { name: "Bytes", abbreviation: "B", numBaseUnits: new Decimal('1') },
+      { name: "Kilobytes", abbreviation: "KB", numBaseUnits: new Decimal('1024') },
+      { name: "Megabytes", abbreviation: "MB", numBaseUnits: new Decimal('1048576') },
+      { name: "Gigabytes", abbreviation: "GB", numBaseUnits: new Decimal('1073741824') },
+      { name: "Terabytes", abbreviation: "TB", numBaseUnits: new Decimal('1099511627776') },
+      { name: "Petabytes", abbreviation: "PB", numBaseUnits: new Decimal('1125899906842624') },
+      { name: "Exabytes", abbreviation: "EB", numBaseUnits: new Decimal('1152921504606846976') },
+      { name: "Zettabytes", abbreviation: "ZB", numBaseUnits: new Decimal('1180591620717411303424') },
+      { name: "Yottabytes", abbreviation: "YB", numBaseUnits: new Decimal('1208925819614629174706176') },
+    ]
+  },
+  {
+    name: "Frequency",
+    baseUnitName: "Hertz",
+    units: [
+      { name: "Hertz", abbreviation: "Hz", numBaseUnits: new Decimal('1') },
+      { name: "Kilohertz", abbreviation: "kHz", numBaseUnits: new Decimal('1000') },
+      { name: "Megahertz", abbreviation: "MHz", numBaseUnits: new Decimal('1000000') },
+      { name: "Gigahertz", abbreviation: "GHz", numBaseUnits: new Decimal('1000000000') }
+    ]
+  },
+  {
+    name: "Angle",
+    baseUnitName: "Degrees",
+    units: [
+      { name: "Degrees", abbreviation: "°", numBaseUnits: new Decimal('1') },
+      { name: "Radians", abbreviation: "rad", numBaseUnits: new Decimal('180').div(Math.PI) },
+      { name: "Gradians", abbreviation: "grad", numBaseUnits: new Decimal('0.9') },
+      { name: "Minutes", abbreviation: "'", numBaseUnits: new Decimal('1').div(60) },
+      { name: "Seconds", abbreviation: "\"", numBaseUnits: new Decimal('1').div(3600) }
+    ]
+  },
+  {
+    name: "Data Rate",
+    baseUnitName: "Bits per Second",
+    units: [
+      { name: "Bits per Second", abbreviation: "bps", numBaseUnits: new Decimal('1') },
+      { name: "Kilobits per Second", abbreviation: "kbps", numBaseUnits: new Decimal('1000') },
+      { name: "Megabits per Second", abbreviation: "Mbps", numBaseUnits: new Decimal('1000000') },
+      { name: "Gigabits per Second", abbreviation: "Gbps", numBaseUnits: new Decimal('1000000000') },
+      { name: "Terabits per Second", abbreviation: "Tbps", numBaseUnits: new Decimal('1000000000000') },
+      { name: "Petabits per Second", abbreviation: "Pbps", numBaseUnits: new Decimal('1000000000000000') },
+      { name: "Exabits per Second", abbreviation: "Ebps", numBaseUnits: new Decimal('1000000000000000000') },
+      { name: "Zettabits per Second", abbreviation: "Zbps", numBaseUnits: new Decimal('1000000000000000000000') },
+      { name: "Yottabits per Second", abbreviation: "Ybps", numBaseUnits: new Decimal('1000000000000000000000000') }
+    ]
+  },
+  {
+    name: "Density",
+    baseUnitName: "Kilograms per Cubic Meter",
+    units: [
+      { name: "Kilograms per Cubic Meter", abbreviation: "kg/m³", numBaseUnits: new Decimal('1') },
+      { name: "Grams per Cubic Centimeter", abbreviation: "g/cm³", numBaseUnits: new Decimal('1000') },
+      { name: "Pounds per Cubic Foot", abbreviation: "lb/ft³", numBaseUnits: new Decimal('16.0184634') }
+    ]
+  },
+  {
+    name: "Electric Current",
+    baseUnitName: "Amperes",
+    units: [
+      { name: "Amperes", abbreviation: "A", numBaseUnits: new Decimal('1') },
+      { name: "Milliamperes", abbreviation: "mA", numBaseUnits: new Decimal('0.001') }
+    ]
+  }
+];
+
+function convertUnit(value: Decimal, fromUnit: IUnit, toUnit: IUnit) {
+  return value.times(fromUnit.numBaseUnits).div(toUnit.numBaseUnits);
+}
+
+const unitConversionCommands: ICommand[] =
+  unitKinds.flatMap(unitKind =>
+    unitKind.units.flatMap(fromUnit =>
+      unitKind.units.except([fromUnit]).map(toUnit => {
+        const fromUnitInToUnits = convertUnit(new Decimal(1), fromUnit, toUnit);
+        const toUnitInFromUnits = convertUnit(new Decimal(1), toUnit, fromUnit);
+
+        const command: ICommand = {
+          name: `Convert ${fromUnit.name} to ${toUnit.name} (${unitKind.name})`,
+          description: `Convert ${fromUnit.name} to ${toUnit.name} (${unitKind.name}). 1 ${fromUnit.abbreviation} = ${fromUnitInToUnits.toNumber()} ${toUnit.abbreviation}. 1 ${toUnit.abbreviation} = ${toUnitInFromUnits.toNumber()} ${fromUnit.abbreviation}.`,
+          parameters: [
+            {
+              name: "value",
+              type: { kind: 'number' },
+              description: "Value to convert"
+            }
+          ],
+          returnType: { kind: 'number' },
+          runFn: (args) => convertUnit(new Decimal(args['value']), fromUnit, toUnit).toNumber()
+        };
+        return command;
+      })
+    )
+  );
+
+// #endregion Unit Conversion
+
 export const commands = [
   randomizeLinesCommand,
   removeEmptyLinesCommand,
@@ -426,4 +675,5 @@ export const commands = [
   removeAccentsFromTextCommand,
   trimLeadingTrailingSpaceCommand,
   generateGuidsCommand
-];
+]
+  .concat(unitConversionCommands);

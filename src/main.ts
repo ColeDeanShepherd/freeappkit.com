@@ -42,15 +42,7 @@ function renderPageTemplate() {
           ])
         ])
       ]),
-      (routeContainerElem = div({ id: "route-container" })),
-      div([
-        h3([text('Our apps:')]),
-        appList()
-      ]),
-      div([
-        h3([text('Supported languages:')]),
-        languageList()
-      ])
+      (routeContainerElem = div({ id: "route-container" }))
     ])
   );
 
@@ -85,7 +77,16 @@ function renderPageTemplate() {
 // #region Pages
 
 const mkHomePage = () =>
-  div([]);
+  div([
+    div([
+      h3([text('Our apps:')]),
+      appList()
+    ]),
+    div([
+      h3([text('Supported languages:')]),
+      languageList()
+    ])
+  ]);
 
 function mkNotFoundPage() {
   return text('Page not found!');
