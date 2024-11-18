@@ -1,4 +1,4 @@
-I have a free web tool that can _______. I'm trying to improve the SEO of the webpage, and I need content. Can you come up with human-sounding content to fill out the webpage? At least 500 words if possible.
+I have a free web tool that can _______. I'm trying to improve the SEO of the webpage, and I need content. Can you come up with human-sounding content to fill out the webpage? Please don't generate too many bulleted lists, and please generate at least 500 words if possible.
 
 Please generate HTML in the following format:
 
