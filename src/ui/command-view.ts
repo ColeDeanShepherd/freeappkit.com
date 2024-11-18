@@ -80,7 +80,7 @@ function mkArgView(
         }
 
         return div({ style: containerStyle }, [
-          label([text((param.description + ' ') ?? '')]),
+          label([text((param.description !== undefined) ? (param.description + ' ') : '')]),
           textInput({ onInput, value: defaultValue.toString() }),
         ]);
       }
