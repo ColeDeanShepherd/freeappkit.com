@@ -34,9 +34,9 @@ export const copyToClipboardButton = (getTextContainerElem: () => HTMLTextAreaEl
 
 export const appList = () =>
   ul([
-    li([
-      a({ href: 'https://keytune.io' }, [text('KeyTune - Learn to play songs on piano for free!')]),
-    ]),
+    // li([
+    //   a({ href: 'https://keytune.io' }, [text('KeyTune - Learn to play songs on piano for free!')]),
+    // ]),
     li([
       a({ href: translate(removeDuplicateLinesRoute.pathname) }, [text('Remove Duplicate Lines')]),
     ]),
