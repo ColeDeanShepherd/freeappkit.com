@@ -8,7 +8,7 @@ import fuzzysort from 'fuzzysort';
 import './ui/style.css'
 
 import { commands, generateGuidsCommand, randomizeLinesCommand } from './commands';
-import { initAnalytics, trackPageView, trackPageViewConversion } from './framework/analytics';
+import { initAnalytics, trackEvent, trackPageView } from './framework/analytics';
 import { getFirstSupportedPreferredLanguage, getLanguage, MaybeLocalizedString, setLanguage, setStrings, toLocalizedString, translate } from './framework/localization';
 import { strings } from './strings';
 import { CommandViewProps, getCommandPathName, mkRouteFromCommand } from './ui/command-view';
@@ -21,6 +21,12 @@ const appElem = document.getElementById('app')!;
 let routeContainerElem: HTMLElement;
 
 let commandSearchData: any;
+
+export function trackCommandSearch(searchQuery: string) {
+  trackEvent('command_search', {
+    query: searchQuery
+  });
+}
 
 function renderPageTemplate() {
   const language = getLanguage();
@@ -80,13 +86,19 @@ function renderPageTemplate() {
 
   function searchForCommands(e: Event) {
     const inputElem = e.target as HTMLInputElement;
-    const query = removeAccents(inputElem.value.toLowerCase());
+    const query = removeAccents(inputElem.value.toLowerCase().trim());
 
     const searchResults = fuzzysort.go(query, commandSearchData, { key: 'name' });
     const matchingCommands = searchResults.map(r => (r.obj as any).command);
 
+    const anyQuery = query.length > 0;
+
+    if (anyQuery) {
+      trackCommandSearch(query);
+    }
+
     if (matchingCommands.length === 0) {
-      if (query.length === 0) {
+      if (anyQuery) {
         searchResultsElem.classList.add('hidden');
         return;
       } else {
@@ -230,7 +242,6 @@ function changeRoute(pathname: string) {
     initAnalytics();
 
     trackPageView();
-    trackPageViewConversion();
   }
 
   setPageElem(route.mkPageElem());

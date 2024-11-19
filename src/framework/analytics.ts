@@ -26,14 +26,6 @@ export function trackEvent(name: string, args: object) {
   gtag('event', name, args);
 }
 
-export function trackPageViewConversion() {
-  gtag('event', 'conversion', {
-    'send_to': googlePageViewConversionRecipient,
-    'value': 1.0,
-    'currency': 'USD'
-  });
-}
-
 export function trackCommandRun(command: ICommand, args: { [key: string]: any }) {
   trackEvent('run_command', {
     name: command.name,
