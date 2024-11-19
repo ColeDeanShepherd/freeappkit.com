@@ -1,4 +1,4 @@
-import { text, h1, h2, h3, h4, div, p, ul, li, a, textArea, button, img, select, option } from './framework/ui/ui-core';
+import { text, h1, h2, h3, h4, div, p, ul, li, a, textArea, button, img, select, option, header, textInput } from './framework/ui/ui-core';
 import { routerFindRouteAndLocale, Route, Router } from './framework/router';
 import { removeDuplicateLinesRoute, removeDuplicateLinesRoute2 } from './ui/remove-duplicate-lines';
 import * as plainTextEditor from './ui/plain-text-editor';
@@ -13,33 +13,43 @@ import { getFirstSupportedPreferredLanguage, getLanguage, MaybeLocalizedString, 
 import { strings } from './strings';
 import { CommandViewProps, mkRouteFromCommand } from './ui/command-view';
 import { isDevEnv } from './config';
+import { removeAccents } from './framework/textUtil';
 
 const appElem = document.getElementById('app')!;
 let routeContainerElem: HTMLElement;
 
+
 function renderPageTemplate() {
+  let searchResultsElem: HTMLElement;
+
   appElem.append(
     div([
-      div({ class: 'header' }, [
-        div([
-          h1({ class: 'logo' }, [
-            a({ href: '/' }, [
-              img({ src: 'favicon.svg', alt: 'Free App Kit' }),
-              text('freeappkit.com', /* disableTranslation: */ true)
+      header([
+        div({ class: 'row-1' }, [
+          div([
+            h1({ class: 'logo' }, [
+              a({ href: '/' }, [
+                img({ src: 'favicon.svg', alt: 'Free App Kit' }),
+                text('freeappkit.com', /* disableTranslation: */ true)
+              ])
+            ]),
+            h2({ class: 'tag-line' }, [
+              text(strings.freeWebApplications)
             ])
           ]),
-          h2({ class: 'tag-line' }, [
-            text(strings.freeWebApplications)
+          div({ class: 'support-us-container' }, [
+            select({ value: getLanguage(), onChange: changeLocale, style: "margin-bottom: 1rem;" }, [
+              option({ value: 'en' }, [text('English', /* disableTranslation: */ true)]),
+              option({ value: 'es' }, [text('Español', /* disableTranslation: */ true)]),
+            ]),
+            button({ style: "margin-bottom: 1rem;" }, [
+              a({ href: 'https://www.patreon.com/bePatron?u=4644571', target: "_blank", class: 'patreon-button' }, [text('Support us on Patreon!')])
+            ])
           ])
         ]),
-        div({ class: 'support-us-container' }, [
-          select({ value: getLanguage(), onChange: changeLocale, style: "margin-bottom: 1rem;" }, [
-            option({ value: 'en' }, [text('English', /* disableTranslation: */ true)]),
-            option({ value: 'es' }, [text('Español', /* disableTranslation: */ true)]),
-          ]),
-          button({ style: "margin-bottom: 1rem;" }, [
-            a({ href: 'https://www.patreon.com/bePatron?u=4644571', target: "_blank", class: 'patreon-button' }, [text('Support us on Patreon!')])
-          ])
+        div({ class: 'row-2', style: 'position: relative' }, [
+          textInput({ placeholder: 'Search...', style: 'width: 100%;', onInput: searchForCommands }),
+          (searchResultsElem = ul({ class: 'search-results' }))
         ])
       ]),
       (routeContainerElem = div({ id: "route-container" }))
@@ -60,6 +70,18 @@ function renderPageTemplate() {
     } else {
       changeSubdomain(newLocale);
     }
+  }
+
+  function searchForCommands(e: Event) {
+    // TODO: search index
+
+    const inputElem = e.target as HTMLInputElement;
+    const query = removeAccents(inputElem.value.toLowerCase());
+
+
+    searchResultsElem.replaceChildren(
+      ...matchingCommands.map(c => li([a([text(translate(c.name))])]))
+    );
   }
 
   // HACK: find child select elements of appElem, and re-set their values to get the right option to be selected
