@@ -20,6 +20,7 @@
     "bootstrap-icons": "^1.11.3",
     "decimal.js": "^10.4.3",
     "dotenv": "^16.4.5",
+    "fuzzysort": "^3.1.0",
     "openai": "^4.72.0",
     "uuid": "^11.0.3"
   }

@@ -4,6 +4,7 @@ import { removeDuplicateLinesRoute, removeDuplicateLinesRoute2 } from './ui/remo
 import * as plainTextEditor from './ui/plain-text-editor';
 import { appList, languageList } from './ui/ui-components';
 import { changeSubdomain, getSubdomain, getUrlWithNewSubdomain } from './framework/urlUtil';
+import fuzzysort from 'fuzzysort';
 
 import './ui/style.css'
 
@@ -11,13 +12,14 @@ import { commands, generateGuidsCommand, randomizeLinesCommand } from './command
 import { initAnalytics, trackPageView, trackPageViewConversion } from './framework/analytics';
 import { getFirstSupportedPreferredLanguage, getLanguage, MaybeLocalizedString, setLanguage, setStrings, toLocalizedString, translate } from './framework/localization';
 import { strings } from './strings';
-import { CommandViewProps, mkRouteFromCommand } from './ui/command-view';
+import { CommandViewProps, getCommandPathName, mkRouteFromCommand } from './ui/command-view';
 import { isDevEnv } from './config';
 import { removeAccents } from './framework/textUtil';
 
 const appElem = document.getElementById('app')!;
 let routeContainerElem: HTMLElement;
 
+let commandSearchData: any;
 
 function renderPageTemplate() {
   let searchResultsElem: HTMLElement;
@@ -48,8 +50,8 @@ function renderPageTemplate() {
           ])
         ]),
         div({ class: 'row-2', style: 'position: relative' }, [
-          textInput({ placeholder: 'Search...', style: 'width: 100%;', onInput: searchForCommands }),
-          (searchResultsElem = ul({ class: 'search-results' }))
+          textInput({ placeholder: 'Search our apps...', style: 'width: 100%;', onInput: searchForCommands }),
+          (searchResultsElem = ul({ class: 'search-results hidden' }))
         ])
       ]),
       (routeContainerElem = div({ id: "route-container" }))
@@ -73,15 +75,27 @@ function renderPageTemplate() {
   }
 
   function searchForCommands(e: Event) {
-    // TODO: search index
-
     const inputElem = e.target as HTMLInputElement;
     const query = removeAccents(inputElem.value.toLowerCase());
 
+    const searchResults = fuzzysort.go(query, commandSearchData, { key: 'name' });
+    const matchingCommands = searchResults.map(r => (r.obj as any).command);
 
-    searchResultsElem.replaceChildren(
-      ...matchingCommands.map(c => li([a([text(translate(c.name))])]))
-    );
+    if (matchingCommands.length === 0) {
+      if (query.length === 0) {
+        searchResultsElem.classList.add('hidden');
+        return;
+      } else {
+        searchResultsElem.classList.remove('hidden');
+        searchResultsElem.replaceChildren(li([text('No results found.')]));
+        return;
+      }
+    } else {
+      searchResultsElem.classList.remove('hidden');
+      searchResultsElem.replaceChildren(
+        ...matchingCommands.map(c => li([a({ href: translate(getCommandPathName(c)) }, [text(translate(c.name))])]))
+      );
+    }
   }
 
   // HACK: find child select elements of appElem, and re-set their values to get the right option to be selected
@@ -195,6 +209,13 @@ function changeRoute(pathname: string) {
 
   const locale = selectLocale(localeFromRoute);
   setLanguage(locale);
+
+  commandSearchData =
+    commands
+      .map(c => ({
+        name: removeAccents(translate(c.name).trim().toLocaleLowerCase()),
+        command: c
+      }));
 
   renderPageTemplate();
 

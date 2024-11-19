@@ -710,5 +710,10 @@ export const strings = {
     "cd10e127-74a8-4a55-821c-bcf524804bba": {
         "en": "numGuids",
         "es": "n\u00FAmeroDeGu\u00EDas"
+    },
+
+    searchOurApps: {
+        en: "Search our apps...",
+        es: "Buscar nuestras aplicaciones..."
     }
 };
