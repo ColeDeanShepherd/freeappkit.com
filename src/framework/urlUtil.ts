@@ -2,12 +2,14 @@ import { isDevEnv, productionSiteHostname } from "../config";
 
 export function getApexHost() {
   return isDevEnv()
-    ? `localhost:${window.location.port}` : productionSiteHostname;
+    ? `localhost:${window.location.port}`
+    : productionSiteHostname;
 }
 
 export function getApexHostname() {
   return isDevEnv()
-    ? `localhost` : productionSiteHostname;
+    ? `localhost`
+    : productionSiteHostname;
 }
 
 export function getSubdomain(): string | undefined {

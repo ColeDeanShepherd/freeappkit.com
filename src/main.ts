@@ -2,7 +2,7 @@ import { text, h1, h2, h3, h4, div, p, ul, li, a, textArea, button, img, select,
 import { routerFindRouteAndLocale, Route, Router } from './framework/router';
 import * as plainTextEditor from './ui/plain-text-editor';
 import { appList, languageList } from './ui/ui-components';
-import { changeSubdomain, getSubdomain, getUrlWithNewSubdomain } from './framework/urlUtil';
+import { changeSubdomain, getApexHost, getSubdomain, getUrlWithNewSubdomain } from './framework/urlUtil';
 import fuzzysort from 'fuzzysort';
 
 import './ui/style.css'
@@ -15,12 +15,17 @@ import { CommandViewProps, getCommandPathName, mkRouteFromCommand } from './ui/c
 import { isDevEnv } from './config';
 import { removeAccents } from './framework/textUtil';
 
+// TODO: add plain-text editor to search bar?
+
 const appElem = document.getElementById('app')!;
 let routeContainerElem: HTMLElement;
 
 let commandSearchData: any;
 
 function renderPageTemplate() {
+  const language = getLanguage();
+  const rootUrl = (language === 'en') ? `${window.location.protocol}//${getApexHost()}` : `${window.location.protocol}//${language}.${getApexHost()}`;
+
   let searchResultsElem: HTMLElement;
 
   appElem.append(
@@ -29,7 +34,7 @@ function renderPageTemplate() {
         div({ class: 'row-1' }, [
           div([
             h1({ class: 'logo' }, [
-              a({ href: '/' }, [
+              a({ href: rootUrl }, [
                 img({ src: 'favicon.svg', alt: 'Free App Kit' }),
                 text('freeappkit.com', /* disableTranslation: */ true)
               ])
