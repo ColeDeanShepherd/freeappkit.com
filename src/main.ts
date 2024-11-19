@@ -1,6 +1,5 @@
 import { text, h1, h2, h3, h4, div, p, ul, li, a, textArea, button, img, select, option, header, textInput } from './framework/ui/ui-core';
 import { routerFindRouteAndLocale, Route, Router } from './framework/router';
-import { removeDuplicateLinesRoute, removeDuplicateLinesRoute2 } from './ui/remove-duplicate-lines';
 import * as plainTextEditor from './ui/plain-text-editor';
 import { appList, languageList } from './ui/ui-components';
 import { changeSubdomain, getSubdomain, getUrlWithNewSubdomain } from './framework/urlUtil';
@@ -154,8 +153,6 @@ const routes: Route[] = [
     mkPageElem: mkHomePage,
   },
   
-  removeDuplicateLinesRoute,
-  removeDuplicateLinesRoute2,
   plainTextEditor.route,
   ...commands.map(c => {
     const viewProps = commandViewPropsOverrides.find(o => o.command === c)?.viewProps;

@@ -1,7 +1,6 @@
 import { text, button, i, span, ul, li, a } from '../framework/ui/ui-core';
 import "bootstrap-icons/font/bootstrap-icons.css";
 import { waitMs } from '../framework/util';
-import { removeDuplicateLinesRoute } from './remove-duplicate-lines';
 import { commands } from '../commands';
 import * as plainTextEditor from './plain-text-editor';
 import { getSubdomainForLocale, languageCodeToName, supportedLanguages, translate } from '../framework/localization';
@@ -37,9 +36,6 @@ export const appList = () =>
     // li([
     //   a({ href: 'https://keytune.io' }, [text('KeyTune - Learn to play songs on piano for free!')]),
     // ]),
-    li([
-      a({ href: translate(removeDuplicateLinesRoute.pathname) }, [text('Remove Duplicate Lines')]),
-    ]),
     li([
       a({ href: translate(plainTextEditor.route.pathname) }, [text('Plain-Text Editor')]),
     ]),

@@ -184,6 +184,10 @@ export interface CommandViewProps {
 }
 
 export const mkCommandView = (command: ICommand, props: CommandViewProps) => {
+  if (command.mkCommandViewOverride) {
+    return command.mkCommandViewOverride();
+  }
+
   let args: { [key: string]: any } = mkDefaultArgs(command.parameters);
   const [returnValueNode, updateReturnVal] = mkReturnValueView(command.returnType)
 

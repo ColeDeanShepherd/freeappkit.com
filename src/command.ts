@@ -33,6 +33,7 @@ export interface ICommand {
   returnType: IType;
   runFn: (args: { [key: string]: any }) => any;
   mkSeoContent?: () => Node;
+  mkCommandViewOverride?: () => Node;
 }
 
 export interface ICommandParameter extends NamedValue {

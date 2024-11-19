@@ -1,9 +1,81 @@
-import { shuffleLines, removeEmptyLines, sortLines, removeAccents, lines } from './framework/textUtil';
+import { shuffleLines, removeEmptyLines, sortLines, removeAccents, lines, detectAndRemoveDuplicateLines } from './framework/textUtil';
 import { ICommand, IType } from './command';
 import { strings } from './strings';
 import { v4 as uuidv4 } from 'uuid';
-import { div, h2, h3, li, ol, p, text, ul } from './framework/ui/ui-core';
+import { button, div, h2, h3, li, ol, p, span, text, textArea, ul } from './framework/ui/ui-core';
 import Decimal from 'decimal.js';
+import { copyToClipboardButton } from './ui/ui-components';
+
+export const removeDuplicateLinesCommand: ICommand = {
+  name: "Remove Duplicate Lines",
+  description: strings.removeDuplicateLinesDescription,
+  parameters: [
+    {
+      name: "text",
+      type: { kind: 'text' },
+      description: "Paste your text below"
+    }
+  ],
+  returnType: {
+    kind: 'object',
+    properties: [
+      { name: 'deDuplicatedText', type: { kind: 'text' } },
+      { name: 'removedDuplicateLines', type: { kind: 'text' } },
+    ]
+  },
+  runFn: (args) => {
+    return null;
+  },
+  mkCommandViewOverride: () => {
+    let inputElem: HTMLTextAreaElement;
+    let outputElem: HTMLTextAreaElement;
+    let duplicateLinesElem: HTMLTextAreaElement;
+
+    const page = div([
+      h2([
+        text('Remove Duplicate Lines')
+      ]),
+      p([text(strings.removeDuplicateLinesDescription)]),
+      div([
+        h3([text('Paste your text below')]),
+        (inputElem = textArea({ style: 'min-height: 300px' })),
+        div({ class: 'button-bar' }, [
+          button({ onClick: removeDuplicateLinesOnClick }, [text('Remove Duplicate Lines')]),
+          button({ onClick: resetOnClick }, [text('Reset')]),
+        ])
+      ]),
+      div([
+        h3([
+          span({ style: 'margin-right: 1rem;' }, [ text('De-duplicated text') ]),
+          copyToClipboardButton(() => outputElem)
+        ]),
+        (outputElem = textArea({ readonly: true, style: 'min-height: 300px' })),
+      ]),
+      div([
+        h3([
+          span({ style: 'margin-right: 1rem;' }, [ text('Duplicate lines that were removed') ]),
+          copyToClipboardButton(() => duplicateLinesElem)
+        ]),
+        (duplicateLinesElem = textArea({ readonly: true, style: 'min-height: 300px' })),
+      ]),
+    ]);
+
+    return page;
+
+    function removeDuplicateLinesOnClick() {
+      const { uniqueLines, duplicateLines } = detectAndRemoveDuplicateLines(inputElem.value);
+
+      outputElem.value = uniqueLines;
+      duplicateLinesElem.value = duplicateLines;
+    }
+
+    function resetOnClick() {
+      inputElem.value = '';
+      outputElem.value = '';
+      duplicateLinesElem.value = '';
+    }
+  }
+};
 
 export const randomizeLinesCommand: ICommand = {
   name: "Randomize Lines",
@@ -657,6 +729,7 @@ const unitConversionCommands: ICommand[] =
 // #endregion Unit Conversion
 
 export const commands = [
+  removeDuplicateLinesCommand,
   randomizeLinesCommand,
   removeEmptyLinesCommand,
   sortLinesCommand,
