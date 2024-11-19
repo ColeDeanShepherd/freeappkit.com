@@ -51,7 +51,7 @@ select {
   padding: 0.5rem;
 }
 
-.header {
+header {
   border-bottom: 1px solid #333;
 }
 
@@ -183,6 +183,14 @@ textarea {
   padding: 1rem;
 }
 
+.search-results {
+  position: absolute;
+  left: 0;
+  top: 100%;
+  width: 100%;
+  background-color: #fff;
+}
+
 @media (prefers-color-scheme: light) {
   :root {
     background-color: #f8f9fa;
@@ -203,7 +211,7 @@ textarea {
 }
 
 @media (min-width: 768px) {
-  .header {
+  header > .row-1 {
     display: flex;
     justify-content: space-between;
   }

@@ -47,7 +47,7 @@ export function setStrings(strings: { [key: string]: LocalizedString }) {
   }
 }
 
-export function translate(str: MaybeLocalizedString) {
+export function translate(str: MaybeLocalizedString): string {
   const localizedString = toLocalizedString(str) as any;
 
   if (localizedString[language] !== undefined) {

@@ -59,6 +59,7 @@ export const p = (propsOrChildren?: NodeProps | Node[], children?: Node[]) => el
 export const ul = (propsOrChildren?: NodeProps | Node[], children?: Node[]) => elem('ul', propsOrChildren, children);
 export const ol = (propsOrChildren?: NodeProps | Node[], children?: Node[]) => elem('ol', propsOrChildren, children);
 export const li = (propsOrChildren?: NodeProps | Node[], children?: Node[]) => elem('li', propsOrChildren, children);
+export const header = (propsOrChildren?: NodeProps | Node[], children?: Node[]) => elem('header', propsOrChildren, children);
 
 interface ANodeProps extends NodeProps {
   href?: string;
@@ -220,6 +221,7 @@ export const option = (propsOrChildren?: OptionProps | Node[], children?: Node[]
 
 interface TextInputProps extends NodeProps {
   value?: string;
+  placeholder?: string;
   onInput?: (e: Event) => void;
   disabled?: boolean;
 }
@@ -232,6 +234,10 @@ export const textInput = (propsOrChildren?: TextInputProps | Node[], children?: 
 
     if (props.value) {
       _elem.setAttribute('value', props.value);
+    }
+
+    if (props.placeholder) {
+      _elem.setAttribute('placeholder', translate(props.placeholder));
     }
 
     if (props.onInput) {
