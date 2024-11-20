@@ -486,7 +486,9 @@ export const generateGuidsCommand: ICommand = {
 interface IUnit {
   name: string;
   abbreviation: string;
-  numBaseUnits: Decimal;
+  numBaseUnits?: Decimal;
+  convertToBaseUnit?: (value: Decimal) => Decimal;
+  convertFromBaseUnit?: (value: Decimal) => Decimal;
 }
 
 const IUnitObjectType: IType = {
@@ -547,11 +549,26 @@ const unitKinds: IUnitKind[] = [
   },
   {
     name: "Temperature",
-    baseUnitName: "Celsius",
+    baseUnitName: "Kelvin",
     units: [
-      { name: "Celsius", abbreviation: "°C", numBaseUnits: new Decimal('1') },
-      { name: "Fahrenheit", abbreviation: "°F", numBaseUnits: new Decimal('1').times(5).div(9).plus(32) },
-      { name: "Kelvin", abbreviation: "K", numBaseUnits: new Decimal('1').plus(273.15) }
+      {
+        name: "Kelvin",
+        abbreviation: "K",
+        convertFromBaseUnit: (value: Decimal) => value,
+        convertToBaseUnit: (value: Decimal) => value
+      },
+      {
+        name: "Celsius",
+        abbreviation: "°C",
+        convertFromBaseUnit: (value: Decimal) => value.minus(273.15),
+        convertToBaseUnit: (value: Decimal) => value.plus(273.15)
+      },
+      {
+        name: "Fahrenheit",
+        abbreviation: "°F",
+        convertFromBaseUnit: (value: Decimal) => value.times(9).div(5).minus(459.67),
+        convertToBaseUnit: (value: Decimal) => value.plus(459.67).times(5).div(9)
+      }
     ]
   },
   {
@@ -708,9 +725,11 @@ const unitKinds: IUnitKind[] = [
 ];
 
 function convertUnit(value: Decimal, fromUnit: IUnit, toUnit: IUnit) {
-  // TODO: ensure both units are of same kind
+  if (fromUnit.convertToBaseUnit && toUnit.convertFromBaseUnit) {
+    return toUnit.convertFromBaseUnit(fromUnit.convertToBaseUnit(value));
+  }
 
-  return value.times(fromUnit.numBaseUnits).div(toUnit.numBaseUnits);
+  return value.times(fromUnit.numBaseUnits!).div(toUnit.numBaseUnits!);
 }
 
 const unitConversionCommands: ICommand[] =

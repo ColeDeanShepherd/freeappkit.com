@@ -1,3 +1,4 @@
+import Decimal from 'decimal.js';
 import { MaybeLocalizedString } from './framework/localization';
 
 export interface NamedValue {
@@ -51,6 +52,10 @@ export const getDefaultValue = (type: IType) => {
       return false;
     case 'text':
       return '';
+    case 'number':
+      return new Decimal(0);
+    default:
+      return undefined;
   }
 }
 
