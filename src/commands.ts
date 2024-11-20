@@ -600,8 +600,8 @@ const unitKinds: IUnitKind[] = [
     baseUnitName: "Meters per Second",
     units: [
       { name: "Meters per Second", abbreviation: "m/s", numBaseUnits: new Decimal('1') },
-      { name: "Kilometers per Hour", abbreviation: "km/h", numBaseUnits: new Decimal('1').times(3600).div(1000) },
-      { name: "Miles per Hour", abbreviation: "mph", numBaseUnits: new Decimal('1').times(3600).div(1609.344) },
+      { name: "Kilometers per Hour", abbreviation: "km/h", numBaseUnits: new Decimal('1').times(1000).div(3600) }, // TODO: fix these
+      { name: "Miles per Hour", abbreviation: "mph", numBaseUnits: new Decimal('1').times('1.609').times(1000).div(3600) },
       { name: "Knots", abbreviation: "kn", numBaseUnits: new Decimal('1').times(1852).div(3600) },
       { name: "Feet per Second", abbreviation: "ft/s", numBaseUnits: new Decimal('0.3048') },
     ]
@@ -659,14 +659,14 @@ const unitKinds: IUnitKind[] = [
     baseUnitName: "Bytes",
     units: [
       { name: "Bytes", abbreviation: "B", numBaseUnits: new Decimal('1') },
-      { name: "Kilobytes", abbreviation: "KB", numBaseUnits: new Decimal('1024') },
-      { name: "Megabytes", abbreviation: "MB", numBaseUnits: new Decimal('1048576') },
-      { name: "Gigabytes", abbreviation: "GB", numBaseUnits: new Decimal('1073741824') },
-      { name: "Terabytes", abbreviation: "TB", numBaseUnits: new Decimal('1099511627776') },
-      { name: "Petabytes", abbreviation: "PB", numBaseUnits: new Decimal('1125899906842624') },
-      { name: "Exabytes", abbreviation: "EB", numBaseUnits: new Decimal('1152921504606846976') },
-      { name: "Zettabytes", abbreviation: "ZB", numBaseUnits: new Decimal('1180591620717411303424') },
-      { name: "Yottabytes", abbreviation: "YB", numBaseUnits: new Decimal('1208925819614629174706176') },
+      { name: "Kilobytes", abbreviation: "KB", numBaseUnits: new Decimal('1000') },
+      { name: "Megabytes", abbreviation: "MB", numBaseUnits: new Decimal('1000000') },
+      { name: "Gigabytes", abbreviation: "GB", numBaseUnits: new Decimal('1000000000') },
+      { name: "Terabytes", abbreviation: "TB", numBaseUnits: new Decimal('1000000000000') },
+      { name: "Petabytes", abbreviation: "PB", numBaseUnits: new Decimal('1000000000000000') },
+      { name: "Exabytes", abbreviation: "EB", numBaseUnits: new Decimal('1000000000000000000') },
+      { name: "Zettabytes", abbreviation: "ZB", numBaseUnits: new Decimal('1000000000000000000000') },
+      { name: "Yottabytes", abbreviation: "YB", numBaseUnits: new Decimal('1000000000000000000000000') }
     ]
   },
   {
@@ -839,6 +839,10 @@ export const unitConverterCommand: ICommand = {
     }
 
     function changeUnitKind(newUnitKind: IUnitKind) {
+      if (newUnitKind === unitKind) {
+        return;
+      }
+
       unitKind = newUnitKind;
       const newFromUnit = newUnitKind.units[0];
       const newToUnit = newUnitKind.units[0];
