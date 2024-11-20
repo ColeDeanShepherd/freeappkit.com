@@ -29,11 +29,50 @@ export function trackCommandSearch(searchQuery: string) {
   });
 }
 
+function mkCommandSearchView() {
+  let searchResultsElem: HTMLElement;
+
+  const view = div({ class: 'row-2', style: 'position: relative' }, [
+    textInput({ placeholder: 'Search our apps...', style: 'width: 100%;', onInput: searchForCommands }),
+    (searchResultsElem = ul({ class: 'search-results hidden' }))
+  ]);
+
+  function searchForCommands(e: Event) {
+    const inputElem = e.target as HTMLInputElement;
+    const query = removeAccents(inputElem.value.toLowerCase().trim());
+
+    const searchResults = fuzzysort.go(query, commandSearchData, { key: 'indexedName' });
+    const matches = searchResults.map(r => (r.obj as any));
+
+    const anyQuery = query.length > 0;
+
+    if (anyQuery) {
+      trackCommandSearch(query);
+    }
+
+    if (matches.length === 0) {
+      if (!anyQuery) {
+        searchResultsElem.classList.add('hidden');
+        return;
+      } else {
+        searchResultsElem.classList.remove('hidden');
+        searchResultsElem.replaceChildren(li([text('No results found.')]));
+        return;
+      }
+    } else {
+      searchResultsElem.classList.remove('hidden');
+      searchResultsElem.replaceChildren(
+        ...matches.map(m => li([a({ href: translate(m.pathname) }, [text(translate(m.name))])]))
+      );
+    }
+  }
+
+  return view;
+}
+
 function renderPageTemplate() {
   const language = getLanguage();
   const rootUrl = (language === 'en') ? `${window.location.protocol}//${getApexHost()}` : `${window.location.protocol}//${language}.${getApexHost()}`;
-
-  let searchResultsElem: HTMLElement;
 
   appElem.append(
     div([
@@ -60,10 +99,7 @@ function renderPageTemplate() {
             ])
           ])
         ]),
-        div({ class: 'row-2', style: 'position: relative' }, [
-          textInput({ placeholder: 'Search our apps...', style: 'width: 100%;', onInput: searchForCommands }),
-          (searchResultsElem = ul({ class: 'search-results hidden' }))
-        ])
+        mkCommandSearchView()
       ]),
       (routeContainerElem = div({ id: "route-container" }))
     ])
@@ -82,36 +118,6 @@ function renderPageTemplate() {
       window.location.href = newUrl.href;
     } else {
       changeSubdomain(newLocale);
-    }
-  }
-
-  function searchForCommands(e: Event) {
-    const inputElem = e.target as HTMLInputElement;
-    const query = removeAccents(inputElem.value.toLowerCase().trim());
-
-    const searchResults = fuzzysort.go(query, commandSearchData, { key: 'indexedName' });
-    const matches = searchResults.map(r => (r.obj as any));
-
-    const anyQuery = query.length > 0;
-
-    if (anyQuery) {
-      trackCommandSearch(query);
-    }
-
-    if (matches.length === 0) {
-      if (anyQuery) {
-        searchResultsElem.classList.add('hidden');
-        return;
-      } else {
-        searchResultsElem.classList.remove('hidden');
-        searchResultsElem.replaceChildren(li([text('No results found.')]));
-        return;
-      }
-    } else {
-      searchResultsElem.classList.remove('hidden');
-      searchResultsElem.replaceChildren(
-        ...matches.map(m => li([a({ href: translate(m.pathname) }, [text(translate(m.name))])]))
-      );
     }
   }
 
