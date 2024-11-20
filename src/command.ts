@@ -37,7 +37,7 @@ export interface ICommand {
   mkArgsViewOverride?: (
     parameters: ICommandParameter[],
     args: { [key: string]: any },
-    onArgsChange?: (args: { [key: string]: any }) => void
+    onArgsChange: (args: { [key: string]: any }) => void
   ) => Node;
 }
 

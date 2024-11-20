@@ -768,7 +768,10 @@ export const unitConverterCommand: ICommand = {
     return convertUnit(value, fromUnit, toUnit);
   },
   mkArgsViewOverride: (params, args, onArgsChange) => {
-    const unitKind = unitKinds.find(k => k.units.some(u => u.name === args['fromUnit'].name))!;
+    let unitKind = unitKinds.find(k => k.units.some(u => u.name === args['fromUnit'].name))!;
+
+    let fromUnitSelect: HTMLSelectElement;
+    let toUnitSelect: HTMLSelectElement;
 
     return div([
       div(
@@ -776,6 +779,7 @@ export const unitConverterCommand: ICommand = {
         unitKinds.map(unitKind =>
           button(
             {
+              onClick: () => changeUnitKind(unitKind),
               class: unitKind === args['fromUnit'] ? 'active' : ''
             },
             [text(unitKind.name)
@@ -784,26 +788,59 @@ export const unitConverterCommand: ICommand = {
       ),
       div([
         label([text("From unit")]),
-        select([
-          ...unitKind.units.map(unit =>
-            option({
-              value: unit.name
-            }, [text(unit.name)])
-          )
-        ])
+        (fromUnitSelect = select({ onChange: changeFromUnit }, [
+          ...getUnitOptions()
+        ]))
       ]),
       div([
         label([text("To unit")]),
-        select([
-          ...unitKind.units.map(unit =>
-            option({
-              value: unit.name
-            }, [text(unit.name)])
-          )
-        ])
+        (toUnitSelect = select({ onChange: changeToUnit }, [
+          ...getUnitOptions()
+        ]))
       ]),
-      mkArgView(params.find(p => p.name === 'value')!, args['value'], onArgsChange)
+      mkArgView(params.find(p => p.name === 'value')!, args, onArgsChange)
     ]);
+
+    function getUnitOptions() {
+      return unitKind.units.map(unit =>
+        option({
+          value: unit.name
+        }, [text(unit.name)])
+      );
+    }
+
+    function setFromUnit(newFromUnit: IUnit) {
+      args['fromUnit'] = newFromUnit;
+      fromUnitSelect.value = newFromUnit.name;
+    }
+
+    function setToUnit(newToUnit: IUnit) {
+      args['toUnit'] = newToUnit;
+      toUnitSelect.value = newToUnit.name;
+    }
+
+    function changeUnitKind(newUnitKind: IUnitKind) {
+      unitKind = newUnitKind;
+      const newFromUnit = newUnitKind.units[0];
+      const newToUnit = newUnitKind.units[0];
+      fromUnitSelect.replaceChildren(...getUnitOptions());
+      toUnitSelect.replaceChildren(...getUnitOptions());
+      setFromUnit(newFromUnit);
+      setToUnit(newToUnit);
+      onArgsChange(args);
+    }
+
+    function changeFromUnit(e: Event) {
+      const newFromUnit = unitKind.units.find(u => u.name === (e.target as HTMLSelectElement).value)!;
+      setFromUnit(newFromUnit);
+      onArgsChange(args);
+    }
+
+    function changeToUnit(e: Event) {
+      const newToUnit = unitKind.units.find(u => u.name === (e.target as HTMLSelectElement).value)!;
+      setToUnit(newToUnit);
+      onArgsChange(args);
+    }
   }
 };
 
