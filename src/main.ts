@@ -88,8 +88,8 @@ function renderPageTemplate() {
     const inputElem = e.target as HTMLInputElement;
     const query = removeAccents(inputElem.value.toLowerCase().trim());
 
-    const searchResults = fuzzysort.go(query, commandSearchData, { key: 'name' });
-    const matchingCommands = searchResults.map(r => (r.obj as any).command);
+    const searchResults = fuzzysort.go(query, commandSearchData, { key: 'indexedName' });
+    const matches = searchResults.map(r => (r.obj as any));
 
     const anyQuery = query.length > 0;
 
@@ -97,7 +97,7 @@ function renderPageTemplate() {
       trackCommandSearch(query);
     }
 
-    if (matchingCommands.length === 0) {
+    if (matches.length === 0) {
       if (anyQuery) {
         searchResultsElem.classList.add('hidden');
         return;
@@ -109,7 +109,7 @@ function renderPageTemplate() {
     } else {
       searchResultsElem.classList.remove('hidden');
       searchResultsElem.replaceChildren(
-        ...matchingCommands.map(c => li([a({ href: translate(getCommandPathName(c)) }, [text(translate(c.name))])]))
+        ...matches.map(m => li([a({ href: translate(m.pathname) }, [text(translate(m.name))])]))
       );
     }
   }
@@ -227,9 +227,17 @@ function changeRoute(pathname: string) {
   commandSearchData =
     commands
       .map(c => ({
-        name: removeAccents(translate(c.name).trim().toLocaleLowerCase()),
-        command: c
-      }));
+        indexedName: removeAccents(translate(c.name).trim().toLocaleLowerCase()),
+        name: c.name,
+        pathname: getCommandPathName(c)
+      }))
+      .concat([
+        {
+          indexedName: removeAccents(translate(plainTextEditor.route.title!).trim().toLocaleLowerCase()),
+          name: plainTextEditor.route.title!,
+          pathname: plainTextEditor.route.pathname
+        }
+      ]);
 
   renderPageTemplate();
 
