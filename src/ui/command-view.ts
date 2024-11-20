@@ -1,5 +1,5 @@
 import { trackCommandRun } from '../framework/analytics';
-import { translate } from '../framework/localization';
+import { MaybeLocalizedString, translate } from '../framework/localization';
 import { Route } from '../framework/router';
 import { copyToClipboardButton } from '../ui/ui-components';
 import { text, h1, h2, h3, h4, div, p, ul, li, a, textArea, button, i, span, checkbox, label, textInput } from '../framework/ui/ui-core';
@@ -230,9 +230,12 @@ export const getCommandPathName = (command: ICommand) => {
   if (command.pathname) {
     return command.pathname;
   } else {
-    return '/' + translate(command.name).toLowerCase().replace(/[ /]/g, '-').replace(/([\(\)])|(---)/g, '-');
+    return commandNameToPathName(command.name);
   }
 }
+
+export const commandNameToPathName = (commandName: MaybeLocalizedString) =>
+  '/' + translate(commandName).toLowerCase().replace(/[ /]/g, '-').replace(/([\(\)])|(---)/g, '-');
 
 export const mkDefaultCommandViewProps = (): CommandViewProps => {
   return {

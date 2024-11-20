@@ -5,7 +5,7 @@ import { v4 as uuidv4 } from 'uuid';
 import { button, div, h2, h3, label, li, ol, option, p, select, span, text, textArea, ul } from './framework/ui/ui-core';
 import Decimal from 'decimal.js';
 import { copyToClipboardButton } from './ui/ui-components';
-import { mkArgView } from './ui/command-view';
+import { commandNameToPathName, mkArgView } from './ui/command-view';
 
 export const removeDuplicateLinesCommand: ICommand = {
   name: "Remove Duplicate Lines",
@@ -739,8 +739,12 @@ const unitConversionCommands: ICommand[] =
         const fromUnitInToUnits = convertUnit(new Decimal(1), fromUnit, toUnit);
         const toUnitInFromUnits = convertUnit(new Decimal(1), toUnit, fromUnit);
 
+        const commandNameForPathname = `Convert ${unitKind.name} - ${fromUnit.name} to ${toUnit.name}`;
+        const commandName = `Convert ${unitKind.name} - ${fromUnit.name} to ${toUnit.name} (${fromUnit.abbreviation} to ${toUnit.abbreviation})`;
+
         const command: ICommand = {
-          name: `Convert ${unitKind.name} - ${fromUnit.name} to ${toUnit.name}`,
+          name: commandName,
+          pathname: commandNameToPathName(commandNameForPathname),
           description: `Convert ${unitKind.name} - ${fromUnit.name} to ${toUnit.name} (${fromUnit.abbreviation} to ${toUnit.abbreviation}). 1 ${fromUnit.abbreviation} = ${fromUnitInToUnits.toNumber()} ${toUnit.abbreviation}. 1 ${toUnit.abbreviation} = ${toUnitInFromUnits.toNumber()} ${fromUnit.abbreviation}.`,
           parameters: [
             {
