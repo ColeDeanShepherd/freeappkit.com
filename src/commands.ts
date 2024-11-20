@@ -789,36 +789,45 @@ export const unitConverterCommand: ICommand = {
   mkArgsViewOverride: (params, args, onArgsChange) => {
     let unitKind = unitKinds.find(k => k.units.some(u => u.name === args['fromUnit'].name))!;
 
+    let unitKindAndButtons: [IUnitKind, HTMLButtonElement][] = unitKinds.map(unitKind =>
+      [
+        unitKind,
+        button(
+          {
+            onClick: () => changeUnitKind(unitKind),
+            class: unitKind === unitKind ? 'active' : ''
+          },
+          [text(unitKind.name)]
+        ),
+      ]
+    );
     let fromUnitSelect: HTMLSelectElement;
     let toUnitSelect: HTMLSelectElement;
 
-    return div([
+    const result = div([
       div(
         { class: 'tabs' },
-        unitKinds.map(unitKind =>
-          button(
-            {
-              onClick: () => changeUnitKind(unitKind),
-              class: unitKind === args['fromUnit'] ? 'active' : ''
-            },
-            [text(unitKind.name)
-          ])
-        )
+        unitKindAndButtons.map(([unitKind, button]) => button)
       ),
       div([
-        label([text("From unit")]),
+        label([text("From unit"), text(' ')]),
         (fromUnitSelect = select({ onChange: changeFromUnit }, [
           ...getUnitOptions()
         ]))
       ]),
       div([
-        label([text("To unit")]),
+        label([text("To unit"), text(' ')]),
         (toUnitSelect = select({ onChange: changeToUnit }, [
           ...getUnitOptions()
         ]))
       ]),
-      mkArgView(params.find(p => p.name === 'value')!, args, onArgsChange)
+      mkArgView(params.find(p => p.name === 'value')!, args, onArgsChange),
+      button({ onClick: swapUnits }, [text("Swap Units")])
     ]);
+
+    changeUnitKind(unitKind);
+
+    return result;
 
     function getUnitOptions() {
       return unitKind.units.map(unit =>
@@ -837,8 +846,18 @@ export const unitConverterCommand: ICommand = {
       args['toUnit'] = newToUnit;
       toUnitSelect.value = newToUnit.name;
     }
+    
+    function swapUnits() {
+      const temp = args['fromUnit'];
+      setFromUnit(args['toUnit']);
+      setToUnit(temp);
+      onArgsChange(args);
+    }
 
     function changeUnitKind(newUnitKind: IUnitKind) {
+      unitKindAndButtons.forEach(([_, button]) => button.classList.remove('focus'));
+      unitKindAndButtons.find(([unitKind, _]) => unitKind === newUnitKind)![1].classList.add('focus');
+
       if (newUnitKind === unitKind) {
         return;
       }
