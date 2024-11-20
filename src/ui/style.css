@@ -201,8 +201,12 @@ textarea {
 }
 
 .search-results li {
-  padding: 0.5rem;
   cursor: pointer;
+}
+
+.search-results li a {
+  padding: 0.5rem;
+  display: block;
 }
 
 .search-results li:hover {
