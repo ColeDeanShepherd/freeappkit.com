@@ -6,7 +6,7 @@ import { text, h1, h2, h3, h4, div, p, ul, li, a, textArea, button, i, span, che
 import { openFilePicker, saveStringToFile } from '../framework/fileSystemUtil';
 import { ICommand, ICommandParameter, IType, mkDefaultArgs, NamedValue } from '../command';
 
-function mkArgView(
+export function mkArgView(
   param: ICommandParameter,
   args: { [key: string]: any },
   onArgsChange?: (args: { [key: string]: any }) => void
@@ -196,7 +196,9 @@ export const mkCommandView = (command: ICommand, props: CommandViewProps) => {
       text(command.name)
     ]),
     p([text(command.description)]),
-    commandArgsView(command.parameters, args, onArgsChange),
+    !command.mkArgsViewOverride
+      ? commandArgsView(command.parameters, args, onArgsChange)
+      : command.mkArgsViewOverride(command.parameters, args, onArgsChange),
     !props.autoRunOnArgChange
       ? button({ onClick: onSubmit }, [text(command.name)])
       : span(),

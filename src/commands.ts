@@ -2,9 +2,10 @@ import { shuffleLines, removeEmptyLines, sortLines, removeAccents, lines, detect
 import { ICommand, IType } from './command';
 import { strings } from './strings';
 import { v4 as uuidv4 } from 'uuid';
-import { button, div, h2, h3, li, ol, p, span, text, textArea, ul } from './framework/ui/ui-core';
+import { button, div, h2, h3, label, li, ol, option, p, select, span, text, textArea, ul } from './framework/ui/ui-core';
 import Decimal from 'decimal.js';
 import { copyToClipboardButton } from './ui/ui-components';
+import { mkArgView } from './ui/command-view';
 
 export const removeDuplicateLinesCommand: ICommand = {
   name: "Remove Duplicate Lines",
@@ -488,6 +489,15 @@ interface IUnit {
   numBaseUnits: Decimal;
 }
 
+const IUnitObjectType: IType = {
+  kind: 'object',
+  properties: [
+    { name: 'name', type: { kind: 'text' } },
+    { name: 'abbreviation', type: { kind: 'text' } },
+    { name: 'numBaseUnits', type: { kind: 'number' } }
+  ]
+};
+
 interface IUnitKind {
   name: string;
   units: IUnit[];
@@ -698,6 +708,8 @@ const unitKinds: IUnitKind[] = [
 ];
 
 function convertUnit(value: Decimal, fromUnit: IUnit, toUnit: IUnit) {
+  // TODO: ensure both units are of same kind
+
   return value.times(fromUnit.numBaseUnits).div(toUnit.numBaseUnits);
 }
 
@@ -726,6 +738,75 @@ const unitConversionCommands: ICommand[] =
     )
   );
 
+export const unitConverterCommand: ICommand = {
+  name: "Unit Converter",
+  description: "Convert between different units",
+  parameters: [
+    {
+      name: "fromUnit",
+      type: IUnitObjectType,
+      description: "From unit",
+      defaultValue: unitKinds[0].units[0]
+    },
+    {
+      name: "toUnit",
+      type: IUnitObjectType,
+      description: "To unit",
+      defaultValue: unitKinds[0].units[0]
+    },
+    {
+      name: "value",
+      type: { kind: 'number' },
+      description: "Value to convert"
+    }
+  ],
+  returnType: { kind: 'number' },
+  runFn: (args) => {
+    const value = new Decimal(args['value']);
+    const fromUnit = args['fromUnit'];
+    const toUnit = args['toUnit'];
+    return convertUnit(value, fromUnit, toUnit);
+  },
+  mkArgsViewOverride: (params, args, onArgsChange) => {
+    const unitKind = unitKinds.find(k => k.units.some(u => u.name === args['fromUnit'].name))!;
+
+    return div([
+      div(
+        { class: 'tabs' },
+        unitKinds.map(unitKind =>
+          button(
+            {
+              class: unitKind === args['fromUnit'] ? 'active' : ''
+            },
+            [text(unitKind.name)
+          ])
+        )
+      ),
+      div([
+        label([text("From unit")]),
+        select([
+          ...unitKind.units.map(unit =>
+            option({
+              value: unit.name
+            }, [text(unit.name)])
+          )
+        ])
+      ]),
+      div([
+        label([text("To unit")]),
+        select([
+          ...unitKind.units.map(unit =>
+            option({
+              value: unit.name
+            }, [text(unit.name)])
+          )
+        ])
+      ]),
+      mkArgView(params.find(p => p.name === 'value')!, args['value'], onArgsChange)
+    ]);
+  }
+};
+
 // #endregion Unit Conversion
 
 export const commands = [
@@ -747,6 +828,7 @@ export const commands = [
   jsonFormatterCommand,
   removeAccentsFromTextCommand,
   trimLeadingTrailingSpaceCommand,
-  generateGuidsCommand
+  generateGuidsCommand,
+  unitConverterCommand
 ]
   .concat(unitConversionCommands);

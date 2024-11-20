@@ -213,6 +213,10 @@ textarea {
   background-color: #f8f9fa;
 }
 
+.tabs {
+  
+}
+
 @media (prefers-color-scheme: light) {
   :root {
     background-color: #f8f9fa;

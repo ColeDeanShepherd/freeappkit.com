@@ -34,6 +34,11 @@ export interface ICommand {
   runFn: (args: { [key: string]: any }) => any;
   mkSeoContent?: () => Node;
   mkCommandViewOverride?: () => Node;
+  mkArgsViewOverride?: (
+    parameters: ICommandParameter[],
+    args: { [key: string]: any },
+    onArgsChange?: (args: { [key: string]: any }) => void
+  ) => Node;
 }
 
 export interface ICommandParameter extends NamedValue {
