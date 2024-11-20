@@ -1,13 +1,14 @@
 import { text, h1, h2, h3, h4, div, p, ul, li, a, textArea, button, img, select, option, header, textInput } from './framework/ui/ui-core';
 import { routerFindRouteAndLocale, Route, Router } from './framework/router';
 import * as plainTextEditor from './ui/plain-text-editor';
+import * as allApps from './ui/all-apps';
 import { appList, languageList } from './ui/ui-components';
 import { changeSubdomain, getApexHost, getSubdomain, getUrlWithNewSubdomain } from './framework/urlUtil';
 import fuzzysort from 'fuzzysort';
 
 import './ui/style.css'
 
-import { commands, generateGuidsCommand, randomizeLinesCommand } from './commands';
+import { commands, frontPageCommands, generateGuidsCommand, randomizeLinesCommand } from './commands';
 import { initAnalytics, trackEvent, trackPageView } from './framework/analytics';
 import { getFirstSupportedPreferredLanguage, getLanguage, MaybeLocalizedString, setLanguage, setStrings, toLocalizedString, translate } from './framework/localization';
 import { strings } from './strings';
@@ -132,7 +133,8 @@ const mkHomePage = () =>
   div([
     div([
       h3([text('Our apps:')]),
-      appList()
+      appList(frontPageCommands),
+      a({ href: translate(allApps.route.pathname) }, [text('All apps...')])
     ]),
     div([
       h3([text('Supported languages:')]),
@@ -170,6 +172,7 @@ const routes: Route[] = [
     mkPageElem: mkHomePage,
   },
   
+  allApps.route,
   plainTextEditor.route,
   ...commands.map(c => {
     const viewProps = commandViewPropsOverrides.find(o => o.command === c)?.viewProps;

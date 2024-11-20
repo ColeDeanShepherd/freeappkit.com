@@ -888,6 +888,29 @@ export const unitConverterCommand: ICommand = {
 
 // #endregion Unit Conversion
 
+export const frontPageCommands = [
+  removeDuplicateLinesCommand,
+  randomizeLinesCommand,
+  removeEmptyLinesCommand,
+  sortLinesCommand,
+  convertToLowerCaseCommand,
+  convertToUpperCaseCommand,
+  base64EncodeCommand,
+  base64DecodeCommand,
+  countCharactersCommand,
+  countWordsCommand,
+  countLinesCommand,
+  countSentencesCommand,
+  urlEncodeCommand,
+  urlDecodeCommand,
+  addToEndOfEachLineCommand,
+  jsonFormatterCommand,
+  removeAccentsFromTextCommand,
+  trimLeadingTrailingSpaceCommand,
+  generateGuidsCommand,
+  unitConverterCommand
+];
+
 export const commands = [
   removeDuplicateLinesCommand,
   randomizeLinesCommand,
