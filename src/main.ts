@@ -1,4 +1,4 @@
-import { text, h1, h2, h3, h4, div, p, ul, li, a, textArea, button, img, select, option, header, textInput } from './framework/ui/ui-core';
+import { text, h1, h2, h3, h4, div, p, ul, li, a, textArea, button, img, select, option, header, textInput, footer } from './framework/ui/ui-core';
 import { routerFindRouteAndLocale, Route, Router } from './framework/router';
 import * as plainTextEditor from './ui/plain-text-editor';
 import * as allApps from './ui/all-apps';
@@ -77,17 +77,21 @@ function renderPageTemplate() {
   appElem.append(
     div([
       header([
+        div({ style: 'margin-bottom: 1rem' }, [
+          h1({ class: 'logo' }, [
+            a({ href: rootUrl }, [
+              img({ src: 'favicon.svg', alt: 'Free App Kit' }),
+              text('freeappkit.com', /* disableTranslation: */ true)
+            ])
+          ])
+        ]),
+        mkCommandSearchView()
+      ]),
+      (routeContainerElem = div({ id: "route-container" })),
+      footer([
         div({ class: 'row-1' }, [
           div([
-            h1({ class: 'logo' }, [
-              a({ href: rootUrl }, [
-                img({ src: 'favicon.svg', alt: 'Free App Kit' }),
-                text('freeappkit.com', /* disableTranslation: */ true)
-              ])
-            ]),
-            h2({ class: 'tag-line' }, [
-              text(strings.freeWebApplications)
-            ])
+            h3([ text('freeappkit.com - Free web applications for all!') ])
           ]),
           div({ class: 'support-us-container' }, [
             select({ value: getLanguage(), onChange: changeLocale, style: "margin-bottom: 1rem;" }, [
@@ -99,9 +103,7 @@ function renderPageTemplate() {
             ])
           ])
         ]),
-        mkCommandSearchView()
-      ]),
-      (routeContainerElem = div({ id: "route-container" }))
+      ])
     ])
   );
 

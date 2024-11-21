@@ -59,6 +59,11 @@ header {
   border-bottom: 1px solid #333;
 }
 
+footer {
+  padding-top: 1rem;
+  border-top: 1px solid #333;
+}
+
 .logo {
   margin-top: 0;
   margin-bottom: 0;
@@ -243,7 +248,8 @@ textarea {
 }
 
 @media (min-width: 768px) {
-  header > .row-1 {
+  header > .row-1,
+  footer > .row-1 {
     display: flex;
     justify-content: space-between;
   }
