@@ -6,6 +6,7 @@ import { button, div, h2, h3, label, li, ol, option, p, select, span, text, text
 import Decimal from 'decimal.js';
 import { copyToClipboardButton } from './ui/ui-components';
 import { commandNameToPathName, mkArgView } from './ui/command-view';
+import { calculateAge } from './framework/dateUtil';
 
 export const removeDuplicateLinesCommand: ICommand = {
   name: "Remove Duplicate Lines",
@@ -890,6 +891,24 @@ export const unitConverterCommand: ICommand = {
   }
 };
 
+export const ageCalculatorCommand: ICommand = {
+  name: "Age Calculator",
+  description: "Calculate an age in years given a birthdate",
+  parameters: [
+    {
+      name: "birthdate",
+      type: { kind: 'date' },
+      description: "Birthdate"
+    }
+  ],
+  returnType: { kind: 'number' },
+  runFn: (args) => {
+    const birthdate = new Date(args['birthdate']);
+    const now = new Date();
+    return calculateAge(birthdate);
+  }
+};
+
 // #endregion Unit Conversion
 
 export const frontPageCommands = [
@@ -912,7 +931,8 @@ export const frontPageCommands = [
   removeAccentsFromTextCommand,
   trimLeadingTrailingSpaceCommand,
   generateGuidsCommand,
-  unitConverterCommand
+  unitConverterCommand,
+  ageCalculatorCommand
 ];
 
 export const commands = [
@@ -935,6 +955,7 @@ export const commands = [
   removeAccentsFromTextCommand,
   trimLeadingTrailingSpaceCommand,
   generateGuidsCommand,
-  unitConverterCommand
+  unitConverterCommand,
+  ageCalculatorCommand
 ]
   .concat(unitConversionCommands);

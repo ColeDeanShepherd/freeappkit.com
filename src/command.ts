@@ -19,12 +19,16 @@ interface NumberType {
   kind: 'number';
 }
 
+interface DateType {
+  kind: 'date';
+}
+
 interface ObjectType {
   kind: 'object';
   properties: NamedValue[];
 }
 
-export type IType = BoolType | TextType | NumberType | ObjectType;
+export type IType = BoolType | TextType | NumberType | DateType | ObjectType;
 
 export interface ICommand {
   name: MaybeLocalizedString;
@@ -54,6 +58,8 @@ export const getDefaultValue = (type: IType) => {
       return '';
     case 'number':
       return new Decimal(0);
+    case 'date':
+      return new Date().getDate();
     default:
       return undefined;
   }

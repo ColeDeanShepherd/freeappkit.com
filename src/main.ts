@@ -7,6 +7,7 @@ import { changeSubdomain, getApexHost, getSubdomain, getUrlWithNewSubdomain } fr
 import fuzzysort from 'fuzzysort';
 
 import './ui/style.css'
+import 'pikaday/css/pikaday.css';
 
 import { commands, frontPageCommands, generateGuidsCommand, randomizeLinesCommand } from './commands';
 import { initAnalytics, trackEvent, trackPageView } from './framework/analytics';

@@ -5,6 +5,8 @@ import { copyToClipboardButton } from '../ui/ui-components';
 import { text, h1, h2, h3, h4, div, p, ul, li, a, textArea, button, i, span, checkbox, label, textInput } from '../framework/ui/ui-core';
 import { openFilePicker, saveStringToFile } from '../framework/fileSystemUtil';
 import { ICommand, ICommandParameter, IType, mkDefaultArgs, NamedValue } from '../command';
+import { onElementAdded } from '../framework/ui/uiUtil';
+import Pikaday from 'pikaday';
 
 export function mkArgView(
   param: ICommandParameter,
@@ -83,6 +85,42 @@ export function mkArgView(
           label([text((param.description !== undefined) ? (param.description + ' ') : '')]),
           textInput({ onInput, value: defaultValue.toString() }),
         ]);
+      }
+    
+    case 'date':
+      {
+        let _dateInput: HTMLInputElement;
+        const defaultValue = param.defaultValue ?? new Date();
+        
+        function onInput(e: Event) {
+          const valueStr = (e.target as HTMLTextAreaElement).value;
+          const value = parseInt(valueStr);
+
+          if (!isNaN(value)) {
+            args[param.name] = value;
+            onArgsChange?.(args);
+          }
+        }
+
+        const view = div({ style: containerStyle }, [
+          label([text((param.description !== undefined) ? (param.description + ' ') : '')]),
+          (_dateInput = textInput({ value: defaultValue.toString() }))
+        ]);
+
+        onElementAdded(_dateInput, (node) => {
+          const curYear = new Date().getFullYear();
+
+          const picker = new Pikaday({
+            field: _dateInput,
+            yearRange: [curYear - 120, curYear],
+            onSelect: (date) => {
+              args[param.name] = date;
+              onArgsChange?.(args);
+            }
+          });
+        });
+
+        return view;
       }
 
     default:
