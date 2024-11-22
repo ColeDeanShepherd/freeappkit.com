@@ -14,6 +14,8 @@ import { strings } from './strings';
 import { CommandViewProps, getCommandPathName, mkRouteFromCommand } from './ui/command-view';
 import { isDevEnv } from './config';
 import { removeAccents } from './framework/textUtil';
+import { routes, notFoundRoute } from './routes';
+import { generateSitemap } from './sitemap';
 
 // TODO: add plain-text editor to search bar?
 
@@ -125,78 +127,7 @@ function renderPageTemplate() {
   });
 }
 
-
-// #region Pages
-
-const mkHomePage = () =>
-  div([
-    div([
-      h3([text('Our apps:')]),
-      appList()
-    ]),
-    div([
-      h3([text('Supported languages:')]),
-      languageList()
-    ])
-  ]);
-
-function mkNotFoundPage() {
-  return text('Page not found!');
-}
-
-// #endregion Pages
-
 // #region Router
-
-const commandViewPropsOverrides = [
-  {
-    command: randomizeLinesCommand,
-    viewProps: {
-      autoRunOnArgChange: false
-    } as CommandViewProps
-  },
-  {
-    command: generateGuidsCommand,
-    viewProps: {
-      autoRunOnArgChange: false
-    } as CommandViewProps
-  }
-];
-
-const routes: Route[] = [
-  {
-    pathname: '/',
-    title: undefined,
-    mkPageElem: mkHomePage,
-  },
-  
-  plainTextEditor.route,
-  ...commands.map(c => {
-    const viewProps = commandViewPropsOverrides.find(o => o.command === c)?.viewProps;
-    return mkRouteFromCommand(c, viewProps);
-  })
-  //...plainTextEditor.plainTextEditorCommands.map(plainTextEditor.mkRouteFromPlainTextEditorCommand),
-  //...commands.except(plainTextEditor.plainTextEditorCommands).map(mkRouteFromCommand)
-];
-
-export function generateSitemap() {
-  const urlNodes = routes.flatMap(route => {
-    const localizedPathname = toLocalizedString(route.pathname);
-
-    // TODO: routes without accented characters
-    
-    return Object.keys(localizedPathname)
-      .map(locale => `<url><loc>https://freeappkit.com${(localizedPathname as any)[locale]}</loc></url>`);
-  }).join('\n');
-
-  return `<?xml version="1.0" encoding="UTF-8"?><urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">${urlNodes}</urlset>`;
-}
-
-const notFoundRoute: Route = {
-  pathname: '/page-not-found',
-  title: 'Page Not Found',
-  mkPageElem: mkNotFoundPage,
-};
 
 const router: Router = {
   routes,
