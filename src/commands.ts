@@ -5,7 +5,8 @@ import { v4 as uuidv4 } from 'uuid';
 import { button, div, h2, h3, label, li, ol, option, p, select, span, text, textArea, ul } from './framework/ui/ui-core';
 import Decimal from 'decimal.js';
 import { copyToClipboardButton } from './ui/ui-components';
-import { mkArgView } from './ui/command-view';
+import { commandNameToPathName, mkArgView } from './ui/command-view';
+import { calculateAge } from './framework/dateUtil';
 
 export const removeDuplicateLinesCommand: ICommand = {
   name: "Remove Duplicate Lines",
@@ -739,8 +740,12 @@ const unitConversionCommands: ICommand[] =
         const fromUnitInToUnits = convertUnit(new Decimal(1), fromUnit, toUnit);
         const toUnitInFromUnits = convertUnit(new Decimal(1), toUnit, fromUnit);
 
+        const commandNameForPathname = `Convert ${unitKind.name} - ${fromUnit.name} to ${toUnit.name}`;
+        const commandName = `Convert ${unitKind.name} - ${fromUnit.name} to ${toUnit.name} (${fromUnit.abbreviation} to ${toUnit.abbreviation})`;
+
         const command: ICommand = {
-          name: `Convert ${unitKind.name} - ${fromUnit.name} to ${toUnit.name}`,
+          name: commandName,
+          pathname: commandNameToPathName(commandNameForPathname),
           description: `Convert ${unitKind.name} - ${fromUnit.name} to ${toUnit.name} (${fromUnit.abbreviation} to ${toUnit.abbreviation}). 1 ${fromUnit.abbreviation} = ${fromUnitInToUnits.toNumber()} ${toUnit.abbreviation}. 1 ${toUnit.abbreviation} = ${toUnitInFromUnits.toNumber()} ${fromUnit.abbreviation}.`,
           parameters: [
             {
@@ -789,45 +794,43 @@ export const unitConverterCommand: ICommand = {
   mkArgsViewOverride: (params, args, onArgsChange) => {
     let unitKind = unitKinds.find(k => k.units.some(u => u.name === args['fromUnit'].name))!;
 
-    let unitKindAndButtons: [IUnitKind, HTMLButtonElement][] = unitKinds.map(unitKind =>
-      [
-        unitKind,
-        button(
-          {
-            onClick: () => changeUnitKind(unitKind),
-            class: unitKind === unitKind ? 'active' : ''
-          },
-          [text(unitKind.name)]
-        ),
-      ]
-    );
+    let unitKindSelect: HTMLSelectElement;
     let fromUnitSelect: HTMLSelectElement;
     let toUnitSelect: HTMLSelectElement;
 
     const result = div([
-      div(
-        { class: 'tabs' },
-        unitKindAndButtons.map(([unitKind, button]) => button)
-      ),
-      div([
+      div({ style: 'margin-bottom: 1rem;' }, [
+        (unitKindSelect = select({ onChange: onUnitKindOptionSelected }, [
+          ...getUnitKindOptions()
+        ]))
+      ]),
+      mkArgView(params.find(p => p.name === 'value')!, args, onArgsChange),
+      div({ style: 'margin-bottom: 1rem;' }, [
         label([text("From unit"), text(' ')]),
         (fromUnitSelect = select({ onChange: changeFromUnit }, [
           ...getUnitOptions()
         ]))
       ]),
-      div([
+      div({ style: 'margin-bottom: 1rem;' }, [
         label([text("To unit"), text(' ')]),
         (toUnitSelect = select({ onChange: changeToUnit }, [
           ...getUnitOptions()
         ]))
       ]),
-      mkArgView(params.find(p => p.name === 'value')!, args, onArgsChange),
       button({ onClick: swapUnits }, [text("Swap Units")])
     ]);
 
     changeUnitKind(unitKind);
 
     return result;
+
+    function getUnitKindOptions() {
+      return unitKinds.map(unitKind =>
+        option({
+          value: unitKind.name
+        }, [text(unitKind.name)]
+      ));
+    }
 
     function getUnitOptions() {
       return unitKind.units.map(unit =>
@@ -854,10 +857,12 @@ export const unitConverterCommand: ICommand = {
       onArgsChange(args);
     }
 
-    function changeUnitKind(newUnitKind: IUnitKind) {
-      unitKindAndButtons.forEach(([_, button]) => button.classList.remove('focus'));
-      unitKindAndButtons.find(([unitKind, _]) => unitKind === newUnitKind)![1].classList.add('focus');
+    function onUnitKindOptionSelected(e: Event) {
+      const newUnitKind = unitKinds.find(k => k.name === (e.target as HTMLSelectElement).value)!;
+      changeUnitKind(newUnitKind);
+    }
 
+    function changeUnitKind(newUnitKind: IUnitKind) {
       if (newUnitKind === unitKind) {
         return;
       }
@@ -886,7 +891,49 @@ export const unitConverterCommand: ICommand = {
   }
 };
 
+export const ageCalculatorCommand: ICommand = {
+  name: "Age Calculator",
+  description: "Calculate an age in years given a birthdate",
+  parameters: [
+    {
+      name: "birthdate",
+      type: { kind: 'date' },
+      description: "Birthdate"
+    }
+  ],
+  returnType: { kind: 'number' },
+  runFn: (args) => {
+    const birthdate = new Date(args['birthdate']);
+    const now = new Date();
+    return calculateAge(birthdate);
+  }
+};
+
 // #endregion Unit Conversion
+
+export const frontPageCommands = [
+  removeDuplicateLinesCommand,
+  randomizeLinesCommand,
+  removeEmptyLinesCommand,
+  sortLinesCommand,
+  convertToLowerCaseCommand,
+  convertToUpperCaseCommand,
+  base64EncodeCommand,
+  base64DecodeCommand,
+  countCharactersCommand,
+  countWordsCommand,
+  countLinesCommand,
+  countSentencesCommand,
+  urlEncodeCommand,
+  urlDecodeCommand,
+  addToEndOfEachLineCommand,
+  jsonFormatterCommand,
+  removeAccentsFromTextCommand,
+  trimLeadingTrailingSpaceCommand,
+  generateGuidsCommand,
+  unitConverterCommand,
+  ageCalculatorCommand
+];
 
 export const commands = [
   removeDuplicateLinesCommand,
@@ -908,6 +955,7 @@ export const commands = [
   removeAccentsFromTextCommand,
   trimLeadingTrailingSpaceCommand,
   generateGuidsCommand,
-  unitConverterCommand
+  unitConverterCommand,
+  ageCalculatorCommand
 ]
   .concat(unitConversionCommands);

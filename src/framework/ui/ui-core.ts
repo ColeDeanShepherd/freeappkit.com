@@ -60,6 +60,7 @@ export const ul = (propsOrChildren?: NodeProps | Node[], children?: Node[]) => e
 export const ol = (propsOrChildren?: NodeProps | Node[], children?: Node[]) => elem('ol', propsOrChildren, children);
 export const li = (propsOrChildren?: NodeProps | Node[], children?: Node[]) => elem('li', propsOrChildren, children);
 export const header = (propsOrChildren?: NodeProps | Node[], children?: Node[]) => elem('header', propsOrChildren, children);
+export const footer = (propsOrChildren?: NodeProps | Node[], children?: Node[]) => elem('footer', propsOrChildren, children);
 
 interface ANodeProps extends NodeProps {
   href?: string;

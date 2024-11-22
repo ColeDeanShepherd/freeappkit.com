@@ -1,11 +1,12 @@
 import { text, button, i, span, ul, li, a } from '../framework/ui/ui-core';
 import "bootstrap-icons/font/bootstrap-icons.css";
 import { waitMs } from '../framework/util';
-import { commands } from '../commands';
+import { frontPageCommands } from '../commands';
 import * as plainTextEditor from './plain-text-editor';
 import { getSubdomainForLocale, languageCodeToName, supportedLanguages, translate } from '../framework/localization';
 import { mkRouteFromCommand } from './command-view';
 import { getApexHost } from '../framework/urlUtil';
+import { ICommand } from '../command';
 
 export const copyToClipboardButton = (getTextContainerElem: () => HTMLTextAreaElement) => {
   let successTextElem: HTMLSpanElement;
@@ -31,7 +32,7 @@ export const copyToClipboardButton = (getTextContainerElem: () => HTMLTextAreaEl
   return btn;
 };
 
-export const appList = () =>
+export const appList = (commands: ICommand[]) =>
   ul([
     // li([
     //   a({ href: 'https://keytune.io' }, [text('KeyTune - Learn to play songs on piano for free!')]),

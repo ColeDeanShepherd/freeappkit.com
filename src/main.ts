@@ -1,13 +1,15 @@
-import { text, h1, h2, h3, h4, div, p, ul, li, a, textArea, button, img, select, option, header, textInput } from './framework/ui/ui-core';
+import { text, h1, h2, h3, h4, div, p, ul, li, a, textArea, button, img, select, option, header, textInput, footer } from './framework/ui/ui-core';
 import { routerFindRouteAndLocale, Route, Router } from './framework/router';
 import * as plainTextEditor from './ui/plain-text-editor';
+import * as allApps from './ui/all-apps';
 import { appList, languageList } from './ui/ui-components';
 import { changeSubdomain, getApexHost, getSubdomain, getUrlWithNewSubdomain } from './framework/urlUtil';
 import fuzzysort from 'fuzzysort';
 
 import './ui/style.css'
+import 'pikaday/css/pikaday.css';
 
-import { commands, generateGuidsCommand, randomizeLinesCommand } from './commands';
+import { commands, frontPageCommands, generateGuidsCommand, randomizeLinesCommand } from './commands';
 import { initAnalytics, trackEvent, trackPageView } from './framework/analytics';
 import { getFirstSupportedPreferredLanguage, getLanguage, MaybeLocalizedString, setLanguage, setStrings, toLocalizedString, translate } from './framework/localization';
 import { strings } from './strings';
@@ -30,26 +32,69 @@ export function trackCommandSearch(searchQuery: string) {
   });
 }
 
+function mkCommandSearchView() {
+  let searchResultsElem: HTMLElement;
+
+  const view = div({ class: 'row-2', style: 'position: relative' }, [
+    textInput({ placeholder: 'Search our apps...', style: 'width: 100%;', onInput: searchForCommands }),
+    (searchResultsElem = ul({ class: 'search-results hidden' }))
+  ]);
+
+  function searchForCommands(e: Event) {
+    const inputElem = e.target as HTMLInputElement;
+    const query = removeAccents(inputElem.value.toLowerCase().trim());
+
+    const searchResults = fuzzysort.go(query, commandSearchData, { key: 'indexedName' });
+    const matches = searchResults.map(r => (r.obj as any));
+
+    const anyQuery = query.length > 0;
+
+    if (anyQuery) {
+      trackCommandSearch(query);
+    }
+
+    if (matches.length === 0) {
+      if (!anyQuery) {
+        searchResultsElem.classList.add('hidden');
+        return;
+      } else {
+        searchResultsElem.classList.remove('hidden');
+        searchResultsElem.replaceChildren(li([text('No results found.')]));
+        return;
+      }
+    } else {
+      searchResultsElem.classList.remove('hidden');
+      searchResultsElem.replaceChildren(
+        ...matches.map(m => li([a({ href: translate(m.pathname) }, [text(translate(m.name))])]))
+      );
+    }
+  }
+
+  return view;
+}
+
 function renderPageTemplate() {
   const language = getLanguage();
   const rootUrl = (language === 'en') ? `${window.location.protocol}//${getApexHost()}` : `${window.location.protocol}//${language}.${getApexHost()}`;
 
-  let searchResultsElem: HTMLElement;
-
   appElem.append(
     div([
       header([
+        div({ style: 'margin-bottom: 1rem' }, [
+          h1({ class: 'logo' }, [
+            a({ href: rootUrl }, [
+              img({ src: 'favicon.svg', alt: 'Free App Kit' }),
+              text('freeappkit.com', /* disableTranslation: */ true)
+            ])
+          ])
+        ]),
+        mkCommandSearchView()
+      ]),
+      (routeContainerElem = div({ id: "route-container" })),
+      footer([
         div({ class: 'row-1' }, [
           div([
-            h1({ class: 'logo' }, [
-              a({ href: rootUrl }, [
-                img({ src: 'favicon.svg', alt: 'Free App Kit' }),
-                text('freeappkit.com', /* disableTranslation: */ true)
-              ])
-            ]),
-            h2({ class: 'tag-line' }, [
-              text(strings.freeWebApplications)
-            ])
+            h3([ text('freeappkit.com - Free web applications for all!') ])
           ]),
           div({ class: 'support-us-container' }, [
             select({ value: getLanguage(), onChange: changeLocale, style: "margin-bottom: 1rem;" }, [
@@ -61,12 +106,7 @@ function renderPageTemplate() {
             ])
           ])
         ]),
-        div({ class: 'row-2', style: 'position: relative' }, [
-          textInput({ placeholder: 'Search our apps...', style: 'width: 100%;', onInput: searchForCommands }),
-          (searchResultsElem = ul({ class: 'search-results hidden' }))
-        ])
-      ]),
-      (routeContainerElem = div({ id: "route-container" }))
+      ])
     ])
   );
 
@@ -83,36 +123,6 @@ function renderPageTemplate() {
       window.location.href = newUrl.href;
     } else {
       changeSubdomain(newLocale);
-    }
-  }
-
-  function searchForCommands(e: Event) {
-    const inputElem = e.target as HTMLInputElement;
-    const query = removeAccents(inputElem.value.toLowerCase().trim());
-
-    const searchResults = fuzzysort.go(query, commandSearchData, { key: 'indexedName' });
-    const matches = searchResults.map(r => (r.obj as any));
-
-    const anyQuery = query.length > 0;
-
-    if (anyQuery) {
-      trackCommandSearch(query);
-    }
-
-    if (matches.length === 0) {
-      if (anyQuery) {
-        searchResultsElem.classList.add('hidden');
-        return;
-      } else {
-        searchResultsElem.classList.remove('hidden');
-        searchResultsElem.replaceChildren(li([text('No results found.')]));
-        return;
-      }
-    } else {
-      searchResultsElem.classList.remove('hidden');
-      searchResultsElem.replaceChildren(
-        ...matches.map(m => li([a({ href: translate(m.pathname) }, [text(translate(m.name))])]))
-      );
     }
   }
 
