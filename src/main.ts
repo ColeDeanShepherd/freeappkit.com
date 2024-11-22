@@ -1,8 +1,6 @@
 import { text, h1, h2, h3, h4, div, p, ul, li, a, textArea, button, img, select, option, header, textInput, footer } from './framework/ui/ui-core';
 import { routerFindRouteAndLocale, Route, Router } from './framework/router';
 import * as plainTextEditor from './ui/plain-text-editor';
-import * as allApps from './ui/all-apps';
-import { appList, languageList } from './ui/ui-components';
 import { changeSubdomain, getApexHost, getSubdomain, getUrlWithNewSubdomain } from './framework/urlUtil';
 import fuzzysort from 'fuzzysort';
 
@@ -16,6 +14,7 @@ import { strings } from './strings';
 import { CommandViewProps, getCommandPathName, mkRouteFromCommand } from './ui/command-view';
 import { isDevEnv } from './config';
 import { removeAccents } from './framework/textUtil';
+import { routes, notFoundRoute } from './routes';
 
 // TODO: add plain-text editor to search bar?
 
@@ -135,80 +134,7 @@ function renderPageTemplate() {
   });
 }
 
-
-// #region Pages
-
-const mkHomePage = () =>
-  div([
-    div([
-      h3([text('Our apps:')]),
-      appList(frontPageCommands),
-      a({ href: translate(allApps.route.pathname) }, [text('All apps...')])
-    ]),
-    div([
-      h3([text('Supported languages:')]),
-      languageList()
-    ])
-  ]);
-
-function mkNotFoundPage() {
-  return text('Page not found!');
-}
-
-// #endregion Pages
-
 // #region Router
-
-const commandViewPropsOverrides = [
-  {
-    command: randomizeLinesCommand,
-    viewProps: {
-      autoRunOnArgChange: false
-    } as CommandViewProps
-  },
-  {
-    command: generateGuidsCommand,
-    viewProps: {
-      autoRunOnArgChange: false
-    } as CommandViewProps
-  }
-];
-
-const routes: Route[] = [
-  {
-    pathname: '/',
-    title: undefined,
-    mkPageElem: mkHomePage,
-  },
-  
-  allApps.route,
-  plainTextEditor.route,
-  ...commands.map(c => {
-    const viewProps = commandViewPropsOverrides.find(o => o.command === c)?.viewProps;
-    return mkRouteFromCommand(c, viewProps);
-  })
-  //...plainTextEditor.plainTextEditorCommands.map(plainTextEditor.mkRouteFromPlainTextEditorCommand),
-  //...commands.except(plainTextEditor.plainTextEditorCommands).map(mkRouteFromCommand)
-];
-
-export function generateSitemap() {
-  const urlNodes = routes.flatMap(route => {
-    const localizedPathname = toLocalizedString(route.pathname);
-
-    // TODO: routes without accented characters
-    
-    return Object.keys(localizedPathname)
-      .map(locale => `<url><loc>https://freeappkit.com${(localizedPathname as any)[locale]}</loc></url>`);
-  }).join('\n');
-
-  return `<?xml version="1.0" encoding="UTF-8"?><urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">${urlNodes}</urlset>`;
-}
-
-const notFoundRoute: Route = {
-  pathname: '/page-not-found',
-  title: 'Page Not Found',
-  mkPageElem: mkNotFoundPage,
-};
 
 const router: Router = {
   routes,
