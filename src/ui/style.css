@@ -111,7 +111,9 @@ button:hover,
 button:focus,
 button:focus-visible,
 .button:focus,
-.button:focus-visible {
+.button:focus-visible,
+button.focus,
+.button.focus {
   outline: 4px auto -webkit-focus-ring-color;
 }
 

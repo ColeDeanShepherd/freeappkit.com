@@ -486,7 +486,9 @@ export const generateGuidsCommand: ICommand = {
 interface IUnit {
   name: string;
   abbreviation: string;
-  numBaseUnits: Decimal;
+  numBaseUnits?: Decimal;
+  convertToBaseUnit?: (value: Decimal) => Decimal;
+  convertFromBaseUnit?: (value: Decimal) => Decimal;
 }
 
 const IUnitObjectType: IType = {
@@ -547,11 +549,26 @@ const unitKinds: IUnitKind[] = [
   },
   {
     name: "Temperature",
-    baseUnitName: "Celsius",
+    baseUnitName: "Kelvin",
     units: [
-      { name: "Celsius", abbreviation: "°C", numBaseUnits: new Decimal('1') },
-      { name: "Fahrenheit", abbreviation: "°F", numBaseUnits: new Decimal('1').times(5).div(9).plus(32) },
-      { name: "Kelvin", abbreviation: "K", numBaseUnits: new Decimal('1').plus(273.15) }
+      {
+        name: "Kelvin",
+        abbreviation: "K",
+        convertFromBaseUnit: (value: Decimal) => value,
+        convertToBaseUnit: (value: Decimal) => value
+      },
+      {
+        name: "Celsius",
+        abbreviation: "°C",
+        convertFromBaseUnit: (value: Decimal) => value.minus(273.15),
+        convertToBaseUnit: (value: Decimal) => value.plus(273.15)
+      },
+      {
+        name: "Fahrenheit",
+        abbreviation: "°F",
+        convertFromBaseUnit: (value: Decimal) => value.times(9).div(5).minus(459.67),
+        convertToBaseUnit: (value: Decimal) => value.plus(459.67).times(5).div(9)
+      }
     ]
   },
   {
@@ -583,8 +600,8 @@ const unitKinds: IUnitKind[] = [
     baseUnitName: "Meters per Second",
     units: [
       { name: "Meters per Second", abbreviation: "m/s", numBaseUnits: new Decimal('1') },
-      { name: "Kilometers per Hour", abbreviation: "km/h", numBaseUnits: new Decimal('1').times(3600).div(1000) },
-      { name: "Miles per Hour", abbreviation: "mph", numBaseUnits: new Decimal('1').times(3600).div(1609.344) },
+      { name: "Kilometers per Hour", abbreviation: "km/h", numBaseUnits: new Decimal('1').times(1000).div(3600) }, // TODO: fix these
+      { name: "Miles per Hour", abbreviation: "mph", numBaseUnits: new Decimal('1').times('1.609').times(1000).div(3600) },
       { name: "Knots", abbreviation: "kn", numBaseUnits: new Decimal('1').times(1852).div(3600) },
       { name: "Feet per Second", abbreviation: "ft/s", numBaseUnits: new Decimal('0.3048') },
     ]
@@ -642,14 +659,14 @@ const unitKinds: IUnitKind[] = [
     baseUnitName: "Bytes",
     units: [
       { name: "Bytes", abbreviation: "B", numBaseUnits: new Decimal('1') },
-      { name: "Kilobytes", abbreviation: "KB", numBaseUnits: new Decimal('1024') },
-      { name: "Megabytes", abbreviation: "MB", numBaseUnits: new Decimal('1048576') },
-      { name: "Gigabytes", abbreviation: "GB", numBaseUnits: new Decimal('1073741824') },
-      { name: "Terabytes", abbreviation: "TB", numBaseUnits: new Decimal('1099511627776') },
-      { name: "Petabytes", abbreviation: "PB", numBaseUnits: new Decimal('1125899906842624') },
-      { name: "Exabytes", abbreviation: "EB", numBaseUnits: new Decimal('1152921504606846976') },
-      { name: "Zettabytes", abbreviation: "ZB", numBaseUnits: new Decimal('1180591620717411303424') },
-      { name: "Yottabytes", abbreviation: "YB", numBaseUnits: new Decimal('1208925819614629174706176') },
+      { name: "Kilobytes", abbreviation: "KB", numBaseUnits: new Decimal('1000') },
+      { name: "Megabytes", abbreviation: "MB", numBaseUnits: new Decimal('1000000') },
+      { name: "Gigabytes", abbreviation: "GB", numBaseUnits: new Decimal('1000000000') },
+      { name: "Terabytes", abbreviation: "TB", numBaseUnits: new Decimal('1000000000000') },
+      { name: "Petabytes", abbreviation: "PB", numBaseUnits: new Decimal('1000000000000000') },
+      { name: "Exabytes", abbreviation: "EB", numBaseUnits: new Decimal('1000000000000000000') },
+      { name: "Zettabytes", abbreviation: "ZB", numBaseUnits: new Decimal('1000000000000000000000') },
+      { name: "Yottabytes", abbreviation: "YB", numBaseUnits: new Decimal('1000000000000000000000000') }
     ]
   },
   {
@@ -708,9 +725,11 @@ const unitKinds: IUnitKind[] = [
 ];
 
 function convertUnit(value: Decimal, fromUnit: IUnit, toUnit: IUnit) {
-  // TODO: ensure both units are of same kind
+  if (fromUnit.convertToBaseUnit && toUnit.convertFromBaseUnit) {
+    return toUnit.convertFromBaseUnit(fromUnit.convertToBaseUnit(value));
+  }
 
-  return value.times(fromUnit.numBaseUnits).div(toUnit.numBaseUnits);
+  return value.times(fromUnit.numBaseUnits!).div(toUnit.numBaseUnits!);
 }
 
 const unitConversionCommands: ICommand[] =
@@ -768,42 +787,102 @@ export const unitConverterCommand: ICommand = {
     return convertUnit(value, fromUnit, toUnit);
   },
   mkArgsViewOverride: (params, args, onArgsChange) => {
-    const unitKind = unitKinds.find(k => k.units.some(u => u.name === args['fromUnit'].name))!;
+    let unitKind = unitKinds.find(k => k.units.some(u => u.name === args['fromUnit'].name))!;
 
-    return div([
+    let unitKindAndButtons: [IUnitKind, HTMLButtonElement][] = unitKinds.map(unitKind =>
+      [
+        unitKind,
+        button(
+          {
+            onClick: () => changeUnitKind(unitKind),
+            class: unitKind === unitKind ? 'active' : ''
+          },
+          [text(unitKind.name)]
+        ),
+      ]
+    );
+    let fromUnitSelect: HTMLSelectElement;
+    let toUnitSelect: HTMLSelectElement;
+
+    const result = div([
       div(
         { class: 'tabs' },
-        unitKinds.map(unitKind =>
-          button(
-            {
-              class: unitKind === args['fromUnit'] ? 'active' : ''
-            },
-            [text(unitKind.name)
-          ])
-        )
+        unitKindAndButtons.map(([unitKind, button]) => button)
       ),
       div([
-        label([text("From unit")]),
-        select([
-          ...unitKind.units.map(unit =>
-            option({
-              value: unit.name
-            }, [text(unit.name)])
-          )
-        ])
+        label([text("From unit"), text(' ')]),
+        (fromUnitSelect = select({ onChange: changeFromUnit }, [
+          ...getUnitOptions()
+        ]))
       ]),
       div([
-        label([text("To unit")]),
-        select([
-          ...unitKind.units.map(unit =>
-            option({
-              value: unit.name
-            }, [text(unit.name)])
-          )
-        ])
+        label([text("To unit"), text(' ')]),
+        (toUnitSelect = select({ onChange: changeToUnit }, [
+          ...getUnitOptions()
+        ]))
       ]),
-      mkArgView(params.find(p => p.name === 'value')!, args['value'], onArgsChange)
+      mkArgView(params.find(p => p.name === 'value')!, args, onArgsChange),
+      button({ onClick: swapUnits }, [text("Swap Units")])
     ]);
+
+    changeUnitKind(unitKind);
+
+    return result;
+
+    function getUnitOptions() {
+      return unitKind.units.map(unit =>
+        option({
+          value: unit.name
+        }, [text(unit.name)])
+      );
+    }
+
+    function setFromUnit(newFromUnit: IUnit) {
+      args['fromUnit'] = newFromUnit;
+      fromUnitSelect.value = newFromUnit.name;
+    }
+
+    function setToUnit(newToUnit: IUnit) {
+      args['toUnit'] = newToUnit;
+      toUnitSelect.value = newToUnit.name;
+    }
+    
+    function swapUnits() {
+      const temp = args['fromUnit'];
+      setFromUnit(args['toUnit']);
+      setToUnit(temp);
+      onArgsChange(args);
+    }
+
+    function changeUnitKind(newUnitKind: IUnitKind) {
+      unitKindAndButtons.forEach(([_, button]) => button.classList.remove('focus'));
+      unitKindAndButtons.find(([unitKind, _]) => unitKind === newUnitKind)![1].classList.add('focus');
+
+      if (newUnitKind === unitKind) {
+        return;
+      }
+
+      unitKind = newUnitKind;
+      const newFromUnit = newUnitKind.units[0];
+      const newToUnit = newUnitKind.units[0];
+      fromUnitSelect.replaceChildren(...getUnitOptions());
+      toUnitSelect.replaceChildren(...getUnitOptions());
+      setFromUnit(newFromUnit);
+      setToUnit(newToUnit);
+      onArgsChange(args);
+    }
+
+    function changeFromUnit(e: Event) {
+      const newFromUnit = unitKind.units.find(u => u.name === (e.target as HTMLSelectElement).value)!;
+      setFromUnit(newFromUnit);
+      onArgsChange(args);
+    }
+
+    function changeToUnit(e: Event) {
+      const newToUnit = unitKind.units.find(u => u.name === (e.target as HTMLSelectElement).value)!;
+      setToUnit(newToUnit);
+      onArgsChange(args);
+    }
   }
 };
 
