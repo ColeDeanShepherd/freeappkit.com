@@ -291,10 +291,6 @@ export const strings = {
         en: "Count sentences with this free online tool.",
         es: "Cuenta sentencias con esta herramienta en línea gratuita."
     },
-    keytuneLink: {
-        en: "KeyTune - Learn to play songs on piano for free!",
-        es: "KeyTune - ¡Aprende a tocar canciones en el piano gratis!",
-    },
     plainTextEditorPath: {
         en: "/plain-text-editor",
         es: "/editor-de-texto-plano",

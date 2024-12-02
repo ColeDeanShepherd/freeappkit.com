@@ -34,9 +34,6 @@ export const copyToClipboardButton = (getTextContainerElem: () => HTMLTextAreaEl
 
 export const appList = (commands: ICommand[]) =>
   ul([
-    // li([
-    //   a({ href: 'https://keytune.io' }, [text('KeyTune - Learn to play songs on piano for free!')]),
-    // ]),
     li([
       a({ href: translate(plainTextEditor.route.pathname) }, [text('Plain-Text Editor')]),
     ]),
