@@ -80,8 +80,8 @@ function renderPageTemplate() {
         div({ style: 'margin-bottom: 1rem' }, [
           h1({ class: 'logo' }, [
             a({ href: rootUrl }, [
-              img({ src: 'favicon.svg', alt: 'Free App Kit' }),
-              text('freeappkit.com', /* disableTranslation: */ true)
+              img({ src: 'favicon.svg', alt: 'TheBitGrid' }),
+              text('thebitgrid.com', /* disableTranslation: */ true)
             ])
           ])
         ]),
@@ -91,7 +91,7 @@ function renderPageTemplate() {
       footer([
         div({ class: 'row-1' }, [
           div([
-            h3([ text('freeappkit.com - Free web applications for all!') ])
+            h3([ text('thebitgrid.com - Free web applications for all!') ])
           ]),
           div({ class: 'support-us-container' }, [
             select({ value: getLanguage(), onChange: changeLocale, style: "margin-bottom: 1rem;" }, [
@@ -180,8 +180,8 @@ function changeRoute(pathname: string) {
   renderPageTemplate();
 
   document.title = (route.title !== undefined)
-    ? `${translate(route.title)} - Free App Kit`
-    : 'Free App Kit';
+    ? `${translate(route.title)} - TheBitGrid`
+    : 'TheBitGrid';
 
   // Send page view to Google Analytics now that the page title is set.
   if (!isDevEnv()) {

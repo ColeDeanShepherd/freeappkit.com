@@ -7,9 +7,9 @@ export const strings = {
         en: " ",
         es: " ",
     },
-    freeappkitdotcom: {
-        en: "freeappkit.com",
-        es: "freeappkit.com",
+    thebitgriddotcom: {
+        en: "thebitgrid.com",
+        es: "thebitgrid.com",
     },
     unknownType: {
         en: "Unknown type",
@@ -27,9 +27,9 @@ export const strings = {
         en: "Español",
         es: "Español",
     },
-    freeAppKit: {
-        en: "Free App Kit",
-        es: "Kit de Aplicación Gratuita",
+    theBitGrid: {
+        en: "TheBitGrid",
+        es: "TheBitGrid",
     },
     freeWebApplications: {
         en: "Free Web Applications",
@@ -376,8 +376,8 @@ export const strings = {
         es: "Herramienta gratuita de conteo de palabras en línea: cuenta palabras y métricas de texto fácilmente",
     },
     _2: {
-        en: "Welcome to FreeAppKit's Word Counter, the ultimate free tool designed to help you analyze and optimize your text quickly and efficiently. Whether you're a writer, editor, student, or content creator, this tool offers an easy way to count words, characters, and more in seconds.",
-        es: "Bienvenido al Contador de Palabras de FreeAppKit, la herramienta gratuita definitiva diseñada para ayudarte a analizar y optimizar tu texto rápida y eficientemente. Ya seas escritor, editor, estudiante o creador de contenido, esta herramienta ofrece una forma sencilla de contar palabras, caracteres y más en segundos.",
+        en: "Welcome to TheBitGrid's Word Counter, the ultimate free tool designed to help you analyze and optimize your text quickly and efficiently. Whether you're a writer, editor, student, or content creator, this tool offers an easy way to count words, characters, and more in seconds.",
+        es: "Bienvenido al Contador de Palabras de TheBitGrid, la herramienta gratuita definitiva diseñada para ayudarte a analizar y optimizar tu texto rápida y eficientemente. Ya seas escritor, editor, estudiante o creador de contenido, esta herramienta ofrece una forma sencilla de contar palabras, caracteres y más en segundos.",
     },
     _3: {
         en: "Why Use Our Word Counter?",
@@ -432,8 +432,8 @@ export const strings = {
         "es": "Formateador JSON - Herramienta en l\u00EDnea gratuita para formatear sus datos JSON"
     },
     "edd00aee-eeb6-42d3-8d01-902e96513980": {
-        "en": "Welcome to Free App Kit\u2019s JSON Formatter, your go-to tool for easily formatting JSON data. Whether you're a developer working on APIs, a data enthusiast parsing JSON files, or someone learning about JSON, our tool is here to help. It's fast, reliable, and completely free to use.",
-        "es": "Bienvenido al Formateador JSON de Free App Kit, su herramienta indispensable para formatear f\u00E1cilmente datos JSON. Ya sea que seas un desarrollador trabajando en APIs, un entusiasta de los datos analizando archivos JSON, o alguien aprendiendo acerca de JSON, nuestra herramienta est\u00E1 aqu\u00ED para ayudarte. Es r\u00E1pido, confiable y completamente gratis de usar."
+        "en": "Welcome to TheBitGrid\u2019s JSON Formatter, your go-to tool for easily formatting JSON data. Whether you're a developer working on APIs, a data enthusiast parsing JSON files, or someone learning about JSON, our tool is here to help. It's fast, reliable, and completely free to use.",
+        "es": "Bienvenido al Formateador JSON de TheBitGrid, su herramienta indispensable para formatear f\u00E1cilmente datos JSON. Ya sea que seas un desarrollador trabajando en APIs, un entusiasta de los datos analizando archivos JSON, o alguien aprendiendo acerca de JSON, nuestra herramienta est\u00E1 aqu\u00ED para ayudarte. Es r\u00E1pido, confiable y completamente gratis de usar."
     },
     "1147b53e-4757-446c-bc43-00c2ee1b73eb": {
         "en": "Why Use a JSON Formatter?",
@@ -564,8 +564,8 @@ export const strings = {
         "es": "Prueba nuestras otras herramientas gratuitas"
     },
     "afa5cd4e-607b-4982-8fb8-226fbac1cc72": {
-        "en": "Free App Kit offers a variety of free web applications to simplify your tasks. From randomizing lines of text to analyzing word counts, we have tools designed to make your life easier. Check them out and see how they can help you!",
-        "es": "Free App Kit ofrece una variedad de aplicaciones web gratuitas para simplificar tus tareas. Desde la aleatorizaci\u00F3n de l\u00EDneas de texto hasta el an\u00E1lisis de recuentos de palabras, tenemos herramientas dise\u00F1adas para hacer tu vida m\u00E1s f\u00E1cil. \u00A1\u00C9chalas un vistazo y mira c\u00F3mo te pueden ayudar!"
+        "en": "TheBitGrid offers a variety of free web applications to simplify your tasks. From randomizing lines of text to analyzing word counts, we have tools designed to make your life easier. Check them out and see how they can help you!",
+        "es": "TheBitGrid ofrece una variedad de aplicaciones web gratuitas para simplificar tus tareas. Desde la aleatorizaci\u00F3n de l\u00EDneas de texto hasta el an\u00E1lisis de recuentos de palabras, tenemos herramientas dise\u00F1adas para hacer tu vida m\u00E1s f\u00E1cil. \u00A1\u00C9chalas un vistazo y mira c\u00F3mo te pueden ayudar!"
     },
     "5d45814c-3ce7-4e1b-9a8e-8565c74786a0": {
         "en": "text",

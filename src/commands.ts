@@ -263,7 +263,7 @@ export const countWordsCommand: ICommand = {
   runFn: (args) => getTextCounts(args['text']),
   mkSeoContent: () => div([
     h2([ text("Free Online Word Counter Tool: Count Words and Text Metrics Effortlessly") ]),
-    p([ text("Welcome to FreeAppKit's Word Counter, the ultimate free tool designed to help you analyze and optimize your text quickly and efficiently. Whether you're a writer, editor, student, or content creator, this tool offers an easy way to count words, characters, and more in seconds.") ]),
+    p([ text("Welcome to TheBitGrid's Word Counter, the ultimate free tool designed to help you analyze and optimize your text quickly and efficiently. Whether you're a writer, editor, student, or content creator, this tool offers an easy way to count words, characters, and more in seconds.") ]),
 
     h3([ text("Why Use Our Word Counter?") ]),
     p([ text("Text metrics matter in many scenarios, such as crafting essays, writing social media posts, or preparing professional documents. Knowing the exact number of words or characters can help you stay within limits or optimize your content for better readability.") ]),
@@ -385,7 +385,7 @@ export const jsonFormatterCommand: ICommand = {
   },
   mkSeoContent: () => div([
     h2([ text("JSON Formatter - Free Online Tool to Format Your JSON Data") ]),
-    p([ text("Welcome to Free App Kit’s JSON Formatter, your go-to tool for easily formatting JSON data. Whether you're a developer working on APIs, a data enthusiast parsing JSON files, or someone learning about JSON, our tool is here to help. It's fast, reliable, and completely free to use.") ]),
+    p([ text("Welcome to TheBitGrid’s JSON Formatter, your go-to tool for easily formatting JSON data. Whether you're a developer working on APIs, a data enthusiast parsing JSON files, or someone learning about JSON, our tool is here to help. It's fast, reliable, and completely free to use.") ]),
 
     h2([ text("Why Use a JSON Formatter?") ]),
     p([ text("JSON (JavaScript Object Notation) is widely used for transmitting data in web applications, APIs, and more. However, JSON data can sometimes be compact or minified, making it hard to read and debug. A JSON Formatter makes the data human-readable by adding proper indentation and line breaks.") ]),
@@ -431,7 +431,7 @@ export const jsonFormatterCommand: ICommand = {
     p([ text("If you find our JSON Formatter helpful, consider supporting us on Patreon. Your support helps us keep the tool free and allows us to develop more useful web applications.") ]),
 
     h2([ text("Try Our Other Free Tools") ]),
-    p([ text("Free App Kit offers a variety of free web applications to simplify your tasks. From randomizing lines of text to analyzing word counts, we have tools designed to make your life easier. Check them out and see how they can help you!") ])
+    p([ text("TheBitGrid offers a variety of free web applications to simplify your tasks. From randomizing lines of text to analyzing word counts, we have tools designed to make your life easier. Check them out and see how they can help you!") ])
   ])
 };
 
