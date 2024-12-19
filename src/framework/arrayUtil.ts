@@ -19,6 +19,10 @@ export function arrayLast<T>(arr: T[]) {
   }
 }
 
+export function arrayRandElem<T>(arr: T[]): T {
+  return arr[Math.floor(Math.random() * arr.length)];
+}
+
 declare global {
   interface Array<T> {
     last(): T | undefined;

@@ -2,7 +2,7 @@ import { text, h1, h2, h3, h4, div, p, ul, li, a, textArea, button, img, select,
 import { Route } from './framework/router';
 import * as plainTextEditor from './ui/plain-text-editor';
 import { appList, languageList } from './ui/ui-components';
-import { commands, frontPageCommands, generateGuidsCommand, randomizeLinesCommand } from './commands';
+import { commands, frontPageCommands, generateGuidsCommand, randomizeLinesCommand, videoGameIdeaGeneratorCommand } from './commands';
 import { CommandViewProps, mkRouteFromCommand } from './ui/command-view';
 import { translate } from './framework/localization';
 import * as allApps from './ui/all-apps';
@@ -43,6 +43,12 @@ const commandViewPropsOverrides = [
   },
   {
     command: generateGuidsCommand,
+    viewProps: {
+      autoRunOnArgChange: false
+    } as CommandViewProps
+  },
+  {
+    command: videoGameIdeaGeneratorCommand,
     viewProps: {
       autoRunOnArgChange: false
     } as CommandViewProps

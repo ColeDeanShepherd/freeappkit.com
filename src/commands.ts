@@ -7,6 +7,7 @@ import Decimal from 'decimal.js';
 import { copyToClipboardButton } from './ui/ui-components';
 import { commandNameToPathName, mkArgView } from './ui/command-view';
 import { calculateAge } from './framework/dateUtil';
+import { arrayRandElem } from './framework/arrayUtil';
 
 export const removeDuplicateLinesCommand: ICommand = {
   name: "Remove Duplicate Lines",
@@ -909,6 +910,77 @@ export const ageCalculatorCommand: ICommand = {
   }
 };
 
+export const videoGameIdeaGeneratorCommand: ICommand = {
+  name: "Video Game Idea Generator",
+  description: "Generate random video game ideas",
+  parameters: [],
+  returnType: { kind: 'text' },
+  runFn: () => {
+    const genres = [
+      "Action",
+      "Adventure",
+      "Role-Playing",
+      "Simulation",
+      "Strategy",
+      "Sports",
+      "Puzzle",
+      "Idle",
+      "Horror",
+      "Survival",
+      "Racing",
+      "Fighting",
+      "Platformer",
+      "MMORPG",
+      "Roguelike",
+      "Stealth",
+      "Open-World",
+      "Sandbox",
+      "Educational",
+      "Music",
+      "Party",
+      "Casual",
+      "Battle Royale",
+      "Metroidvania",
+      "Tower Defense",
+      "Visual Novel",
+      "Dating Sim",
+      "Rhythm",
+      "Card",
+      "Board",
+      "Trivia",
+      "Text-Based",
+      "Interactive Fiction",
+      "Art",
+      "Walking Simulator",
+      "Life Simulation",
+      "City Building",
+      "Tycoon",
+      "Real-Time Strategy",
+      "Turn-Based Strategy",
+      "Tactical RPG",
+      "First-Person Shooter",
+      "Third-Person Shooter",
+      "Twin-Stick Shooter",
+      "Light Gun Shooter",
+      "Beat 'em Up",
+      "Hack and Slash",
+      "Bullet Hell",
+      "Battle Arena",
+      "MOBA",
+      "Tower Offense",
+      "Tower Defense",
+      "Rhythm",
+      "Music",
+      "Dance",
+      "Fitness",
+    ];
+
+    const genre1 = arrayRandElem(genres);
+    const genre2 = arrayRandElem(genres.except([genre1]));
+    return `${genre1} & ${genre2}`;
+  }
+};
+
 // #endregion Unit Conversion
 
 export const frontPageCommands = [
@@ -932,7 +1004,8 @@ export const frontPageCommands = [
   trimLeadingTrailingSpaceCommand,
   generateGuidsCommand,
   unitConverterCommand,
-  ageCalculatorCommand
+  ageCalculatorCommand,
+  videoGameIdeaGeneratorCommand
 ];
 
 export const commands = [
@@ -956,6 +1029,7 @@ export const commands = [
   trimLeadingTrailingSpaceCommand,
   generateGuidsCommand,
   unitConverterCommand,
-  ageCalculatorCommand
+  ageCalculatorCommand,
+  videoGameIdeaGeneratorCommand
 ]
   .concat(unitConversionCommands);
